@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "../../lib/supabase";
 
 type Variant={id:string;size:string;price_inr:number;stock:number};
 type Product={id:string;name:string;active:boolean;variants:Variant[]};
