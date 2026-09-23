@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "../lib/supabase";
 
 type Variant={id:string;size:string;price_inr:number;stock:number};
 type Product={id:string;name:string;description:string;origin:string;ingredients:string;variants:Variant[];images:{url:string;alt_text:string|null;sort_order:number}[]};
