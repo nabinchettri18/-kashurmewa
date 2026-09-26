@@ -3,7 +3,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 type Item={size:string;qty:number;price:number};
-const prices:Record<string,number>={ "250g":449,"500g":799,"1kg":1399 };
 
 export default function CartPage(){
   const [items,setItems]=useState<Item[]>([]);
