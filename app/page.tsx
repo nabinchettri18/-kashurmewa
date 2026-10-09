@@ -47,7 +47,7 @@ export default function Home(){
   };
 
   return <main>
-    <div className="topbar"><span>THE TASTE OF KASHMIR</span><span>COMPLIMENTARY DELIVERY ON ORDERS OVER ₹999</span><span>100% WALNUTS</span></div>
+    <div className="topbar"><span>THE TASTE OF KASHMIR</span><span>100% WALNUTS</span></div>
 
     <header className="site-header">
       <button className="mobile-menu" aria-label={menuOpen?"Close menu":"Open menu"} aria-expanded={menuOpen} onClick={()=>setMenuOpen(v=>!v)}>{menuOpen?"✕":"☰"}</button>
