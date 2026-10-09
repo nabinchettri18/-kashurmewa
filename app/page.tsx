@@ -18,6 +18,7 @@ export default function Home(){
   const [size,setSize]=useState("");
   const [cart,setCart]=useState(0);
   const [error,setError]=useState("");
+  const [menuOpen,setMenuOpen]=useState(false);
 
   useEffect(()=>{(async()=>{
     const {data,error}=await supabase.from("km_products")
@@ -49,9 +50,9 @@ export default function Home(){
     <div className="topbar"><span>THE TASTE OF KASHMIR</span><span>COMPLIMENTARY DELIVERY ON ORDERS OVER ₹999</span><span>100% WALNUTS</span></div>
 
     <header className="site-header">
-      <button className="mobile-menu" aria-label="Menu">☰</button>
+      <button className="mobile-menu" aria-label={menuOpen?"Close menu":"Open menu"} aria-expanded={menuOpen} onClick={()=>setMenuOpen(v=>!v)}>{menuOpen?"✕":"☰"}</button>
       <Link className="logo" href="/">KASHUR<span>MEWA</span></Link>
-      <nav className="main-nav">
+      <nav className={menuOpen?"main-nav menu-open":"main-nav"} onClick={()=>setMenuOpen(false)}>
         <a href="#shop">Shop</a><a href="#story">Our Story</a><a href="#origin">The Valley</a><a href="#journal">Journal</a>
       </nav>
       <div className="header-actions">
@@ -76,13 +77,6 @@ export default function Home(){
         <div className="hero-frame">
           <img src={images[0]} alt="Kashurmewa walnuts and Kashmir landscape" />
         </div>
-        <div className="hero-card">
-          <span>THE SIGNATURE PACK</span>
-          <strong>{product?.name||"Kashmiri Walnuts"}</strong>
-          <small>From ₹{selected?Number(selected.price_inr).toLocaleString("en-IN"):"449"}</small>
-          <a href="#shop">VIEW PRODUCT →</a>
-        </div>
-        <div className="round-mark">FROM<br/>KASHMIR<br/><b>✦</b><br/>INDIA</div>
       </div>
     </section>
 
