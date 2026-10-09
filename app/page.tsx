@@ -53,11 +53,11 @@ export default function Home(){
       <button className="mobile-menu" aria-label={menuOpen?"Close menu":"Open menu"} aria-expanded={menuOpen} onClick={()=>setMenuOpen(v=>!v)}>{menuOpen?"✕":"☰"}</button>
       <Link className="logo" href="/">KASHUR<span>MEWA</span></Link>
       <nav className={menuOpen?"main-nav menu-open":"main-nav"} onClick={()=>setMenuOpen(false)}>
-        <a href="#shop">Shop</a><a href="#story">Our Story</a><a href="#origin">The Valley</a><a href="#journal">Journal</a>
+        <Link href="/shop">Shop</Link><a href="#story">Our Story</a><a href="#origin">The Valley</a><a href="#journal">Journal</a>
       </nav>
       <div className="header-actions">
         <button aria-label="Search">⌕</button>
-        <button aria-label="Account">♙</button>
+        <Link href="/account" aria-label="Account">♙</Link>
         <Link href="/cart" className="bag">Bag <span>{cart}</span></Link>
       </div>
     </header>
@@ -68,7 +68,7 @@ export default function Home(){
         <h1>A little piece<br/>of <i>Kashmir.</i></h1>
         <p>Premium Kashmiri walnuts selected for their clean taste, delicate texture and unmistakable character.</p>
         <div className="hero-actions">
-          <a className="primary-btn" href="#shop">SHOP WALNUTS <b>↗</b></a>
+          <Link className="primary-btn" href="/shop">SHOP WALNUTS <b>↗</b></Link>
           <a className="text-btn" href="#story">OUR STORY <span>→</span></a>
         </div>
         <div className="hero-meta"><span>ORIGIN <b>{product?.origin||"KASHMIR, INDIA"}</b></span><span>INGREDIENT <b>100% WALNUTS</b></span></div>
