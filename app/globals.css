@@ -159,3 +159,76 @@ a,button{-webkit-tap-highlight-color:transparent}
  .buy-panel{padding:48px 30px}
  .benefits{padding-left:5vw;padding-right:5vw}
 }
+
+
+/* Mobile usability and clean hero: no floating promotional overlays. */
+.hero-card,.round-mark{display:none!important}
+.hero-visual{padding-left:0}
+.hero-frame{width:100%}
+@media(max-width:850px){
+  .site-header{position:sticky;top:0;display:grid;grid-template-columns:42px 1fr auto;gap:8px;padding:0 5vw;z-index:100}
+  .mobile-menu{display:grid;place-items:center;width:38px;height:38px;color:#f5f0e5;border:1px solid #486052;border-radius:50%;font-size:17px}
+  .site-header .logo{justify-self:start;white-space:nowrap;font-size:clamp(15px,4.3vw,19px);letter-spacing:1.8px}
+  .main-nav{display:none}
+  .main-nav.menu-open{position:absolute;display:flex;left:0;right:0;top:100%;padding:12px 5vw 22px;background:#10291f;border-top:1px solid #345043;box-shadow:0 18px 30px #06160f33;flex-direction:column;gap:0;z-index:110}
+  .main-nav.menu-open a{padding:17px 0;border-bottom:1px solid #345043;font-size:10px;letter-spacing:2px;color:#f5f0e5}
+  .main-nav.menu-open a:last-child{border-bottom:0}
+  .header-actions{gap:0}
+  .header-actions button{display:none}
+  .bag{font-size:8px;letter-spacing:1px;padding-left:10px;white-space:nowrap}
+  .bag span{width:19px;height:19px}
+  .hero-new{display:flex;flex-direction:column;min-height:0}
+  .hero-left{padding:55px 6vw 34px}
+  .hero-left h1{font-size:clamp(58px,13vw,84px);line-height:.91;letter-spacing:-3px;max-width:100%;overflow-wrap:normal}
+  .hero-left>p{font-size:13px;line-height:1.8;max-width:34rem}
+  .hero-actions{flex-wrap:wrap;gap:18px;margin-top:26px}
+  .hero-meta{margin-top:34px;gap:20px;flex-wrap:wrap}
+  .hero-visual{min-height:0;padding:0 5vw 36px}
+  .hero-frame{min-height:0;height:clamp(300px,100vw,480px);width:100%}
+  .hero-frame img{object-position:center}
+  .trust-row{min-height:54px;gap:22px}
+  .shop-new{padding:68px 5vw}
+  .section-intro{margin-bottom:32px}
+  .section-intro h2,.story-text h2,.valley-copy h2{letter-spacing:-2.5px}
+  .section-intro>p{font-size:12px}
+  .shop-layout{min-height:0}
+  .product-photo{height:clamp(280px,86vw,430px)}
+  .large-product-info{gap:12px;padding:22px 18px}
+  .large-product-info h3{font-size:26px}
+  .circle-arrow{width:44px;height:44px}
+  .buy-panel{padding:36px 24px;min-height:0}
+  .buy-panel h3{font-size:40px;margin-bottom:25px}
+  .variant-list button{padding:17px 0;min-height:68px}
+  .variant-list button span{font-size:19px}
+  .buy-bottom{flex-wrap:wrap}
+  .buy-bottom .primary-btn{flex:1;min-width:160px}
+  .micro-copy{font-size:8px;line-height:1.6}
+  .benefits{padding:55px 7vw}
+  .story-image,.valley-image{min-height:0;height:clamp(300px,90vw,470px)}
+  .story-text,.valley-copy{padding:60px 7vw}
+  .valley-copy>p{font-size:12px}
+  .ritual{padding:65px 7vw;gap:12px}
+  .ritual-grid{margin-top:28px}
+  .journal-new{padding:65px 6vw}
+  .journal-cards article{padding:24px 0;min-height:0}
+  .journal-cards h3{font-size:24px;margin:17px 0 24px}
+  .newsletter{padding:58px 7vw;gap:10px}
+  .newsletter h2{font-size:clamp(42px,10vw,56px);letter-spacing:-2.5px}
+  .newsletter>div:last-child{margin-top:16px}
+  .newsletter-input input{min-width:0;width:100%;font-size:13px}
+  .footer-new{padding:55px 7vw 24px}
+  .footer-main{gap:28px 18px;padding-bottom:38px}
+  .footer-main a:not(.logo){font-size:10px;line-height:1.5}
+  .footer-bottom{font-size:7px;letter-spacing:1.2px}
+}
+@media(max-width:360px){
+  .site-header{grid-template-columns:34px minmax(0,1fr) auto;gap:5px}
+  .mobile-menu{width:32px;height:32px}
+  .site-header .logo{font-size:14px;letter-spacing:1px}
+  .bag{padding-left:7px;font-size:7px}
+  .hero-left{padding-top:45px}
+  .hero-left h1{font-size:55px}
+  .hero-meta{gap:14px}
+  .buy-panel{padding:32px 18px}
+  .footer-main{grid-template-columns:1fr 1fr}
+}
