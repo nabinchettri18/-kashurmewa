@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "../lib/supabase";
@@ -75,7 +74,7 @@ export default function Home(){
       </div>
       <div className="hero-visual">
         <div className="hero-frame">
-          <Image src={images[0]} alt="Kashurmewa walnuts and Kashmir landscape" fill priority sizes="(max-width: 800px) 100vw, 58vw"/>
+          <img src={images[0]} alt="Kashurmewa walnuts and Kashmir landscape" />
         </div>
         <div className="hero-card">
           <span>THE SIGNATURE PACK</span>
@@ -93,7 +92,7 @@ export default function Home(){
       <div className="section-intro"><div><small>SHOP KASHURMEWA</small><h2>The everyday<br/><i>luxury.</i></h2></div><p>One ingredient. Nothing to hide. Choose your pack and bring the taste of the valley to your table.</p></div>
       {error?<div className="catalog-error">{error}</div>:product?<div className="shop-layout">
         <div className="large-product-card">
-          <div className="product-photo"><Image src={images[1]||images[0]} alt="Kashmiri walnuts" fill sizes="(max-width: 800px) 100vw, 52vw"/><span className="photo-label">KASHMIRI WALNUTS · 01</span></div>
+          <div className="product-photo"><img src={images[1]||images[0]} alt="Kashmiri walnuts" /><span className="photo-label">KASHMIRI WALNUTS · 01</span></div>
           <div className="large-product-info"><div><small>SIGNATURE COLLECTION</small><h3>{product.name}</h3><p>{product.description}</p></div><Link href="/cart" className="circle-arrow">↗</Link></div>
         </div>
         <div className="buy-panel">
@@ -114,13 +113,13 @@ export default function Home(){
     </section>
 
     <section id="story" className="story-new">
-      <div className="story-image"><Image src={images[2]||images[0]} alt="Whole Kashmiri walnuts" fill sizes="(max-width: 800px) 100vw, 48vw"/></div>
+      <div className="story-image"><img src={images[2]||images[0]} alt="Whole Kashmiri walnuts" /></div>
       <div className="story-text"><small>THE KASHURMEWA STORY</small><h2>From the valley<br/><i>to your table.</i></h2><p>Kashurmewa is built around a simple idea: the best pantry staples deserve care. We bring the character of Kashmir to the everyday table through carefully selected walnuts and considered presentation.</p><p>Less processing. Less noise. More attention to the ingredient itself.</p><a href="#origin">DISCOVER THE STORY <span>→</span></a></div>
     </section>
 
     <section id="origin" className="valley">
       <div className="valley-copy"><small>THE VALLEY</small><h2>Where the<br/><i>story begins.</i></h2><p>There is a particular character to produce shaped by place. Kashmir is not simply where our walnuts come from — it is part of what makes the experience distinctive.</p><div className="valley-list"><span><b>01</b> SOURCE WITH CARE</span><span><b>02</b> PACK FOR FRESHNESS</span><span><b>03</b> DELIVER WITH PURPOSE</span></div></div>
-      <div className="valley-image"><Image src={images[0]} alt="Kashmir valley" fill sizes="(max-width: 800px) 100vw, 55vw"/><div>THE VALLEYS<br/><i>OF KASHMIR</i></div></div>
+      <div className="valley-image"><img src={images[0]} alt="Kashmir valley" /><div>THE VALLEYS<br/><i>OF KASHMIR</i></div></div>
     </section>
 
     <section className="ritual"><div><small>THE WALNUT RITUAL</small><h2>More than<br/><i>a snack.</i></h2></div><div className="ritual-grid"><article><span>01</span><b>Morning</b><p>Fold into breakfast bowls, oats or yoghurt.</p></article><article><span>02</span><b>Afternoon</b><p>Keep a handful nearby for a simple everyday bite.</p></article><article><span>03</span><b>Evening</b><p>Add texture to salads, desserts and home baking.</p></article></div></section>
