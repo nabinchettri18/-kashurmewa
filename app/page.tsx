@@ -75,7 +75,7 @@ export default function Home(){
       </div>
       <div className="hero-visual">
         <div className="hero-frame">
-          <img src="/images/walnut-hero.png" alt="Premium whole Kashmiri walnuts in a rustic wooden bowl" />
+          <img src={images[1] || images[0]} alt="Kashmiri walnuts arranged for a premium product presentation" />
         </div>
       </div>
     </section>
