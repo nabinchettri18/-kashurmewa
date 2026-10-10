@@ -33,7 +33,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true, message: "Your message has been received." });
   } catch (error) {
     if (error instanceof Error && error.message.includes("SUPABASE_SERVICE_ROLE_KEY")) {
-      return jsonError("The contact form is not configured on the server yet. Please email the store directly.", 503);
+      return jsonError("The contact form is not configured on the server yet. Please try again later.", 503);
     }
     return jsonError("Please send a valid message and try again.", 400);
   }
