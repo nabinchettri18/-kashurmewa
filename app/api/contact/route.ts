@@ -5,7 +5,16 @@ const jsonError = (error: string, status: number) => NextResponse.json({ error }
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
+    const contentLength = Number(request.headers.get("content-length") || 0);
+    if (contentLength > 12_000) return jsonError("Message is too large.", 413);
+    const rawBody = await request.text();
+    if (rawBody.length > 12_000) return jsonError("Message is too large.", 413);
+    let body: any;
+    try {
+      body = JSON.parse(rawBody);
+    } catch {
+      return jsonError("Please send a valid message and try again.", 400);
+    }
     const name = typeof body?.name === "string" ? body.name.trim() : "";
     const email = typeof body?.email === "string" ? body.email.trim().toLowerCase() : "";
     const subject = typeof body?.subject === "string" ? body.subject.trim() : "";
@@ -15,10 +24,6 @@ export async function POST(request: Request) {
         subject.length > 160 || !message || message.length > 5000) {
       return jsonError("Please check the form fields and try again.", 400);
     }
-    // Reject oversized request bodies and obvious automated submissions.
-    const contentLength = Number(request.headers.get("content-length") || 0);
-    if (contentLength > 12_000) return jsonError("Message is too large.", 413);
-
     const supabase = getSupabaseAdmin();
     const { error } = await supabase.from("km_contact_messages").insert({ name, email, subject, message });
     if (error) {
