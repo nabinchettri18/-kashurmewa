@@ -8,20 +8,19 @@ export const metadata: Metadata = {
     template: "%s | Kashurmewa",
   },
   description:
-    "Handpicked premium Kashmiri walnuts in natural shell. Sourced directly from high-altitude mountain orchards of Kashmir and packed for natural crunch and freshness.",
+    "Explore Kashurmewa Kashmiri walnuts in shell. Compare available pack sizes, current prices and delivery details before ordering.",
   keywords: [
     "Kashmiri walnuts",
     "Walnuts in shell",
     "Kashurmewa",
     "Kashmir dry fruits",
-    "Organic walnuts India",
     "Buy walnuts online",
   ],
   authors: [{ name: "Kashurmewa" }],
   creator: "Kashurmewa",
   openGraph: {
     title: "Kashurmewa — Authentic Kashmiri In-Shell Walnuts",
-    description: "Premium Kashmiri walnuts sourced directly from mountain orchards.",
+    description: "Kashmiri walnuts in shell, with clear pack sizes and current catalogue prices.",
     url: "https://kashurmewa.com",
     siteName: "Kashurmewa",
     locale: "en_IN",
