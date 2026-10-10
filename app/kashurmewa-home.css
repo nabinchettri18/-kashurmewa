@@ -103,3 +103,43 @@
 .km-hero{grid-template-columns:1fr}.km-hero-copy{padding:54px 7vw 38px}.km-hero h1{font-size:clamp(53px,14vw,76px);letter-spacing:-2.8px}.km-hero-copy>p{font-size:13px}.km-hero-notes{margin-top:30px}.km-hero-notes b{font-size:8px}.km-hero-notes small{font-size:7px}.km-hero-photo{min-height:360px;height:360px}.km-photo-stamp{width:88px;height:88px;right:7%;top:8%}.km-photo-stamp strong{font-size:20px}.km-image-caption{font-size:7px;left:15px;right:15px}
 .km-intro-strip{justify-content:flex-start;overflow-x:auto;white-space:nowrap;padding:16px 7vw;gap:18px}.km-intro-strip span{font-size:8px}.km-intro-strip>i{flex:none}
 .km-collection{padding:63px 6vw}.km-section-heading{display:block;margin-bottom:25px}.km-section-heading h2{font-size:clamp(38px,10vw,54px)}.km-section-heading>p{margin-top:15px;font-size:11px}.km-collection-grid{grid-template-columns:1fr}.km-collection-feature{min-height:350px}.km-feature-content{left:23px;bottom:25px}.km-feature-content h3{font-size:42px}.km-size-panel{padding:32px 24px}.km-pack-row{gap:8px}.km-benefits,.km-why,.km-story,.km-faq{grid-template-columns:1fr}.km-benefit-image{min-height:320px;height:320px}.km-benefit-copy{padding:48px 7vw}.km-benefit-copy h2,.km-why-copy h2,.km-story h2,.km-faq h2{font-size:clamp(36px,9vw,48px)}.km-why-photo{min-height:300px;height:300px}.km-why-copy{padding:48px 7vw}.km-story-copy{padding:58px 7vw}.km-story-image{min-height:300px;height:300px}.km-faq{padding:58px 7vw;gap:30px}.km-faq-items summary{font-size:17px}.km-footer{grid-template-columns:1fr 1fr;padding:43px 7vw 18px;gap:30px 22px}.km-footer-brand{grid-column:1/-1}.km-footer-cta{border-left:0;padding-left:0;justify-content:flex-start}.km-footer-bottom{flex-direction:column;gap:8px}.km-toast{left:14px;right:14px;bottom:14px;text-align:center}}
+
+
+/* Editorial image treatment: photographs should feel part of the paper palette, not like pasted cards. */
+.km-home .site-header{min-height:78px!important;height:auto!important;padding:12px clamp(20px,5vw,76px)!important;gap:clamp(14px,2vw,30px)!important}
+.km-home .site-header .kashurmewa-logo{width:clamp(100px,11vw,142px)!important;max-width:142px!important;flex:0 0 auto!important;display:flex!important;align-items:center!important}
+.km-home .site-header .kashurmewa-logo-img{width:100%!important;height:auto!important;max-width:142px!important;max-height:48px!important;object-fit:contain!important}
+.km-home .site-header .main-nav{min-width:0;flex:1 1 auto;gap:clamp(12px,1.8vw,28px)!important}
+.km-home .site-header .main-nav a{white-space:nowrap;font-size:10px;letter-spacing:.35px}
+.km-home .site-header .header-actions{flex:0 0 auto}
+.km-home .km-hero{position:relative;isolation:isolate;background:linear-gradient(112deg,#f4ead9 0%,#f4ead9 37%,#eadac1 67%,#dfc8a7 100%);overflow:hidden}
+.km-home .km-hero-copy{z-index:3}
+.km-home .km-hero-photo{min-height:610px;background:#d9c7aa;position:relative;isolation:isolate;overflow:hidden}
+.km-home .km-hero-photo>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 56%;filter:sepia(.08) saturate(.78) contrast(.96);transform:scale(1.025);-webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.12) 9%,rgba(0,0,0,.72) 25%,#000 43%);mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.12) 9%,rgba(0,0,0,.72) 25%,#000 43%)}
+.km-home .km-hero-photo:before{content:"";position:absolute;z-index:1;inset:0;pointer-events:none;background:linear-gradient(90deg,#f3e8d6 0%,rgba(243,232,214,.78) 8%,rgba(243,232,214,.18) 29%,transparent 49%),linear-gradient(180deg,rgba(243,232,214,.13),transparent 22%,transparent 75%,rgba(35,49,33,.24))}
+.km-home .km-hero-photo:after{content:"";position:absolute;z-index:1;inset:0;pointer-events:none;background:linear-gradient(115deg,rgba(120,83,42,.08),transparent 45%),linear-gradient(0deg,rgba(32,42,27,.38),transparent 27%)}
+.km-home .km-photo-stamp{backdrop-filter:blur(3px);background:rgba(47,69,44,.82);box-shadow:0 8px 25px rgba(31,38,25,.12)}
+.km-home .km-image-caption{z-index:3}
+.km-home .km-collection-feature>img,.km-home .km-benefit-image>img,.km-home .km-why-photo>img,.km-home .km-story-image>img{filter:saturate(.78) sepia(.06) contrast(.97);transition:transform .7s,filter .7s}
+.km-home .km-collection-feature:hover>img{transform:scale(1.025);filter:saturate(.9) contrast(1)}
+.km-home .km-benefit-image,.km-home .km-why-photo,.km-home .km-story-image{background:#d9c7aa;isolation:isolate}
+.km-home .km-benefit-image:before,.km-home .km-why-photo:before,.km-home .km-story-image:before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,rgba(36,59,44,.13),transparent 55%),linear-gradient(0deg,rgba(36,45,31,.35),transparent 52%);mix-blend-mode:multiply}
+.km-home .km-benefit-image>div,.km-home .km-story-image>span{z-index:2}
+.km-home .km-why-photo>img{filter:saturate(.68) sepia(.1) contrast(.95)}
+.km-home .km-story-image:after{z-index:1;background:linear-gradient(0deg,rgba(27,42,29,.7),transparent 64%)}
+.km-home .km-benefit-image:after{z-index:1;background:linear-gradient(0deg,rgba(27,42,29,.7),transparent 68%)}
+@media(max-width:900px){
+ .km-home .site-header{gap:12px!important;padding-inline:3vw!important}
+ .km-home .site-header .kashurmewa-logo{width:110px!important}
+ .km-home .site-header .kashurmewa-logo-img{max-height:40px!important}
+ .km-home .site-header .main-nav{gap:12px!important}
+ .km-home .site-header .main-nav a{font-size:8px}
+}
+@media(max-width:680px){
+ .km-home .site-header{min-height:68px!important;height:68px!important;padding:10px 6vw!important}
+ .km-home .site-header .kashurmewa-logo{width:108px!important;max-width:108px!important}
+ .km-home .site-header .kashurmewa-logo-img{max-width:108px!important;max-height:38px!important}
+ .km-home .km-hero-photo{min-height:350px;height:350px}
+ .km-home .km-hero-photo>img{-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 74%,rgba(0,0,0,.72) 100%);mask-image:linear-gradient(180deg,#000 0%,#000 74%,rgba(0,0,0,.72) 100%);object-position:center 55%}
+ .km-home .km-hero-photo:before{background:linear-gradient(180deg,rgba(243,232,214,.05),transparent 55%,rgba(35,49,33,.22))}
+}
