@@ -4,11 +4,6 @@
 
 begin;
 
--- Older installations created the variants table without a unique SKU constraint.
--- This index also makes the catalogue migration's SKU conflict handling valid.
-create unique index if not exists km_product_variants_sku_key
-  on public.km_product_variants(sku);
-
 -- Remove every legacy/public policy that could expose or mutate private commerce rows.
 do $$
 declare p record;
