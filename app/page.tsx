@@ -25,6 +25,8 @@ export default function Home() {
   const [product, setProduct] = useState<Product | null>(null);
   const [size, setSize] = useState("500 g");
   const [cartCount, setCartCount] = useState(0);
+  const [productLoading, setProductLoading] = useState(true);
+  const [productError, setProductError] = useState(false);
   const [notice, setNotice] = useState("");
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
@@ -40,6 +42,9 @@ export default function Home() {
         }
       } catch (error) {
         console.error("Unable to load Kashurmewa featured product from Supabase.", error);
+        setProductError(true);
+      } finally {
+        setProductLoading(false);
       }
       try {
         const c = JSON.parse(localStorage.getItem("kashurmewa-cart") || "[]");
@@ -57,12 +62,17 @@ export default function Home() {
     product?.variants.find((v) => v.size === size) || product?.variants[0];
 
   const addToBag = () => {
-    if (!selectedVariant || !product) return;
+    if (!selectedVariant || !product || selectedVariant.stock <= 0) return;
     try {
       const current = JSON.parse(localStorage.getItem("kashurmewa-cart") || "[]");
       const existing = current.find((i: { variantId: string }) => i.variantId === selectedVariant.id);
+      const alreadyInCart = Number(existing?.qty || 0);
+      if (alreadyInCart >= selectedVariant.stock) {
+        setNotice("Your bag already contains the available quantity for this pack.");
+        return;
+      }
       if (existing) {
-        existing.qty += 1;
+        existing.qty = Math.min(alreadyInCart + 1, selectedVariant.stock);
       } else {
         current.push({ productId: product.id, variantId: selectedVariant.id, qty: 1 });
       }
@@ -111,7 +121,7 @@ export default function Home() {
 
           <FadeInUp delay={0.4}>
             <p className="text-sm sm:text-base text-[#C0C9C0] max-w-lg leading-relaxed font-light mb-10">
-              Discover thoughtfully presented walnuts, selected for their natural mountain character and the simple pleasure of everyday health rituals.
+              Whole walnuts from Kashmir, thoughtfully selected and simply presented. A natural staple for everyday tables, gifting, and slow moments at home.
             </p>
           </FadeInUp>
 
@@ -192,7 +202,7 @@ export default function Home() {
       </section>
 
       {/* SECTION C — FULL-BLEED IMAGE STORY */}
-      <section className="relative h-[65vh] min-h-[500px] overflow-hidden">
+      <section id="origin" className="relative h-[65vh] min-h-[500px] overflow-hidden">
         <ParallaxImage
           src={images[1] || HERO_IMAGES[1]}
           alt="Kashmiri Walnut Orchard"
@@ -226,7 +236,14 @@ export default function Home() {
           </p>
         </div>
 
-        {product && (
+        {productLoading ? (
+          <div className="py-16 text-sm text-[#747A72]" role="status">Gathering the current collection…</div>
+        ) : productError ? (
+          <div className="border border-[#E7DED1] bg-[#FFFDF8] p-8 text-sm text-[#68452F]" role="alert">
+            We couldn’t load the featured product just now. Please refresh or visit the full shop.
+            <Link href="/shop" className="ml-2 underline font-semibold">Open shop →</Link>
+          </div>
+        ) : product ? (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
             {/* Main Product Card */}
             <div className="lg:col-span-7 bg-[#FFFDF8] border border-[#E7DED1] p-8 sm:p-12 flex flex-col justify-between">
@@ -338,6 +355,8 @@ export default function Home() {
               </div>
             </div>
           </div>
+        ) : (
+          <div className="py-16 text-sm text-[#747A72]">This product is temporarily unavailable. Please explore the shop for current availability.</div>
         )}
       </section>
 
@@ -434,7 +453,7 @@ export default function Home() {
             {[
               {
                 q: "Why are Kashmiri walnuts considered superior?",
-                a: "High altitude, cold winter dormant periods, and snowmelt river soils allow Kashmiri walnuts to accumulate higher natural oil concentration, yielding crispier kernels and a richer flavor profile.",
+                a: "Kashmir has a long tradition of walnut growing. Each harvest can vary naturally in size, shell texture, and flavour—part of what makes seasonal produce distinctive.",
               },
               {
                 q: "How should I store in-shell walnuts after delivery?",
@@ -446,7 +465,7 @@ export default function Home() {
               },
               {
                 q: "Are the walnut shells chemically bleached or treated?",
-                a: "No. Kashurmewa walnuts are completely unbleached and chemical-free. Shells retain their authentic natural texture.",
+                a: "Our product is presented as natural in-shell walnuts. Please refer to the product packaging for the specific handling and ingredient information for your batch.",
               },
             ].map((faq, idx) => (
               <div key={idx} className="border border-[#E7DED1] bg-[#FAF8F2] overflow-hidden">
