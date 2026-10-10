@@ -19,7 +19,10 @@ function AccountForm() {
 
   const nextPath = () => {
     const requestedPath = search.get("next");
-    return requestedPath?.startsWith("/") && !requestedPath.startsWith("//")
+    return requestedPath?.startsWith("/") &&
+      !requestedPath.startsWith("//") &&
+      !requestedPath.includes("\\\\") &&
+      !requestedPath.includes("\\u0000")
       ? requestedPath
       : "/cart";
   };
@@ -81,7 +84,7 @@ function AccountForm() {
             <br />
             <i>{mode === "signin" ? "you again." : "the good stuff."}</i>
           </h1>
-          <p>Sign in or create an account to continue to checkout.</p>
+          <p>Sign in or create an account to manage your account. You can also check out as a guest from your bag.</p>
           <div className="account-tabs">
             <button className={mode === "signin" ? "selected" : ""} onClick={() => setMode("signin")}>
               SIGN IN
