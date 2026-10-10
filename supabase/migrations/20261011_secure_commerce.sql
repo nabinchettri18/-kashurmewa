@@ -26,8 +26,8 @@ alter table public.km_order_items enable row level security;
 alter table public.km_admin_users enable row level security;
 
 -- Start with no direct access to private tables. Service role bypasses RLS and is server-only.
-revoke all on public.km_orders, public.km_order_items, public.km_admin_users from anon, authenticated;
-revoke insert, update, delete on public.km_products, public.km_product_variants, public.km_product_images from anon, authenticated;
+revoke all on public.km_orders, public.km_order_items, public.km_admin_users from public, anon, authenticated;
+revoke all on public.km_products, public.km_product_variants, public.km_product_images from public, anon, authenticated;
 grant select on public.km_products, public.km_product_variants, public.km_product_images to anon, authenticated;
 
 create policy "Public read active products" on public.km_products
@@ -81,7 +81,7 @@ create table if not exists public.km_contact_messages (
   created_at timestamptz not null default now()
 );
 alter table public.km_contact_messages enable row level security;
-revoke all on public.km_contact_messages from anon, authenticated;
+revoke all on public.km_contact_messages from public, anon, authenticated;
 
 -- Atomic COD checkout: validate live catalogue, lock stock rows, decrement inventory,
 -- and write order plus items in one transaction. Any exception rolls the entire transaction back.
