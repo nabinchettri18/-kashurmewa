@@ -1,603 +1,155 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
+import { ArrowRight, ArrowUpRight, Leaf, PackageCheck, ShieldCheck, ShoppingBag, Sprout, Truck } from "lucide-react";
 import { fetchProductBySlug, Product, ProductVariant } from "@/lib/catalog";
 import { NavigationHeader } from "@/components/navigation/Header";
-import {
-  FadeInUp,
-  FadeIn,
-  ImageMaskReveal,
-  TextWordReveal,
-  ParallaxImage,
-} from "@/components/motion/AnimationWrappers";
-import { motion, AnimatePresence } from "framer-motion";
-import { ShieldCheck, Truck, Sparkles, Leaf, ArrowUpRight, ChevronDown, CheckCircle } from "lucide-react";
-import { KashurmewLogo } from "@/components/brand/Logo";
+import "./kashurmewa-home.css";
 
-const HERO_IMAGES = [
+const FALLBACK_IMAGES = [
   "https://images.pexels.com/photos/8303558/pexels-photo-8303558.jpeg",
   "https://images.pexels.com/photos/14627184/pexels-photo-14627184.jpeg",
   "https://images.pexels.com/photos/16089996/pexels-photo-16089996.jpeg",
 ];
+const money = (value: number) => new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 }).format(value);
 
 export default function Home() {
   const [product, setProduct] = useState<Product | null>(null);
-  const [size, setSize] = useState("500 g");
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [cartCount, setCartCount] = useState(0);
-  const [productLoading, setProductLoading] = useState(true);
-  const [productError, setProductError] = useState(false);
   const [notice, setNotice] = useState("");
-  const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
   useEffect(() => {
-    (async () => {
-      try {
-        const p = await fetchProductBySlug("kashmiri-walnuts");
-        if (p) {
-          setProduct(p);
-          if (p.variants.length) {
-            setSize(p.variants[0].size);
-          }
-        }
-      } catch (error) {
-        console.error("Unable to load Kashurmewa featured product from Supabase.", error);
-        setProductError(true);
-      } finally {
-        setProductLoading(false);
-      }
-      try {
-        const c = JSON.parse(localStorage.getItem("kashurmewa-cart") || "[]");
-        setCartCount(c.reduce((n: number, i: { qty: number }) => n + i.qty, 0));
-      } catch {}
-    })();
+    let alive = true;
+    fetchProductBySlug("kashmiri-walnuts").then((result) => { if (alive) setProduct(result); })
+      .catch((error) => { console.error("Unable to load Kashurmewa product", error); if (alive) setLoadError(true); })
+      .finally(() => { if (alive) setLoading(false); });
+    try {
+      const cart = JSON.parse(localStorage.getItem("kashurmewa-cart") || "[]");
+      setCartCount(cart.reduce((sum: number, item: { qty: number }) => sum + Number(item.qty || 0), 0));
+    } catch {}
+    return () => { alive = false; };
   }, []);
 
-  const images = useMemo(
-    () => (product?.images?.map((i) => i.url).filter(Boolean).length ? product.images.map((i) => i.url) : HERO_IMAGES),
-    [product]
-  );
+  const images = product?.images?.length ? product.images.map((image) => image.url).filter(Boolean) : FALLBACK_IMAGES;
+  const heroImage = images[0] || FALLBACK_IMAGES[0];
+  const productImage = images[1] || images[0] || FALLBACK_IMAGES[1];
 
-  const selectedVariant: ProductVariant | undefined =
-    product?.variants.find((v) => v.size === size) || product?.variants[0];
-
-  const addToBag = () => {
-    if (!selectedVariant || !product || selectedVariant.stock <= 0) return;
+  function addToBag(variant: ProductVariant) {
+    if (!product || variant.stock <= 0) { setNotice("This pack is currently unavailable."); return; }
     try {
-      const current = JSON.parse(localStorage.getItem("kashurmewa-cart") || "[]");
-      const existing = current.find((i: { variantId: string }) => i.variantId === selectedVariant.id);
-      const alreadyInCart = Number(existing?.qty || 0);
-      if (alreadyInCart >= selectedVariant.stock) {
-        setNotice("Your bag already contains the available quantity for this pack.");
-        return;
-      }
+      const cart = JSON.parse(localStorage.getItem("kashurmewa-cart") || "[]");
+      const existing = cart.find((item: { variantId: string }) => item.variantId === variant.id);
       if (existing) {
-        existing.qty = Math.min(alreadyInCart + 1, selectedVariant.stock);
-      } else {
-        current.push({ productId: product.id, variantId: selectedVariant.id, qty: 1 });
-      }
-      localStorage.setItem("kashurmewa-cart", JSON.stringify(current));
-      const count = current.reduce((n: number, i: { qty: number }) => n + i.qty, 0);
-      setCartCount(count);
-      setNotice(`Added ${selectedVariant.size} pack to your bag!`);
-      setTimeout(() => setNotice(""), 3500);
-    } catch {}
-  };
+        if (Number(existing.qty) >= variant.stock) { setNotice("Your bag already has the available quantity for this pack."); return; }
+        existing.qty = Number(existing.qty) + 1;
+      } else cart.push({ productId: product.id, variantId: variant.id, qty: 1 });
+      localStorage.setItem("kashurmewa-cart", JSON.stringify(cart));
+      setCartCount(cart.reduce((sum: number, item: { qty: number }) => sum + Number(item.qty || 0), 0));
+      setNotice(variant.size + " added to your bag");
+      window.setTimeout(() => setNotice(""), 2800);
+    } catch { setNotice("We couldn't update your bag. Please try again."); }
+  }
 
   return (
-    <main className="bg-[#FAF8F2] text-[#202722] selection:bg-[#B69A66] selection:text-[#10291F]">
-      {/* Schema.org Structured Data */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Brand",
-            name: "Kashurmewa",
-            description: "Premium Kashmiri walnuts in shell, sourced directly from high-altitude orchards in Kashmir.",
-            url: "https://kashurmewa.com",
-          }),
-        }}
-      />
-
+    <main className="km-home">
       <NavigationHeader cartCount={cartCount} />
-
-      {/* SECTION A — CINEMATIC FULL-VIEWPORT HERO */}
-      <section className="relative min-h-[calc(100vh-105px)] bg-[#10291F] text-[#F5F0E5] grid grid-cols-1 lg:grid-cols-12 overflow-hidden items-center">
-        <div className="lg:col-span-6 px-6 sm:px-12 lg:px-16 py-16 lg:py-24 z-10 flex flex-col justify-center">
-          <FadeInUp delay={0.1}>
-            <div className="flex items-center gap-3 text-xs tracking-[0.25em] text-[#B69A66] uppercase font-semibold mb-6">
-              <span className="w-8 h-[1px] bg-[#B69A66]"></span>
-              01 · KASHMIR MOUNTAIN HARVEST
-            </div>
-          </FadeInUp>
-
-          <FadeInUp delay={0.25}>
-            <h1 className="text-5xl sm:text-7xl lg:text-8xl font-normal font-serif tracking-tight leading-[0.9] mb-8 text-[#F5F0E5]">
-              Nature, at its <br />
-              <i className="italic text-[#B69A66] font-serif">finest.</i>
-            </h1>
-          </FadeInUp>
-
-          <FadeInUp delay={0.4}>
-            <p className="text-sm sm:text-base text-[#C0C9C0] max-w-lg leading-relaxed font-light mb-10">
-              Whole walnuts from Kashmir, thoughtfully selected and simply presented. A natural staple for everyday tables, gifting, and slow moments at home.
-            </p>
-          </FadeInUp>
-
-          <FadeInUp delay={0.55}>
-            <div className="flex flex-wrap items-center gap-5">
-              <Link
-                href="/shop"
-                className="bg-[#B69A66] text-[#10291F] font-semibold text-xs tracking-[0.2em] px-8 py-4 uppercase hover:bg-[#C7AD78] transition-all duration-300 flex items-center gap-3 group"
-              >
-                <span>EXPLORE WALNUTS</span>
-                <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </Link>
-              <a
-                href="#story"
-                className="text-xs tracking-[0.2em] text-[#E7E7DC] hover:text-[#B69A66] uppercase px-4 py-4 transition-colors flex items-center gap-2"
-              >
-                <span>OUR STORY</span>
-                <span className="text-[#B69A66]">→</span>
-              </a>
-            </div>
-          </FadeInUp>
-
-          <FadeInUp delay={0.7}>
-            <div className="grid grid-cols-2 gap-6 pt-10 mt-12 border-t border-[#345043]/60 text-xs tracking-wider">
-              <div>
-                <span className="block text-[10px] text-[#9EAFA2] uppercase tracking-widest mb-1">ORIGIN</span>
-                <strong className="text-[#F0EEE4] font-medium">{product?.origin || "KASHMIR, INDIA"}</strong>
-              </div>
-              <div>
-                <span className="block text-[10px] text-[#9EAFA2] uppercase tracking-widest mb-1">INGREDIENT</span>
-                <strong className="text-[#F0EEE4] font-medium">100% IN-SHELL WALNUTS</strong>
-              </div>
-            </div>
-          </FadeInUp>
-        </div>
-
-        <div className="lg:col-span-6 h-[480px] lg:h-full relative overflow-hidden">
-          <ImageMaskReveal className="w-full h-full" delay={0.3} direction="left">
-            <ParallaxImage src={images[0]} alt="Whole Kashmiri Walnuts in Shell" className="w-full h-full min-h-[500px]" />
-          </ImageMaskReveal>
-          <div className="absolute inset-0 bg-gradient-to-r from-[#10291F] via-transparent to-transparent hidden lg:block pointer-events-none opacity-80" />
-        </div>
-      </section>
-
-      {/* TRUST STRIP */}
-      <div className="bg-[#F6F2E9] border-y border-[#D4CABB] py-4 px-6">
-        <div className="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4 text-[11px] tracking-[0.2em] uppercase text-[#68452F]">
-          <span className="flex items-center gap-2">
-            <Sparkles size={14} className="text-[#B69A66]" /> HANDPICKED HARVEST
-          </span>
-          <span className="flex items-center gap-2">
-            <Leaf size={14} className="text-[#B69A66]" /> 100% UNBLEACHED NATURAL SHELLS
-          </span>
-          <span className="flex items-center gap-2">
-            <Truck size={14} className="text-[#B69A66]" /> PAN-INDIA COURIER DELIVERY
-          </span>
-          <span className="flex items-center gap-2">
-            <ShieldCheck size={14} className="text-[#B69A66]" /> FOOD-GRADE FRESHNESS PACKAGING
-          </span>
-        </div>
-      </div>
-
-      {/* SECTION B — BRAND STATEMENT */}
-      <section className="py-24 lg:py-36 px-6 sm:px-12 max-w-6xl mx-auto text-center">
-        <FadeInUp>
-          <span className="text-[10px] tracking-[0.3em] text-[#B69A66] uppercase font-bold block mb-4">
-            KASHURMEWA MANIFESTO
-          </span>
-        </FadeInUp>
-        <h2 className="text-4xl sm:text-6xl lg:text-7xl font-serif leading-[1.05] tracking-tight text-[#30231C] mb-8">
-          <TextWordReveal text="Good things begin with nature." delay={0.2} />
-        </h2>
-        <FadeInUp delay={0.4}>
-          <p className="text-base sm:text-lg text-[#68452F] max-w-2xl mx-auto font-light leading-relaxed">
-            We believe that the best dry fruits require minimal intervention. Our walnuts are harvested in the temperate orchards of Kashmir, sorted carefully, and packed without chemical washing or bleach.
-          </p>
-        </FadeInUp>
-      </section>
-
-      {/* SECTION C — FULL-BLEED IMAGE STORY */}
-      <section id="origin" className="relative h-[65vh] min-h-[500px] overflow-hidden">
-        <ParallaxImage
-          src={images[1] || HERO_IMAGES[1]}
-          alt="Kashmiri Walnut Orchard"
-          className="w-full h-full"
-        />
-        <div className="absolute inset-0 bg-[#10291F]/40 flex items-end p-8 sm:p-16">
-          <FadeInUp className="text-[#F5F0E5] max-w-xl">
-            <span className="text-[10px] tracking-[0.25em] text-[#B69A66] uppercase font-semibold block mb-2">
-              MOUNTAIN ORCHARDS
-            </span>
-            <h3 className="text-3xl sm:text-5xl font-serif leading-tight">
-              Shaped by high altitude and snowmelt waters.
-            </h3>
-          </FadeInUp>
-        </div>
-      </section>
-
-      {/* SECTION D — FEATURED PRODUCT SHOWCASE */}
-      <section id="shop" className="py-24 px-6 sm:px-12 max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
-          <div>
-            <span className="text-[10px] tracking-[0.25em] text-[#B69A66] uppercase font-bold block mb-2">
-              SIGNATURE SELECTION
-            </span>
-            <h2 className="text-4xl sm:text-6xl font-serif text-[#30231C] leading-none">
-              The everyday <i className="italic text-[#344B3A]">luxury.</i>
-            </h2>
+      {notice && <div className="km-toast" role="status">{notice}</div>}
+      <section className="km-hero">
+        <div className="km-hero-copy">
+          <span className="km-eyebrow"><i /> A LITTLE PIECE OF THE MOUNTAINS</span>
+          <h1>Goodness,<br />grown <em>naturally.</em></h1>
+          <p>Thoughtfully packed Kashmiri walnuts for everyday rituals, shared tables, and thoughtful gifting.</p>
+          <div className="km-hero-actions">
+            <Link className="km-button" href="/shop">Explore walnuts <ArrowRight size={16} /></Link>
+            <a className="km-text-link" href="#story">Discover our story <ArrowUpRight size={15} /></a>
           </div>
-          <p className="text-sm text-[#68452F] max-w-xs font-light leading-relaxed">
-            One pure ingredient. Choose your preferred weight configuration and enjoy authentic Kashmiri walnuts delivered fresh.
-          </p>
-        </div>
-
-        {productLoading ? (
-          <div className="py-16 text-sm text-[#747A72]" role="status">Gathering the current collection…</div>
-        ) : productError ? (
-          <div className="border border-[#E7DED1] bg-[#FFFDF8] p-8 text-sm text-[#68452F]" role="alert">
-            We couldn’t load the featured product just now. Please refresh or visit the full shop.
-            <Link href="/shop" className="ml-2 underline font-semibold">Open shop →</Link>
+          <div className="km-hero-notes">
+            <span><Leaf size={19} /><b>One simple ingredient</b><small>Walnuts in shell</small></span>
+            <span><PackageCheck size={19} /><b>Carefully packed</b><small>Made for your pantry</small></span>
+            <span><Truck size={19} /><b>Delivered to you</b><small>Across India</small></span>
           </div>
-        ) : product ? (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-            {/* Main Product Card */}
-            <div className="lg:col-span-7 bg-[#FFFDF8] border border-[#E7DED1] p-8 sm:p-12 flex flex-col justify-between">
-              <div>
-                <div className="relative h-[380px] sm:h-[460px] bg-[#F7F3EB] overflow-hidden mb-8">
-                  <ImageMaskReveal className="w-full h-full" delay={0.2}>
-                    <img
-                      src={images[1] || images[0]}
-                      alt={product.name}
-                      className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                    />
-                  </ImageMaskReveal>
-                  <span className="absolute bottom-4 left-4 bg-[#10291F] text-[#F5F0E5] text-[10px] tracking-widest px-3 py-1.5 uppercase font-semibold">
-                    100% IN-SHELL WALNUTS
-                  </span>
-                </div>
-                <small className="text-[10px] tracking-[0.2em] text-[#B69A66] uppercase font-bold block mb-2">
-                  AUTHENTIC KASHMIRI HARVEST
-                </small>
-                <h3 className="text-3xl sm:text-4xl font-serif text-[#30231C] mb-4">{product.name}</h3>
-                <p className="text-sm text-[#68452F] leading-relaxed font-light mb-6">{product.description}</p>
-              </div>
-
-              <div className="flex items-center justify-between border-t border-[#E7DED1] pt-6">
-                <Link
-                  href="/products/kashmiri-walnuts"
-                  className="text-xs tracking-[0.15em] text-[#344B3A] font-semibold uppercase hover:text-[#B69A66] flex items-center gap-2"
-                >
-                  <span>VIEW DETAILED SPECIFICATIONS</span>
-                  <ArrowUpRight size={16} />
-                </Link>
-              </div>
-            </div>
-
-            {/* Buying Panel */}
-            <div className="lg:col-span-5 bg-[#10291F] text-[#F5F0E5] p-8 sm:p-12 flex flex-col justify-between border border-[#345043]">
-              <div>
-                <span className="text-[10px] tracking-[0.25em] text-[#B69A66] uppercase font-bold block mb-2">
-                  SELECT PACK SIZE
-                </span>
-                <h3 className="text-3xl sm:text-4xl font-serif mb-8 text-[#F5F0E5]">
-                  Choose your <i className="italic text-[#B69A66]">ritual.</i>
-                </h3>
-
-                <div className="space-y-4 mb-8">
-                  {product.variants.map((v) => (
-                    <button
-                      key={v.id}
-                      disabled={v.stock <= 0}
-                      onClick={() => setSize(v.size)}
-                      className={`w-full p-4 border text-left flex justify-between items-center transition-all duration-300 ${
-                        selectedVariant?.id === v.id
-                          ? "border-[#B69A66] bg-[#345043]/40 text-[#FFFDF8]"
-                          : "border-[#345043] bg-transparent text-[#C0C9C0] hover:border-[#B69A66]/60"
-                      }`}
-                    >
-                      <div>
-                        <span className="font-serif text-xl block">{v.size} Pack</span>
-                        <small className="text-[9px] tracking-widest text-[#B69A66] uppercase">
-                          {v.stock > 0 ? "AVAILABLE · READY TO SHIP" : "SOLD OUT"}
-                        </small>
-                      </div>
-                      <strong className="font-serif text-2xl text-[#F5F0E5]">
-                        ₹{Number(v.price_inr).toLocaleString("en-IN")}
-                      </strong>
-                    </button>
+        </div>
+        <div className="km-hero-photo">
+          <img src={heroImage} alt="Walnuts and natural harvest textures" />
+          <div className="km-photo-stamp"><span>FROM THE</span><strong>orchard</strong><span>TO YOUR HOME</span><b>✳</b></div>
+          <div className="km-image-caption"><span>01 / THE HARVEST</span><span>Natural. Honest. Kashurmewa.</span></div>
+        </div>
+      </section>
+      <section className="km-intro-strip" aria-label="Kashurmewa values">
+        <span><Sprout size={17} /> A taste of the mountains</span><i />
+        <span><ShieldCheck size={17} /> Simple, honest ingredients</span><i />
+        <span><PackageCheck size={17} /> Packed with care</span>
+      </section>
+      <section className="km-collection" id="shop">
+        <div className="km-section-heading">
+          <div><span className="km-eyebrow">THE KASHURMEWA COLLECTION</span><h2>Walnuts for every <em>moment.</em></h2></div>
+          <p>One treasured harvest, available in a size that suits your home.</p>
+        </div>
+        <div className="km-collection-grid">
+          <Link className="km-collection-feature" href="/shop">
+            <img src={productImage} alt="Kashmiri walnuts in shell" />
+            <div className="km-feature-shade" />
+            <div className="km-feature-content"><span>THE SIGNATURE HARVEST</span><h3>Whole Kashmiri<br />walnuts.</h3><p>Explore the collection <ArrowUpRight size={15} /></p></div>
+          </Link>
+          <div className="km-size-panel">
+            <span className="km-eyebrow">CHOOSE YOUR PACK</span>
+            <h3>Small ritual.<br /><em>Beautifully simple.</em></h3>
+            <p>Choose your preferred weight. Current prices and availability are shown directly from our catalogue.</p>
+            {loading ? <div className="km-state">Loading today’s selection…</div> :
+              loadError ? <div className="km-state">We couldn’t load the latest packs. Please visit the <Link href="/shop">shop</Link>.</div> :
+              product?.variants?.length ? (
+                <div className="km-pack-list">
+                  {product.variants.map((variant) => (
+                    <div className="km-pack-row" key={variant.id}>
+                      <div><strong>{variant.size}</strong><small>{variant.stock > 0 ? "Available to order" : "Currently unavailable"}</small></div>
+                      <b>{money(variant.price_inr)}</b>
+                      <button disabled={variant.stock <= 0} onClick={() => addToBag(variant)} aria-label={"Add " + variant.size + " to bag"}><ShoppingBag size={15} /></button>
+                    </div>
                   ))}
                 </div>
-              </div>
-
-              <div>
-                <div className="flex items-center justify-between border-t border-[#345043] pt-6 mb-6">
-                  <div>
-                    <span className="text-[10px] text-[#9EAFA2] uppercase block tracking-wider">TOTAL PRICE</span>
-                    <strong className="text-3xl font-serif text-[#F5F0E5]">
-                      ₹{selectedVariant ? Number(selectedVariant.price_inr).toLocaleString("en-IN") : "—"}
-                    </strong>
-                  </div>
-                  <button
-                    onClick={addToBag}
-                    disabled={!selectedVariant || selectedVariant.stock <= 0}
-                    className="bg-[#B69A66] text-[#10291F] font-semibold text-xs tracking-[0.15em] px-6 py-4 uppercase hover:bg-[#C7AD78] transition-colors disabled:opacity-40"
-                  >
-                    {selectedVariant && selectedVariant.stock > 0 ? "ADD TO BAG +" : "OUT OF STOCK"}
-                  </button>
-                </div>
-
-                <AnimatePresence>
-                  {notice && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      className="bg-[#345043] text-[#F5F0E5] text-xs p-3 flex items-center justify-between mb-4 border border-[#B69A66]"
-                    >
-                      <span className="flex items-center gap-2">
-                        <CheckCircle size={14} className="text-[#B69A66]" /> {notice}
-                      </span>
-                      <Link href="/cart" className="underline font-semibold text-[#B69A66]">
-                        View bag →
-                      </Link>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-                <p className="text-[10px] tracking-wider text-[#9EAFA2] uppercase">
-                  ✓ Secure checkout · Freshly packed · Pan-India delivery
-                </p>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="py-16 text-sm text-[#747A72]">This product is temporarily unavailable. Please explore the shop for current availability.</div>
-        )}
-      </section>
-
-      {/* SECTION E — PRODUCT DETAIL STORY */}
-      <section className="py-24 bg-[#EAE2D3] border-y border-[#D4CABB]">
-        <div className="max-w-7xl mx-auto px-6 sm:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          <div className="lg:col-span-6">
-            <span className="text-[10px] tracking-[0.25em] text-[#B69A66] uppercase font-bold block mb-3">
-              UNBLEACHED INTEGRITY
-            </span>
-            <h2 className="text-4xl sm:text-6xl font-serif text-[#30231C] leading-tight mb-6">
-              Why hard shells <br />
-              <i className="italic text-[#344B3A]">matter.</i>
-            </h2>
-            <p className="text-sm sm:text-base text-[#68452F] leading-relaxed font-light mb-8 max-w-xl">
-              Walnuts in their natural, unbroken hard shells act as nature’s vault. The hard shell shields kernel oil from light and oxygen, preventing rancidity without artificial antioxidants or chemical preservatives.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-6 border-t border-[#D4CABB]">
-              <div>
-                <strong className="block font-serif text-2xl text-[#30231C] mb-1">01. Net Weight</strong>
-                <p className="text-xs text-[#68452F] leading-relaxed">
-                  Net weight declarations represent total weight of in-shell walnuts.
-                </p>
-              </div>
-              <div>
-                <strong className="block font-serif text-2xl text-[#30231C] mb-1">02. Shelf Life</strong>
-                <p className="text-xs text-[#68452F] leading-relaxed">
-                  Stays fresh up to 6 months in cool, dry storage conditions.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="lg:col-span-6 h-[450px]">
-            <ImageMaskReveal className="w-full h-full" delay={0.2} direction="right">
-              <img
-                src={images[2] || HERO_IMAGES[2]}
-                alt="Walnut Detail"
-                className="w-full h-full object-cover shadow-2xl"
-              />
-            </ImageMaskReveal>
+              ) : <div className="km-state">Our walnut collection is being prepared. Please check back soon.</div>}
+            <Link href="/shop" className="km-underlined-link">View all details <ArrowRight size={15} /></Link>
           </div>
         </div>
       </section>
-
-      {/* SECTION F — THE BRAND STORY */}
-      <section id="story" className="py-24 lg:py-36 px-6 sm:px-12 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          <div className="lg:col-span-6 h-[520px]">
-            <ImageMaskReveal className="w-full h-full" delay={0.1}>
-              <img src={images[0]} alt="Kashmir Landscape" className="w-full h-full object-cover" />
-            </ImageMaskReveal>
-          </div>
-          <div className="lg:col-span-6">
-            <FadeInUp>
-              <span className="text-[10px] tracking-[0.25em] text-[#B69A66] uppercase font-bold block mb-3">
-                THE KASHURMEWA JOURNEY
-              </span>
-              <h2 className="text-4xl sm:text-6xl font-serif text-[#30231C] leading-none mb-8">
-                From the valley <br />
-                <i className="italic text-[#344B3A]">to your table.</i>
-              </h2>
-              <p className="text-sm sm:text-base text-[#68452F] font-light leading-relaxed mb-6">
-                Kashurmewa was founded to bridge the gap between mountain orchards in Kashmir and food lovers seeking pure, uncompromised staples.
-              </p>
-              <p className="text-sm sm:text-base text-[#68452F] font-light leading-relaxed mb-8">
-                By focusing exclusively on natural walnut quality, transparent packaging, and fast pan-India delivery, we bring the true character of the valley straight to your home.
-              </p>
-              <Link
-                href="/about"
-                className="inline-flex items-center gap-2 text-xs tracking-[0.2em] uppercase font-semibold text-[#10291F] border-b border-[#10291F] pb-2 hover:text-[#B69A66] hover:border-[#B69A66] transition-colors"
-              >
-                <span>DISCOVER OUR PHILOSOPHY</span>
-                <ArrowUpRight size={16} />
-              </Link>
-            </FadeInUp>
+      <section className="km-benefits">
+        <div className="km-benefit-image"><img src={images[2] || FALLBACK_IMAGES[2]} alt="A natural walnut harvest" /><div><span>THE EVERYDAY GOOD</span><strong>Small bites.<br /><em>Grounded living.</em></strong></div></div>
+        <div className="km-benefit-copy">
+          <span className="km-eyebrow">NATURE NEEDS NO EXTRAS</span>
+          <h2>A simple ingredient.<br /><em>So many ways to enjoy.</em></h2>
+          <p>Add walnuts to breakfast, bake them into something special, or enjoy them as part of your everyday snack routine.</p>
+          <div className="km-benefit-list">
+            <div><span>01</span><div><b>Everyday versatility</b><small>Enjoy on their own or add to meals and recipes.</small></div></div>
+            <div><span>02</span><div><b>Naturally satisfying</b><small>A classic pantry staple with a rich, earthy taste.</small></div></div>
+            <div><span>03</span><div><b>Made for sharing</b><small>A thoughtful addition to your home or gifting basket.</small></div></div>
           </div>
         </div>
       </section>
-
-      {/* SECTION H — FAQ ACCORDION */}
-      <section id="faq" className="py-24 bg-[#FFFDF8] border-t border-[#E7DED1]">
-        <div className="max-w-4xl mx-auto px-6 sm:px-12">
-          <div className="text-center mb-16">
-            <span className="text-[10px] tracking-[0.25em] text-[#B69A66] uppercase font-bold block mb-3">
-              CLEAR ANSWERS
-            </span>
-            <h2 className="text-4xl sm:text-5xl font-serif text-[#30231C]">
-              Frequently asked <i className="italic text-[#344B3A]">questions.</i>
-            </h2>
-          </div>
-
-          <div className="space-y-4">
-            {[
-              {
-                q: "Why are Kashmiri walnuts considered superior?",
-                a: "Kashmir has a long tradition of walnut growing. Each harvest can vary naturally in size, shell texture, and flavour—part of what makes seasonal produce distinctive.",
-              },
-              {
-                q: "How should I store in-shell walnuts after delivery?",
-                a: "Keep walnuts in a cool, dry place away from direct heat and humidity. Natural hard shells shield the kernels. After cracking, store kernels in an airtight container or refrigerator.",
-              },
-              {
-                q: "What is your shipping timeline across India?",
-                a: "Orders are processed within 24-48 hours. Express courier delivery takes 3-5 business days for metro cities and 5-7 business days for regional pin codes. Free delivery applies on orders above ₹999.",
-              },
-              {
-                q: "Are the walnut shells chemically bleached or treated?",
-                a: "Our product is presented as natural in-shell walnuts. Please refer to the product packaging for the specific handling and ingredient information for your batch.",
-              },
-            ].map((faq, idx) => (
-              <div key={idx} className="border border-[#E7DED1] bg-[#FAF8F2] overflow-hidden">
-                <button
-                  onClick={() => setActiveFaq(activeFaq === idx ? null : idx)}
-                  className="w-full p-6 text-left flex justify-between items-center font-serif text-xl text-[#30231C] hover:text-[#344B3A] transition-colors"
-                >
-                  <span>{faq.q}</span>
-                  <ChevronDown
-                    size={20}
-                    className={`transition-transform duration-300 text-[#B69A66] ${
-                      activeFaq === idx ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
-                <AnimatePresence>
-                  {activeFaq === idx && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="px-6 pb-6 text-sm text-[#68452F] leading-relaxed font-light border-t border-[#E7DED1]/60 pt-4"
-                    >
-                      {faq.a}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            ))}
-          </div>
+      <section className="km-why">
+        <div className="km-why-photo"><img src={heroImage} alt="Kashurmewa walnut harvest" /></div>
+        <div className="km-why-copy"><span className="km-eyebrow">WHY KASHURMEWA</span><h2>Rooted in nature.<br /><em>Made for your home.</em></h2><p>We keep the experience simple: a product rooted in a distinctive harvest, clear pack choices, and a considered presentation from our brand to your table.</p><Link className="km-light-button" href="/about">Meet Kashurmewa <ArrowRight size={15} /></Link></div>
+      </section>
+      <section className="km-story" id="story">
+        <div className="km-story-copy"><span className="km-eyebrow">OUR STORY · OUR ORIGIN</span><h2>A little closer to<br /><em>where it begins.</em></h2><p>Kashurmewa celebrates the character of Kashmiri walnuts with an understated, thoughtful approach. We believe good products deserve honest presentation, careful packing, and a place in the everyday.</p><a className="km-underlined-link" href="#origin">Explore our roots <ArrowRight size={15} /></a></div>
+        <div className="km-story-image" id="origin"><img src={productImage} alt="Close-up of walnut harvest" /><span>THE KASHURMEWA WAY · EST. 2026</span></div>
+      </section>
+      <section className="km-faq" id="faq">
+        <div><span className="km-eyebrow">A FEW GOOD QUESTIONS</span><h2>Before it reaches<br /><em>your doorstep.</em></h2></div>
+        <div className="km-faq-items">
+          <details><summary>What do you sell? <span>+</span></summary><p>Kashurmewa currently focuses on Kashmiri walnuts in shell. Available pack sizes are listed in the shop.</p></details>
+          <details><summary>How do I choose a pack size? <span>+</span></summary><p>Compare the pack weights and current prices in the collection section, then choose the size that works for your home.</p></details>
+          <details><summary>Where can I check delivery and order details? <span>+</span></summary><p>Visit the shop or cart to review the available options before placing an order.</p></details>
         </div>
       </section>
-
-      {/* SECTION I — FINAL SHOPPING MOMENT */}
-      <section className="py-24 bg-[#10291F] text-[#F5F0E5] text-center px-6">
-        <div className="max-w-3xl mx-auto">
-          <FadeInUp>
-            <span className="text-[10px] tracking-[0.3em] text-[#B69A66] uppercase font-bold block mb-4">
-              THE KASHURMEWA EXPERIENCE
-            </span>
-            <h2 className="text-4xl sm:text-6xl font-serif leading-tight mb-8">
-              Bring the taste of Kashmir to your everyday table.
-            </h2>
-            <Link
-              href="/shop"
-              className="inline-block bg-[#B69A66] text-[#10291F] font-semibold text-xs tracking-[0.2em] px-10 py-5 uppercase hover:bg-[#C7AD78] transition-colors"
-            >
-              SHOP KASHMIRI WALNUTS NOW ↗
-            </Link>
-          </FadeInUp>
-        </div>
-      </section>
-
-      {/* SECTION J — FOOTER */}
-      <footer className="bg-[#091E16] text-[#DCE4DC] py-16 px-6 sm:px-12 border-t border-[#345043]">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 pb-16 border-b border-[#345043]">
-          <div className="md:col-span-5">
-            <div className="mb-4">
-              <KashurmewLogo variant="light" size="md" />
-            </div>
-            <p className="text-sm text-[#9FAC9F] max-w-sm font-light leading-relaxed">
-              Premium Kashmiri walnuts in shell, sourced directly from high-altitude orchards and delivered fresh across India.
-            </p>
-          </div>
-
-          <div className="md:col-span-2">
-            <small className="block text-[10px] tracking-[0.2em] text-[#819187] uppercase font-bold mb-4">
-              SHOP
-            </small>
-            <div className="flex flex-col gap-3 text-xs text-[#CCD5CE]">
-              <Link href="/shop" className="hover:text-[#B69A66] transition-colors">
-                All Products
-              </Link>
-              <Link href="/products/kashmiri-walnuts" className="hover:text-[#B69A66] transition-colors">
-                In-Shell Walnuts
-              </Link>
-              <Link href="/cart" className="hover:text-[#B69A66] transition-colors">
-                Bag & Checkout
-              </Link>
-            </div>
-          </div>
-
-          <div className="md:col-span-2">
-            <small className="block text-[10px] tracking-[0.2em] text-[#819187] uppercase font-bold mb-4">
-              EXPLORE
-            </small>
-            <div className="flex flex-col gap-3 text-xs text-[#CCD5CE]">
-              <Link href="/about" className="hover:text-[#B69A66] transition-colors">
-                About Kashurmewa
-              </Link>
-              <a href="#story" className="hover:text-[#B69A66] transition-colors">
-                Our Story
-              </a>
-              <a href="#origin" className="hover:text-[#B69A66] transition-colors">
-                Origin
-              </a>
-            </div>
-          </div>
-
-          <div className="md:col-span-3">
-            <small className="block text-[10px] tracking-[0.2em] text-[#819187] uppercase font-bold mb-4">
-              POLICIES & LEGAL
-            </small>
-            <div className="flex flex-col gap-3 text-xs text-[#CCD5CE]">
-              <Link href="/contact" className="hover:text-[#B69A66] transition-colors">
-                Contact Support
-              </Link>
-              <Link href="/policies/shipping" className="hover:text-[#B69A66] transition-colors">
-                Shipping & Delivery
-              </Link>
-              <Link href="/policies/refund" className="hover:text-[#B69A66] transition-colors">
-                Returns & Refunds
-              </Link>
-              <Link href="/policies/privacy" className="hover:text-[#B69A66] transition-colors">
-                Privacy Policy
-              </Link>
-              <Link href="/policies/terms" className="hover:text-[#B69A66] transition-colors">
-                Terms of Service
-              </Link>
-              <Link href="/policies/food-safety" className="hover:text-[#B69A66] transition-colors">
-                Food Safety Declarations
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        <div className="max-w-7xl mx-auto pt-8 flex flex-col sm:flex-row justify-between items-center text-[10px] tracking-widest text-[#809087] uppercase gap-4">
-          <span>© 2026 KASHURMEWA. ALL RIGHTS RESERVED.</span>
-          <span>AUTHENTIC KASHMIRI DRY FRUITS</span>
-          <span>MADE IN INDIA</span>
-        </div>
+      <footer className="km-footer">
+        <div className="km-footer-brand"><span className="km-footer-logo">kashur<span>mewa</span></span><p>A little piece of the mountains, thoughtfully brought to your home.</p></div>
+        <div><small>EXPLORE</small><Link href="/shop">Shop walnuts</Link><Link href="/about">Our story</Link><Link href="/account">My account</Link></div>
+        <div><small>YOUR ORDER</small><Link href="/cart">Shopping bag</Link><Link href="/account">Order details</Link></div>
+        <div className="km-footer-cta"><span>GOODNESS, GROWN NATURALLY.</span><Link href="/shop">Find your pack <ArrowUpRight size={15} /></Link></div>
+        <div className="km-footer-bottom"><span>© {new Date().getFullYear()} Kashurmewa</span><span>Thoughtfully presented. Naturally inspired.</span></div>
       </footer>
     </main>
   );
