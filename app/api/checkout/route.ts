@@ -1,13 +1,8 @@
+import { randomUUID } from "node:crypto";
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
-import { FALLBACK_PRODUCTS } from "@/lib/catalog";
 
-type CheckoutItemInput = {
-  productId: string;
-  variantId: string;
-  qty: number;
-};
-
+type CheckoutItemInput = { variantId: string; qty: number };
 type CheckoutPayload = {
   customerName: string;
   customerEmail: string;
@@ -17,104 +12,110 @@ type CheckoutPayload = {
   city: string;
   state: string;
   pincode: string;
-  paymentMethod: "cod" | "razorpay" | "cashfree";
+  paymentMethod: "cod";
   items: CheckoutItemInput[];
 };
+type VerifiedItem = {
+  productId: string;
+  variantId: string;
+  productName: string;
+  size: string;
+  quantity: number;
+  unitPriceInr: number;
+  totalPriceInr: number;
+  stockBeforeReservation: number;
+};
+
+async function releaseReservations(items: VerifiedItem[]) {
+  for (const item of [...items].reverse()) {
+    await supabase.from("km_product_variants")
+      .update({ stock: item.stockBeforeReservation })
+      .eq("id", item.variantId)
+      .eq("stock", item.stockBeforeReservation - item.quantity);
+  }
+}
 
 export async function POST(request: Request) {
   try {
-    const body: CheckoutPayload = await request.json();
+    const body = (await request.json()) as Partial<CheckoutPayload>;
+    const customerName = typeof body.customerName === "string" ? body.customerName.trim() : "";
+    const customerEmail = typeof body.customerEmail === "string" ? body.customerEmail.trim().toLowerCase() : "";
+    const customerPhone = typeof body.customerPhone === "string" ? body.customerPhone.trim() : "";
+    const addressLine1 = typeof body.addressLine1 === "string" ? body.addressLine1.trim() : "";
+    const addressLine2 = typeof body.addressLine2 === "string" ? body.addressLine2.trim() : "";
+    const city = typeof body.city === "string" ? body.city.trim() : "";
+    const state = typeof body.state === "string" ? body.state.trim() : "";
+    const pincode = typeof body.pincode === "string" ? body.pincode.trim() : "";
 
-    // 1. Validation
-    if (
-      !body.customerName ||
-      !body.customerEmail ||
-      !body.customerPhone ||
-      !body.addressLine1 ||
-      !body.city ||
-      !body.state ||
-      !body.pincode ||
-      !Array.isArray(body.items) ||
-      body.items.length === 0
-    ) {
-      return NextResponse.json(
-        { error: "Invalid checkout information. Please fill all required fields." },
-        { status: 400 }
-      );
+    if (!customerName || !customerEmail || !customerPhone || !addressLine1 || !city || !state || !pincode) {
+      return NextResponse.json({ error: "Please complete all required delivery details." }, { status: 400 });
+    }
+    if (customerName.length > 120 || customerEmail.length > 254 || addressLine1.length > 250 ||
+        addressLine2.length > 250 || city.length > 100 || state.length > 100) {
+      return NextResponse.json({ error: "One or more fields are too long." }, { status: 400 });
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerEmail)) {
+      return NextResponse.json({ error: "Enter a valid email address." }, { status: 400 });
+    }
+    if (!/^[0-9]{10}$/.test(customerPhone) || !/^[0-9]{6}$/.test(pincode)) {
+      return NextResponse.json({ error: "Enter a valid 10-digit phone number and 6-digit pincode." }, { status: 400 });
     }
 
-    // 2. Server-side price and stock verification
-    const variantIds = body.items.map((i) => i.variantId);
-    
-    // Attempt database query first
-    const { data: dbVariants } = await supabase
+    // Never accept an unpaid online order until gateway creation and signature verification exist.
+    if (body.paymentMethod !== "cod") {
+      return NextResponse.json({ error: "Online payment is not enabled yet. Please select Cash on Delivery." }, { status: 400 });
+    }
+
+    if (!Array.isArray(body.items) || body.items.length === 0 || body.items.length > 10) {
+      return NextResponse.json({ error: "Your bag is empty or contains too many different items." }, { status: 400 });
+    }
+    const items = body.items;
+    const variantIds = items.map((item) => item?.variantId);
+    if (variantIds.some((id) => typeof id !== "string" || id.length < 1 || id.length > 100) ||
+        new Set(variantIds).size !== variantIds.length ||
+        items.some((item) => !Number.isInteger(item?.qty) || item.qty < 1 || item.qty > 20)) {
+      return NextResponse.json({ error: "Your bag contains invalid item quantities. Please review your bag." }, { status: 400 });
+    }
+
+    const { data: dbVariants, error: catalogueError } = await supabase
       .from("km_product_variants")
-      .select("id, product_id, size, price_inr, stock, km_products(name)")
+      .select("id, product_id, size, price_inr, stock, km_products!inner(name, active)")
       .in("id", variantIds)
-      .eq("active", true);
+      .eq("active", true)
+      .eq("km_products.active", true);
 
-    const verifiedItems: {
-      productId: string;
-      variantId: string;
-      productName: string;
-      size: string;
-      quantity: number;
-      unitPriceInr: number;
-      totalPriceInr: number;
-    }[] = [];
+    if (catalogueError) {
+      console.error("Checkout catalogue verification failed:", catalogueError.message);
+      return NextResponse.json({ error: "We couldn’t verify live prices and stock. Please try again shortly." }, { status: 503 });
+    }
+    if (!dbVariants || dbVariants.length !== variantIds.length) {
+      return NextResponse.json({ error: "One or more items are no longer available. Please refresh your bag." }, { status: 409 });
+    }
 
+    const verifiedItems: VerifiedItem[] = [];
     let subtotalInr = 0;
-
-    for (const clientItem of body.items) {
-      if (clientItem.qty <= 0) continue;
-
-      let matchedVariant: any = dbVariants?.find((v: any) => v.id === clientItem.variantId);
-
-      // Fallback matching if database variant not populated yet
-      if (!matchedVariant) {
-        for (const fp of FALLBACK_PRODUCTS) {
-          const fv = fp.variants.find((v) => v.id === clientItem.variantId);
-          if (fv) {
-            matchedVariant = {
-              id: fv.id,
-              product_id: fp.id,
-              size: fv.size,
-              price_inr: fv.price_inr,
-              stock: fv.stock,
-              km_products: { name: fp.name }
-            };
-            break;
-          }
-        }
+    for (const clientItem of items) {
+      const variant = dbVariants.find((candidate: any) => candidate.id === clientItem.variantId) as any;
+      if (!variant) return NextResponse.json({ error: "A selected pack is no longer available." }, { status: 409 });
+      const unitPriceInr = Number(variant.price_inr);
+      const stockBeforeReservation = Number(variant.stock ?? 0);
+      if (!Number.isFinite(unitPriceInr) || unitPriceInr < 0) {
+        return NextResponse.json({ error: "A product has an invalid current price. Please contact the store." }, { status: 503 });
       }
-
-      if (!matchedVariant) {
-        return NextResponse.json(
-          { error: `Selected product variant is no longer available.` },
-          { status: 400 }
-        );
+      if (!Number.isInteger(stockBeforeReservation) || stockBeforeReservation < clientItem.qty) {
+        return NextResponse.json({ error: "Not enough stock remains for the " + variant.size + " pack. Please update your bag." }, { status: 409 });
       }
-
-      const availableStock = Number(matchedVariant.stock || 0);
-      if (clientItem.qty > availableStock && availableStock > 0) {
-        return NextResponse.json(
-          { error: `Only ${availableStock} units of ${matchedVariant.size} are available in stock.` },
-          { status: 400 }
-        );
-      }
-
-      const unitPrice = Math.round(Number(matchedVariant.price_inr) * 100) / 100;
-      const itemTotal = Math.round(unitPrice * clientItem.qty * 100) / 100;
-
-      subtotalInr += itemTotal;
+      const totalPriceInr = Math.round(unitPriceInr * clientItem.qty * 100) / 100;
+      subtotalInr += totalPriceInr;
       verifiedItems.push({
-        productId: matchedVariant.product_id,
-        variantId: matchedVariant.id,
-        productName: matchedVariant.km_products?.name || "Kashmiri In-Shell Walnuts",
-        size: matchedVariant.size,
+        productId: variant.product_id,
+        variantId: variant.id,
+        productName: variant.km_products?.name || "Kashurmewa walnuts",
+        size: variant.size,
         quantity: clientItem.qty,
-        unitPriceInr: unitPrice,
-        totalPriceInr: itemTotal
+        unitPriceInr,
+        totalPriceInr,
+        stockBeforeReservation,
       });
     }
 
@@ -122,68 +123,68 @@ export async function POST(request: Request) {
     const shippingFeeInr = subtotalInr >= 999 ? 0 : 99;
     const totalAmountInr = Math.round((subtotalInr + shippingFeeInr) * 100) / 100;
 
-    // 3. Generate unique order reference
-    const timestamp = new Date().toISOString().slice(0, 10).replace(/-/g, "");
-    const randomHex = Math.floor(1000 + Math.random() * 9000).toString();
-    const orderReference = `KM-${timestamp}-${randomHex}`;
+    // Conditional updates prevent two simultaneous checkouts reserving the same stock snapshot.
+    const reserved: VerifiedItem[] = [];
+    for (const item of verifiedItems) {
+      const { data, error } = await supabase.from("km_product_variants")
+        .update({ stock: item.stockBeforeReservation - item.quantity })
+        .eq("id", item.variantId)
+        .eq("stock", item.stockBeforeReservation)
+        .gte("stock", item.quantity)
+        .select("id")
+        .maybeSingle();
+      if (error || !data) {
+        await releaseReservations(reserved);
+        return NextResponse.json({ error: "Stock changed for the " + item.size + " pack. Please refresh your bag and try again." }, { status: 409 });
+      }
+      reserved.push(item);
+    }
 
-    const paymentStatus = body.paymentMethod === "cod" ? "pending" : "pending";
-    const fulfillmentStatus = "pending";
-
-    // 4. Record order in Supabase
-    const { data: orderData, error: orderError } = await supabase
-      .from("km_orders")
+    const orderReference = "KM-" + new Date().toISOString().slice(0, 10).replace(/-/g, "") + "-" + randomUUID().slice(0, 8).toUpperCase();
+    const { data: orderData, error: orderError } = await supabase.from("km_orders")
       .insert({
         order_reference: orderReference,
-        customer_name: body.customerName,
-        customer_email: body.customerEmail,
-        customer_phone: body.customerPhone,
-        address_line1: body.addressLine1,
-        address_line2: body.addressLine2 || "",
-        city: body.city,
-        state: body.state,
-        pincode: body.pincode,
+        customer_name: customerName,
+        customer_email: customerEmail,
+        customer_phone: customerPhone,
+        address_line1: addressLine1,
+        address_line2: addressLine2,
+        city,
+        state,
+        pincode,
         subtotal_inr: subtotalInr,
         shipping_fee_inr: shippingFeeInr,
         total_amount_inr: totalAmountInr,
-        payment_method: body.paymentMethod,
-        payment_status: paymentStatus,
-        fulfillment_status: fulfillmentStatus,
+        payment_method: "cod",
+        payment_status: "pending",
+        fulfillment_status: "pending",
       })
       .select("id")
       .single();
 
-    if (!orderError && orderData?.id) {
-      // Insert order items
-      const orderItemsToInsert = verifiedItems.map((item) => ({
-        order_id: orderData.id,
-        product_id: item.productId,
-        variant_id: item.variantId,
-        product_name: item.productName,
-        variant_size: item.size,
-        quantity: item.quantity,
-        unit_price_inr: item.unitPriceInr,
-        total_price_inr: item.totalPriceInr,
-      }));
+    if (orderError || !orderData?.id) {
+      await releaseReservations(reserved);
+      console.error("Checkout order insert failed:", orderError?.message);
+      return NextResponse.json({ error: "We couldn’t save your order. No order was confirmed; please try again." }, { status: 503 });
+    }
 
-      await supabase.from("km_order_items").insert(orderItemsToInsert);
+    const orderItemsToInsert = verifiedItems.map((item) => ({
+      order_id: orderData.id,
+      product_id: item.productId,
+      variant_id: item.variantId,
+      product_name: item.productName,
+      variant_size: item.size,
+      quantity: item.quantity,
+      unit_price_inr: item.unitPriceInr,
+      total_price_inr: item.totalPriceInr,
+    }));
+    const { error: orderItemsError } = await supabase.from("km_order_items").insert(orderItemsToInsert);
 
-      // Decrement inventory stock safely
-      for (const item of verifiedItems) {
-        const { data: vCurrent } = await supabase
-          .from("km_product_variants")
-          .select("stock")
-          .eq("id", item.variantId)
-          .single();
-
-        if (vCurrent) {
-          const nextStock = Math.max(0, Number(vCurrent.stock || 0) - item.quantity);
-          await supabase
-            .from("km_product_variants")
-            .update({ stock: nextStock })
-            .eq("id", item.variantId);
-        }
-      }
+    if (orderItemsError) {
+      const { error: cleanupError } = await supabase.from("km_orders").delete().eq("id", orderData.id);
+      await releaseReservations(reserved);
+      console.error("Checkout order items insert failed:", orderItemsError.message, cleanupError?.message);
+      return NextResponse.json({ error: "We couldn’t save the full order. Please try again; contact the store if you see a reference for this attempt." }, { status: 503 });
     }
 
     return NextResponse.json({
@@ -192,18 +193,13 @@ export async function POST(request: Request) {
       totalAmountInr,
       subtotalInr,
       shippingFeeInr,
-      paymentMethod: body.paymentMethod,
-      customerName: body.customerName,
-      customerEmail: body.customerEmail,
-      message:
-        body.paymentMethod === "cod"
-          ? "Order placed successfully! Cash on delivery selected."
-          : "Order created. Online payment integration structure prepared."
+      paymentMethod: "cod",
+      customerName,
+      customerEmail,
+      message: "Your Cash on Delivery order has been placed.",
     });
-  } catch (err: any) {
-    return NextResponse.json(
-      { error: err?.message || "An unexpected error occurred during checkout processing." },
-      { status: 500 }
-    );
+  } catch (error) {
+    console.error("Unexpected checkout error:", error);
+    return NextResponse.json({ error: "An unexpected checkout error occurred. Please try again." }, { status: 500 });
   }
 }
