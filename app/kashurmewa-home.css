@@ -143,3 +143,32 @@
  .km-home .km-hero-photo>img{-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 74%,rgba(0,0,0,.72) 100%);mask-image:linear-gradient(180deg,#000 0%,#000 74%,rgba(0,0,0,.72) 100%);object-position:center 55%}
  .km-home .km-hero-photo:before{background:linear-gradient(180deg,rgba(243,232,214,.05),transparent 55%,rgba(35,49,33,.22))}
 }
+
+
+/* Fix overlapping hero fades: one soft seam blend, one gentle caption shade. */
+.km-home .km-hero-photo>img{
+  -webkit-mask-image:none!important;
+  mask-image:none!important;
+  filter:sepia(.04) saturate(.88) contrast(.98)!important;
+  transform:scale(1.015);
+}
+.km-home .km-hero-photo:before{
+  background:linear-gradient(90deg,rgba(243,232,214,.72) 0%,rgba(243,232,214,.3) 10%,transparent 30%)!important;
+}
+.km-home .km-hero-photo:after{
+  background:linear-gradient(0deg,rgba(27,42,29,.42) 0%,transparent 26%)!important;
+}
+@media(max-width:680px){
+  .km-home .km-hero-photo>img{
+    -webkit-mask-image:none!important;
+    mask-image:none!important;
+    transform:none;
+    object-position:center 55%;
+  }
+  .km-home .km-hero-photo:before{
+    background:linear-gradient(180deg,transparent 62%,rgba(27,42,29,.12) 100%)!important;
+  }
+  .km-home .km-hero-photo:after{
+    background:linear-gradient(0deg,rgba(27,42,29,.42) 0%,transparent 28%)!important;
+  }
+}
