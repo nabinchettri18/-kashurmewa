@@ -86,7 +86,7 @@ export default function CartPage() {
     const next = lines
       .map((line) =>
         line.variantId === variantId
-          ? { ...line, qty: Math.max(0, Math.min(line.qty + delta, Math.max(line.stock, 1))) }
+          ? { ...line, qty: Math.max(0, Math.min(line.qty + delta, line.stock)) }
           : line
       )
       .filter((line) => line.qty > 0);
@@ -206,6 +206,7 @@ export default function CartPage() {
                     <span>KASHURMEWA</span>
                     <h2>{line.productName}</h2>
                     <p>{line.size}</p>
+                    {line.stock <= 0 ? <small className="cart-stock-warning">Currently out of stock</small> : line.qty > line.stock ? <small className="cart-stock-warning">Only {line.stock} available — update quantity</small> : null}
                   </div>
                   <div className="qty">
                     <button type="button" onClick={() => update(line.variantId, -1)} aria-label="Decrease quantity">
@@ -245,6 +246,7 @@ export default function CartPage() {
                 type="button"
                 className="button dark checkout"
                 onClick={() => setShowCheckout(true)}
+                disabled={lines.some((line) => line.stock <= 0 || line.qty > line.stock)}
               >
                 PROCEED TO CHECKOUT ↗
               </button>
