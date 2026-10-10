@@ -35,7 +35,7 @@ function AccountForm() {
       } else {
         const r = await supabase.auth.signInWithPassword({ email, password });
         if (r.error) throw r.error;
-        router.push(search.get("next") || "/cart");
+        router.push(nextPath());
       }
     } catch (e) {
       setMessage(e instanceof Error ? e.message : "Could not complete account request.");
