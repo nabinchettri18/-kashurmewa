@@ -21,8 +21,8 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
   return (
     <>
       <div className="topbar">
-        <span>KASHURMEWA — HARVEST 2026</span>
-        <span>100% NATURAL KASHMIRI WALNUTS IN SHELL</span>
+        <span>KASHURMEWA — WALNUTS, THOUGHTFULLY PRESENTED</span>
+        <span>WHOLE KASHMIRI WALNUTS IN SHELL</span>
         <span>FREE PAN-INDIA DELIVERY ABOVE ₹999</span>
       </div>
 
@@ -51,15 +51,9 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
           <a href="/#story" className="hover:text-[#B69A66] transition-colors">
             Our Story
           </a>
-          <a href="/#origin" className="hover:text-[#B69A66] transition-colors">
-            Kashmir Origin
-          </a>
           <Link href="/about" className="hover:text-[#B69A66] transition-colors">
-            About Brand
+            Our Approach
           </Link>
-          <a href="/#faq" className="hover:text-[#B69A66] transition-colors">
-            FAQ
-          </a>
         </nav>
 
         <div className="header-actions">
@@ -70,7 +64,7 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
 
           <Link href="/cart" className="bag">
             <ShoppingBag size={15} />
-            <span>Bag</span>
+            <span className="bag-label">Bag</span>
             <span className="bg-[#B69A66] text-[#10291F] font-bold rounded-full w-5 h-5 flex items-center justify-center text-[10px] ml-1">
               {cartCount}
             </span>
@@ -97,12 +91,8 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
                 <span>Our Story</span>
                 <ArrowRight size={16} className="text-[#B69A66]" />
               </a>
-              <a href="/#origin" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pb-3 border-b border-[#345043]">
-                <span>The Kashmir Valley</span>
-                <ArrowRight size={16} className="text-[#B69A66]" />
-              </a>
               <Link href="/about" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pb-3 border-b border-[#345043]">
-                <span>About Brand</span>
+                <span>Our Approach</span>
                 <ArrowRight size={16} className="text-[#B69A66]" />
               </Link>
               <Link href="/cart" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pt-2 text-[#B69A66] font-semibold">
