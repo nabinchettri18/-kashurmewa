@@ -48,16 +48,16 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
           <Link href="/shop" className="hover:text-[#B69A66] transition-colors">
             Shop Walnuts
           </Link>
-          <a href="#story" className="hover:text-[#B69A66] transition-colors">
+          <a href="/#story" className="hover:text-[#B69A66] transition-colors">
             Our Story
           </a>
-          <a href="#origin" className="hover:text-[#B69A66] transition-colors">
+          <a href="/#origin" className="hover:text-[#B69A66] transition-colors">
             Kashmir Origin
           </a>
           <Link href="/about" className="hover:text-[#B69A66] transition-colors">
             About Brand
           </Link>
-          <a href="#faq" className="hover:text-[#B69A66] transition-colors">
+          <a href="/#faq" className="hover:text-[#B69A66] transition-colors">
             FAQ
           </a>
         </nav>
@@ -93,11 +93,11 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
                 <span>Shop Catalogue</span>
                 <ArrowRight size={16} className="text-[#B69A66]" />
               </Link>
-              <a href="#story" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pb-3 border-b border-[#345043]">
+              <a href="/#story" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pb-3 border-b border-[#345043]">
                 <span>Our Story</span>
                 <ArrowRight size={16} className="text-[#B69A66]" />
               </a>
-              <a href="#origin" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pb-3 border-b border-[#345043]">
+              <a href="/#origin" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pb-3 border-b border-[#345043]">
                 <span>The Kashmir Valley</span>
                 <ArrowRight size={16} className="text-[#B69A66]" />
               </a>
