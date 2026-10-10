@@ -21,9 +21,8 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
   return (
     <>
       <div className="topbar">
-        <span>KASHURMEWA — WALNUTS, THOUGHTFULLY PRESENTED</span>
-        <span>WHOLE KASHMIRI WALNUTS IN SHELL</span>
-        <span>FREE PAN-INDIA DELIVERY ABOVE ₹999</span>
+        <span>THE EVERYDAY WALNUT, REIMAGINED</span>
+        <span>FREE DELIVERY ON ORDERS ABOVE ₹999</span>
       </div>
 
       <header
@@ -80,7 +79,7 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="fixed inset-x-0 top-[105px] bg-[#10291f] border-b border-[#345043] p-6 shadow-2xl z-50 md:hidden"
+            className="km-mobile-menu fixed inset-x-0 top-[100px] bg-[#10291f] border-b border-[#345043] p-6 shadow-2xl z-50 md:hidden"
           >
             <div className="flex flex-col gap-5 text-sm uppercase tracking-widest text-[#f5f0e5]">
               <Link href="/shop" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pb-3 border-b border-[#345043]">
