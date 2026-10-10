@@ -111,7 +111,7 @@ export default function Home() {
           ) : <div className="ks-state">Our collection is being prepared. Please check back soon.</div>}
       </section>
 
-      <section className="ks-story">
+      <section className="ks-story" id="story">
         <div className="ks-story-photo"><img src={ORCHARD_IMAGE} alt="Green walnuts growing on a tree in an orchard"/><span>FROM ORCHARD TO EVERYDAY</span></div>
         <div className="ks-story-copy"><span className="ks-kicker">A BRAND WITH ROOTS</span><h2>Good food starts<br/>with <em>good choices.</em></h2><p>Kashurmewa is built around one simple idea: make it easier to bring a distinctive harvest into everyday life. We focus on the product, clear pack choices and thoughtful presentation—without making shopping complicated.</p><Link className="ks-button ks-button-light" href="/about">Meet Kashurmewa <ArrowRight size={16}/></Link></div>
       </section>
