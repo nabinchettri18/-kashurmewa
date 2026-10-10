@@ -160,7 +160,7 @@ export default function AdminDashboard() {
     return (
       <div className="admin-shell">
         <main className="admin-main">
-          <div className="admin-panel">
+          <div className="admin-access-card">
             <p className="eyebrow">RESTRICTED AREA</p>
             <h1>Admin sign-in required</h1>
             <p>Sign in with an account assigned the admin role to manage inventory and orders.</p>
