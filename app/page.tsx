@@ -94,7 +94,7 @@ export default function Home() {
               {product.variants.map((variant, index) => (
                 <article className="ks-product-card" key={variant.id}>
                   <Link className="ks-product-image" href="/shop" aria-label={`View ${variant.size} Kashmiri walnuts`}>
-                    <img src={index === 0 ? WALNUT_DETAIL : WALNUT_HERO} alt="Kashmiri walnuts in shell" />
+                    <img src={product.images?.[0]?.url || (index === 0 ? WALNUT_DETAIL : WALNUT_HERO)} alt={product.name} loading="lazy" />
                     <span>{index === 0 ? "THE SIGNATURE" : "PANTRY ESSENTIAL"}</span>
                   </Link>
                   <div className="ks-product-info">
