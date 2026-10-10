@@ -101,13 +101,7 @@ cross join (values
   ('1 kg', 1199, 50, 'KM-WAL-1KG')
 ) as v(size, price_inr, stock, sku)
 where p.slug = 'kashmiri-walnuts'
-on conflict (sku) do update set
-  product_id = excluded.product_id,
-  size = excluded.size,
-  price_inr = excluded.price_inr,
-  stock = excluded.stock,
-  active = true,
-  updated_at = now();
+on conflict (sku) do nothing; -- Preserve live price, availability and inventory on migration reruns.
 
 insert into public.km_product_images (product_id, url, alt_text, sort_order)
 select p.id, i.url, i.alt_text, i.sort_order
