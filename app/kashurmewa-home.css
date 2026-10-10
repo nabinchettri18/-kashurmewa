@@ -172,3 +172,29 @@
     background:linear-gradient(0deg,rgba(27,42,29,.42) 0%,transparent 28%)!important;
   }
 }
+
+
+/* Final hero seam correction: blend the photo itself into the cream copy panel. */
+.km-home .km-hero{grid-template-columns:44% 56%;background:#f3e8d6!important}
+.km-home .km-hero-photo{margin-left:-1px}
+.km-home .km-hero-photo>img{
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.08) 4%,rgba(0,0,0,.35) 12%,rgba(0,0,0,.78) 25%,#000 39%)!important;
+  mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.08) 4%,rgba(0,0,0,.35) 12%,rgba(0,0,0,.78) 25%,#000 39%)!important;
+}
+.km-home .km-hero-photo:before{
+  content:"";position:absolute;z-index:1;inset:0;pointer-events:none;
+  background:linear-gradient(90deg,#f3e8d6 0%,rgba(243,232,214,.82) 7%,rgba(243,232,214,.4) 17%,rgba(243,232,214,.12) 29%,transparent 43%)!important;
+}
+.km-home .km-hero-photo:after{
+  z-index:1!important;
+  background:linear-gradient(0deg,rgba(27,42,29,.38) 0%,transparent 26%)!important;
+}
+@media(max-width:680px){
+ .km-home .km-hero{grid-template-columns:1fr;background:#f3e8d6!important}
+ .km-home .km-hero-photo{margin-left:0}
+ .km-home .km-hero-photo>img{
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 82%,rgba(0,0,0,.88) 100%)!important;
+  mask-image:linear-gradient(180deg,#000 0%,#000 82%,rgba(0,0,0,.88) 100%)!important;
+ }
+ .km-home .km-hero-photo:before{background:linear-gradient(180deg,transparent 65%,rgba(27,42,29,.08) 100%)!important}
+}
