@@ -249,3 +249,36 @@
   .km-home .km-hero{background:#f3e8d6!important}
   .km-home .km-hero-photo:after{background:transparent!important}
 }
+
+
+/* Hero-only reset: eliminate any horizontal overlay bands without altering the cream seam. */
+.km-home .km-hero,
+.km-home .km-hero-copy,
+.km-home .km-hero-photo{
+  background-image:none!important;
+}
+.km-home .km-hero{
+  background-color:#f3e8d6!important;
+}
+.km-home .km-hero-copy{
+  background-color:transparent!important;
+  box-shadow:none!important;
+}
+.km-home .km-hero-photo{
+  background-color:#d7c2a1!important;
+  box-shadow:none!important;
+}
+.km-home .km-hero-photo:before{display:none!important;content:none!important}
+.km-home .km-hero-photo:after{
+  background:linear-gradient(90deg,rgba(243,232,214,.92) 0%,rgba(243,232,214,.65) 5%,rgba(243,232,214,.28) 14%,rgba(243,232,214,.08) 25%,transparent 38%)!important;
+  box-shadow:none!important;
+}
+.km-home .km-hero-photo>img{
+  -webkit-mask-image:none!important;
+  mask-image:none!important;
+  filter:none!important;
+  transform:none!important;
+}
+@media(max-width:680px){
+  .km-home .km-hero-photo:after{background:transparent!important}
+}
