@@ -82,6 +82,8 @@ create table if not exists public.km_contact_messages (
 );
 alter table public.km_contact_messages enable row level security;
 revoke all on public.km_contact_messages from public, anon, authenticated;
+grant insert on public.km_contact_messages to service_role;
+grant select, insert, update, delete on public.km_orders, public.km_order_items, public.km_product_variants to service_role;
 
 -- Atomic COD checkout: validate live catalogue, lock stock rows, decrement inventory,
 -- and write order plus items in one transaction. Any exception rolls the entire transaction back.
