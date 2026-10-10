@@ -7,11 +7,11 @@ import { fetchProductBySlug, Product, ProductVariant } from "@/lib/catalog";
 import { NavigationHeader } from "@/components/navigation/Header";
 import "./kashurmewa-home.css";
 
-const FALLBACK_IMAGES = [
-  "https://images.pexels.com/photos/8303558/pexels-photo-8303558.jpeg",
-  "https://images.pexels.com/photos/14627184/pexels-photo-14627184.jpeg",
-  "https://images.pexels.com/photos/16089996/pexels-photo-16089996.jpeg",
-];
+// Curated imagery: walnut product photography for the storefront, walnut orchard/harvest photography for the brand story.
+const WALNUT_HERO = "https://images.pexels.com/photos/9013291/pexels-photo-9013291.jpeg";
+const WALNUT_DETAIL = "https://images.pexels.com/photos/37309469/pexels-photo-37309469.jpeg";
+const ORCHARD_IMAGE = "https://www.newsclick.in/sites/default/files/styles/responsive_885/public/2021-09/jk%20wallnut%201.jpg?itok=9Yo-l3R4";
+const HARVEST_IMAGE = "https://www.thecitizen.in/h-upload/2022/11/09/424890-30sgr07.jpg";
 const money = (value: number) => new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 }).format(value);
 
 export default function Home() {
@@ -33,9 +33,9 @@ export default function Home() {
     return () => { alive = false; };
   }, []);
 
-  const images = product?.images?.length ? product.images.map((image) => image.url).filter(Boolean) : FALLBACK_IMAGES;
-  const heroImage = images[0] || FALLBACK_IMAGES[0];
-  const productImage = images[1] || images[0] || FALLBACK_IMAGES[1];
+  // Use known-relevant curated images for decorative sections. Supabase remains the source of product, price and stock data.
+  const heroImage = WALNUT_HERO;
+  const productImage = WALNUT_DETAIL;
 
   function addToBag(variant: ProductVariant) {
     if (!product || variant.stock <= 0) { setNotice("This pack is currently unavailable."); return; }
@@ -73,7 +73,7 @@ export default function Home() {
           </div>
         </div>
         <div className="km-hero-photo">
-          <img src={heroImage} alt="Walnuts and natural harvest textures" />
+          <img src={heroImage} alt="A rustic bowl filled with whole walnuts" />
           <div className="km-photo-stamp"><span>FROM THE</span><strong>orchard</strong><span>TO YOUR HOME</span><b>✳</b></div>
           <div className="km-image-caption"><span>01 / THE HARVEST</span><span>Natural. Honest. Kashurmewa.</span></div>
         </div>
@@ -116,7 +116,7 @@ export default function Home() {
         </div>
       </section>
       <section className="km-benefits">
-        <div className="km-benefit-image"><img src={images[2] || FALLBACK_IMAGES[2]} alt="A natural walnut harvest" /><div><span>THE EVERYDAY GOOD</span><strong>Small bites.<br /><em>Grounded living.</em></strong></div></div>
+        <div className="km-benefit-image"><img src={ORCHARD_IMAGE} alt="Walnut trees and harvest in a traditional orchard" /><div><span>THE EVERYDAY GOOD</span><strong>Small bites.<br /><em>Grounded living.</em></strong></div></div>
         <div className="km-benefit-copy">
           <span className="km-eyebrow">NATURE NEEDS NO EXTRAS</span>
           <h2>A simple ingredient.<br /><em>So many ways to enjoy.</em></h2>
@@ -129,12 +129,12 @@ export default function Home() {
         </div>
       </section>
       <section className="km-why">
-        <div className="km-why-photo"><img src={heroImage} alt="Kashurmewa walnut harvest" /></div>
+        <div className="km-why-photo"><img src={ORCHARD_IMAGE} alt="Walnut trees in a leafy orchard" /></div>
         <div className="km-why-copy"><span className="km-eyebrow">WHY KASHURMEWA</span><h2>Rooted in nature.<br /><em>Made for your home.</em></h2><p>We keep the experience simple: a product rooted in a distinctive harvest, clear pack choices, and a considered presentation from our brand to your table.</p><Link className="km-light-button" href="/about">Meet Kashurmewa <ArrowRight size={15} /></Link></div>
       </section>
       <section className="km-story" id="story">
         <div className="km-story-copy"><span className="km-eyebrow">OUR STORY · OUR ORIGIN</span><h2>A little closer to<br /><em>where it begins.</em></h2><p>Kashurmewa celebrates the character of Kashmiri walnuts with an understated, thoughtful approach. We believe good products deserve honest presentation, careful packing, and a place in the everyday.</p><a className="km-underlined-link" href="#origin">Explore our roots <ArrowRight size={15} /></a></div>
-        <div className="km-story-image" id="origin"><img src={productImage} alt="Close-up of walnut harvest" /><span>THE KASHURMEWA WAY · EST. 2026</span></div>
+        <div className="km-story-image" id="origin"><img src={HARVEST_IMAGE} alt="Freshly harvested walnuts being sorted in Kashmir" /><span>THE KASHURMEWA WAY · EST. 2026</span></div>
       </section>
       <section className="km-faq" id="faq">
         <div><span className="km-eyebrow">A FEW GOOD QUESTIONS</span><h2>Before it reaches<br /><em>your doorstep.</em></h2></div>
