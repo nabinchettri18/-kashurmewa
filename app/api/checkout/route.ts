@@ -17,7 +17,16 @@ type CheckoutPayload = {
 
 export async function POST(request: Request) {
   try {
-    const body = (await request.json()) as Partial<CheckoutPayload>;
+    const contentLength = Number(request.headers.get("content-length") || 0);
+    if (contentLength > 16_000) return NextResponse.json({ error: "Checkout request is too large." }, { status: 413 });
+    const rawBody = await request.text();
+    if (rawBody.length > 16_000) return NextResponse.json({ error: "Checkout request is too large." }, { status: 413 });
+    let body: Partial<CheckoutPayload>;
+    try {
+      body = JSON.parse(rawBody) as Partial<CheckoutPayload>;
+    } catch {
+      return NextResponse.json({ error: "Please submit valid checkout details." }, { status: 400 });
+    }
     const text = (value: unknown) => typeof value === "string" ? value.trim() : "";
     const customerName = text(body.customerName);
     const customerEmail = text(body.customerEmail).toLowerCase();
