@@ -13,50 +13,61 @@ export default function ProductDetailPage() {
   const [qty, setQty] = useState(1);
   const [notice, setNotice] = useState("");
   const [selectedImage, setSelectedImage] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
 
   useEffect(() => {
+    let cancelled = false;
     (async () => {
-      const p = await fetchProductBySlug(params.slug || "kashmiri-walnuts");
-      if (p) {
-        setProduct(p);
-        if (p.variants.length) {
-          setSize(p.variants[0].size);
+      try {
+        const p = await fetchProductBySlug(params.slug || "kashmiri-walnuts");
+        if (!cancelled && p) {
+          setProduct(p);
+          if (p.variants.length) setSize(p.variants[0].size);
         }
+      } catch {
+        if (!cancelled) setLoadError(true);
+      } finally {
+        if (!cancelled) setLoading(false);
       }
     })();
+    return () => { cancelled = true; };
   }, [params.slug]);
 
   const selectedVariant: ProductVariant | undefined = product?.variants.find((x) => x.size === size) || product?.variants[0];
-  const mainImage = product?.images[selectedImage]?.url || "https://images.pexels.com/photos/8303558/pexels-photo-8303558.jpeg";
+  const mainImage = product?.images[selectedImage]?.url;
 
   const addToBag = () => {
-    if (!product || !selectedVariant) return;
+    if (!product || !selectedVariant || selectedVariant.stock <= 0) return;
     try {
       const cart = JSON.parse(localStorage.getItem("kashurmewa-cart") || "[]");
       const found = cart.find((i: { variantId: string }) => i.variantId === selectedVariant.id);
+      const alreadyInCart = found?.qty || 0;
       if (found) {
-        found.qty = Math.min(found.qty + qty, selectedVariant.stock || 50);
+        found.qty = Math.min(found.qty + qty, selectedVariant.stock);
       } else {
         cart.push({
           productId: product.id,
           variantId: selectedVariant.id,
-          qty: Math.min(qty, selectedVariant.stock || 50),
+          qty: Math.min(qty, selectedVariant.stock),
         });
       }
       localStorage.setItem("kashurmewa-cart", JSON.stringify(cart));
-      setNotice(`Added ${qty} × ${selectedVariant.size} pack to your bag.`);
+      setNotice(`Added ${Math.min(qty, Math.max(0, selectedVariant.stock - alreadyInCart))} × ${selectedVariant.size} pack to your bag.`);
       setTimeout(() => setNotice(""), 4000);
     } catch {}
   };
 
-  if (!product) {
+  if (loading || loadError || !product) {
     return (
       <main className="commerce-page">
         <header className="commerce-header">
           <KashurmewLogo variant="dark" size="sm" />
           <Link href="/shop">← Back to shop</Link>
         </header>
-        <div className="commerce-loading">Loading product catalog…</div>
+        <div className="commerce-loading" role={loadError ? "alert" : undefined}>
+          {loading ? "Loading product from Supabase…" : loadError ? "We couldn’t load this product. Check the Supabase connection and permissions, then refresh." : "This product is unavailable. Check that it is active and has an active variant in Supabase."}
+        </div>
       </main>
     );
   }
@@ -70,9 +81,7 @@ export default function ProductDetailPage() {
           <Link href="/about">About</Link>
           <Link href="/account">Account</Link>
         </nav>
-        <Link className="commerce-bag" href="/cart">
-          Bag ↗
-        </Link>
+        <Link className="commerce-bag" href="/cart">Bag ↗</Link>
       </header>
 
       <div className="product-breadcrumb">
@@ -82,7 +91,7 @@ export default function ProductDetailPage() {
       <section className="product-detail">
         <div>
           <div className="detail-main-image">
-            <img src={mainImage} alt={product.name} />
+            {mainImage ? <img src={mainImage} alt={product.name} /> : <div className="commerce-muted">Product image coming soon</div>}
           </div>
           <div className="detail-image-note">
             <span>01 / ORIGIN: {product.origin}</span>
@@ -90,17 +99,7 @@ export default function ProductDetailPage() {
           </div>
           <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
             {product.images.map((img, idx) => (
-              <button
-                key={idx}
-                onClick={() => setSelectedImage(idx)}
-                style={{
-                  width: "70px",
-                  height: "70px",
-                  border: selectedImage === idx ? "2px solid #344B3A" : "1px solid #E7DED1",
-                  padding: 0,
-                  cursor: "pointer",
-                }}
-              >
+              <button key={idx} onClick={() => setSelectedImage(idx)} style={{ width: "70px", height: "70px", border: selectedImage === idx ? "2px solid #344B3A" : "1px solid #E7DED1", padding: 0, cursor: "pointer" }}>
                 <img src={img.url} alt={img.alt_text || product.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
               </button>
             ))}
@@ -111,26 +110,17 @@ export default function ProductDetailPage() {
           <span className="commerce-eyebrow">KASHURMEWA SIGNATURE</span>
           <h1>{product.name}</h1>
           <p className="detail-description">{product.description}</p>
-          <div className="detail-rating">
-            ✦ Sourced directly from high-altitude orchards in Kashmir · Packed for natural freshness
-          </div>
+          <div className="detail-rating">✦ Sourced directly from high-altitude orchards in Kashmir · Packed for natural freshness</div>
 
           <div className="detail-price">
             ₹{selectedVariant ? (selectedVariant.price_inr * qty).toLocaleString("en-IN") : "—"}
             <span>INR · Inclusive of all applicable taxes · Free delivery above ₹999</span>
           </div>
 
-          <span className="commerce-eyebrow" style={{ display: "block", marginTop: "20px" }}>
-            CHOOSE PACK SIZE
-          </span>
+          <span className="commerce-eyebrow" style={{ display: "block", marginTop: "20px" }}>CHOOSE PACK SIZE</span>
           <div className="detail-variants">
             {product.variants.map((v) => (
-              <button
-                key={v.id}
-                disabled={v.stock <= 0}
-                className={size === v.size ? "chosen" : ""}
-                onClick={() => setSize(v.size)}
-              >
+              <button key={v.id} disabled={v.stock <= 0} className={size === v.size ? "chosen" : ""} onClick={() => { setSize(v.size); setQty(1); }}>
                 <b>{v.size}</b>
                 <span>₹{v.price_inr.toLocaleString("en-IN")}</span>
               </button>
@@ -140,65 +130,32 @@ export default function ProductDetailPage() {
           <div className="detail-quantity">
             <span>Quantity</span>
             <div>
-              <button onClick={() => setQty(Math.max(1, qty - 1))} aria-label="Decrease quantity">
-                −
-              </button>
+              <button onClick={() => setQty(Math.max(1, qty - 1))} aria-label="Decrease quantity">−</button>
               <b>{qty}</b>
-              <button
-                onClick={() => setQty(Math.min(selectedVariant?.stock || 50, qty + 1))}
-                aria-label="Increase quantity"
-              >
-                +
-              </button>
+              <button onClick={() => setQty(Math.min(selectedVariant?.stock || 1, qty + 1))} disabled={!selectedVariant || qty >= selectedVariant.stock} aria-label="Increase quantity">+</button>
             </div>
-            <small>{selectedVariant?.stock ? `${selectedVariant.stock} units available` : "In Stock"}</small>
+            <small>{selectedVariant ? (selectedVariant.stock > 0 ? `${selectedVariant.stock} units available` : "Out of stock") : "Stock unavailable"}</small>
           </div>
 
-          <button className="detail-add" disabled={!selectedVariant || selectedVariant.stock <= 0} onClick={addToBag}>
-            {selectedVariant && selectedVariant.stock > 0
-              ? `ADD TO BAG — ₹${(selectedVariant.price_inr * qty).toLocaleString("en-IN")}`
-              : "OUT OF STOCK"}{" "}
-            <span>↗</span>
+          <button className="detail-add" disabled={!selectedVariant || selectedVariant.stock <= 0 || qty > selectedVariant.stock} onClick={addToBag}>
+            {selectedVariant && selectedVariant.stock > 0 ? `ADD TO BAG — ₹${(selectedVariant.price_inr * qty).toLocaleString("en-IN")}` : "OUT OF STOCK"} <span>↗</span>
           </button>
 
-          {notice && (
-            <p className="commerce-notice" style={{ marginTop: "14px", fontWeight: 600 }}>
-              {notice} <Link href="/cart">Proceed to cart & checkout →</Link>
-            </p>
-          )}
+          {notice && <p className="commerce-notice" style={{ marginTop: "14px", fontWeight: 600 }}>{notice} <Link href="/cart">Proceed to cart & checkout →</Link></p>}
 
           <div className="detail-promises">
-            <div>
-              <b>Net Weight & Packaging Note</b>
-              <span>
-                Net pack weight reflects whole walnuts inside natural shells. Walnuts in shell naturally maintain their crispness and kernel oils longer.
-              </span>
-            </div>
-            <div>
-              <b>Storage Instructions</b>
-              <span>{product.storage_instructions || "Store in a cool, dry place in an airtight container."}</span>
-            </div>
-            <div>
-              <b>Shelf Life</b>
-              <span>{product.shelf_life || "6 Months from packaging date."}</span>
-            </div>
-            <div>
-              <b>Ingredients</b>
-              <span>{product.ingredients}</span>
-            </div>
+            <div><b>Net Weight & Packaging Note</b><span>Net pack weight reflects whole walnuts inside natural shells. Walnuts in shell naturally maintain their crispness and kernel oils longer.</span></div>
+            <div><b>Storage Instructions</b><span>{product.storage_instructions || "Store in a cool, dry place in an airtight container."}</span></div>
+            <div><b>Shelf Life</b><span>{product.shelf_life || "6 Months from packaging date."}</span></div>
+            <div><b>Ingredients</b><span>{product.ingredients}</span></div>
           </div>
         </div>
       </section>
 
       <section className="detail-story">
         <span className="commerce-eyebrow">THE KASHURMEWA COMMITMENT</span>
-        <h2>
-          Simple by nature.<br />
-          <i>Considered by design.</i>
-        </h2>
-        <p>
-          Our walnuts are carefully gathered from Kashmiri orchards, sorted to remove broken shells, and packed without chemical washing or bleaching. What you receive is authentic Kashmiri produce in its pure, natural state.
-        </p>
+        <h2>Simple by nature.<br /><i>Considered by design.</i></h2>
+        <p>Our walnuts are carefully gathered from Kashmiri orchards, sorted to remove broken shells, and packed without chemical washing or bleaching. What you receive is authentic Kashmiri produce in its pure, natural state.</p>
       </section>
 
       <footer className="commerce-footer">
