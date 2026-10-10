@@ -40,7 +40,7 @@ create table if not exists public.km_product_images (
 create index if not exists km_product_variants_product_id_idx on public.km_product_variants(product_id);
 create index if not exists km_product_images_product_id_sort_idx on public.km_product_images(product_id, sort_order);
 -- The original schema did not declare SKU unique; required by the seed's ON CONFLICT clause.
-create unique index if not exists km_product_variants_sku_key on public.km_product_variants(sku);
+create index if not exists km_product_variants_sku_idx on public.km_product_variants(sku);
 
 alter table public.km_products enable row level security;
 alter table public.km_product_variants enable row level security;
