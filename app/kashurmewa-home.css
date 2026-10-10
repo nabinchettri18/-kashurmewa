@@ -198,3 +198,29 @@
  }
  .km-home .km-hero-photo:before{background:linear-gradient(180deg,transparent 65%,rgba(27,42,29,.08) 100%)!important}
 }
+
+
+/* Stable hero layout: remove layered masks and blend with one overlay only. */
+.km-home .km-hero-photo>img{
+  -webkit-mask-image:none!important;
+  mask-image:none!important;
+  filter:none!important;
+  transform:none!important;
+}
+.km-home .km-hero-photo:before{
+  display:none!important;
+}
+.km-home .km-hero-photo:after{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  pointer-events:none!important;
+  z-index:1!important;
+  background:linear-gradient(90deg,rgba(243,232,214,.92) 0%,rgba(243,232,214,.65) 5%,rgba(243,232,214,.28) 14%,rgba(243,232,214,.08) 25%,transparent 38%),linear-gradient(0deg,rgba(27,42,29,.36) 0%,transparent 25%)!important;
+}
+@media(max-width:680px){
+  .km-home .km-hero-photo>img{object-position:center 55%!important}
+  .km-home .km-hero-photo:after{
+    background:linear-gradient(0deg,rgba(27,42,29,.36) 0%,transparent 25%)!important;
+  }
+}
