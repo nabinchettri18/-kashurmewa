@@ -21,8 +21,8 @@ function AccountForm() {
     const requestedPath = search.get("next");
     return requestedPath?.startsWith("/") &&
       !requestedPath.startsWith("//") &&
-      !requestedPath.includes("\\\\") &&
-      !requestedPath.includes("\\u0000")
+      !requestedPath.includes("\\") &&
+      !/[\u0000-\u001f]/.test(requestedPath)
       ? requestedPath
       : "/cart";
   };
