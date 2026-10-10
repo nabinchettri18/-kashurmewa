@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
+import { getSupabaseAdmin } from "@/lib/supabase-admin";
+import type { SupabaseClient } from "@supabase/supabase-js";
 
 type CheckoutItemInput = { variantId: string; qty: number };
 type CheckoutPayload = {
@@ -26,7 +27,7 @@ type VerifiedItem = {
   stockBeforeReservation: number;
 };
 
-async function releaseReservations(items: VerifiedItem[]) {
+async function releaseReservations(supabase: SupabaseClient, items: VerifiedItem[]) {
   for (const item of [...items].reverse()) {
     await supabase.from("km_product_variants")
       .update({ stock: item.stockBeforeReservation })
@@ -77,6 +78,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Your bag contains invalid item quantities. Please review your bag." }, { status: 400 });
     }
 
+    const supabase = getSupabaseAdmin();
     const { data: dbVariants, error: catalogueError } = await supabase
       .from("km_product_variants")
       .select("id, product_id, size, price_inr, stock, km_products!inner(name, active)")
@@ -134,7 +136,7 @@ export async function POST(request: Request) {
         .select("id")
         .maybeSingle();
       if (error || !data) {
-        await releaseReservations(reserved);
+        await releaseReservations(supabase, reserved);
         return NextResponse.json({ error: "Stock changed for the " + item.size + " pack. Please refresh your bag and try again." }, { status: 409 });
       }
       reserved.push(item);
@@ -163,7 +165,7 @@ export async function POST(request: Request) {
       .single();
 
     if (orderError || !orderData?.id) {
-      await releaseReservations(reserved);
+      await releaseReservations(supabase, reserved);
       console.error("Checkout order insert failed:", orderError?.message);
       return NextResponse.json({ error: "We couldn’t save your order. No order was confirmed; please try again." }, { status: 503 });
     }
@@ -182,7 +184,7 @@ export async function POST(request: Request) {
 
     if (orderItemsError) {
       const { error: cleanupError } = await supabase.from("km_orders").delete().eq("id", orderData.id);
-      await releaseReservations(reserved);
+      await releaseReservations(supabase, reserved);
       console.error("Checkout order items insert failed:", orderItemsError.message, cleanupError?.message);
       return NextResponse.json({ error: "We couldn’t save the full order. Please try again; contact the store if you see a reference for this attempt." }, { status: 503 });
     }
@@ -199,6 +201,9 @@ export async function POST(request: Request) {
       message: "Your Cash on Delivery order has been placed.",
     });
   } catch (error) {
+    if (error instanceof Error && error.message.includes("SUPABASE_SERVICE_ROLE_KEY")) {
+      return NextResponse.json({ error: "Checkout is not configured on the server yet. Add SUPABASE_SERVICE_ROLE_KEY to your local environment." }, { status: 503 });
+    }
     console.error("Unexpected checkout error:", error);
     return NextResponse.json({ error: "An unexpected checkout error occurred. Please try again." }, { status: 500 });
   }
