@@ -29,7 +29,7 @@ export default function ShippingPolicyPage() {
         <div className="policy-content">
           <h2>Order Processing Timelines</h2>
           <p>
-            All confirmed Kashurmewa orders are processed and packed within 24 to 48 hours (excluding Sundays and national holidays).
+            Orders are prepared after confirmation. Processing time can vary with stock, destination, and operating days; any delay or dispatch update should be confirmed with our team.
           </p>
 
           <h2>Shipping Charges & Free Delivery</h2>
@@ -40,13 +40,12 @@ export default function ShippingPolicyPage() {
 
           <h2>Estimated Delivery Periods</h2>
           <ul>
-            <li><strong>Metro Cities (Delhi NCR, Mumbai, Bengaluru, Kolkata, Chennai, Hyderabad):</strong> 3 – 5 business days.</li>
-            <li><strong>Rest of India & Tier 2/3 Cities:</strong> 5 – 7 business days.</li>
+            <li>Delivery times depend on destination, courier service, weather, and other conditions. Any time estimate is indicative, not a guarantee.</li>
           </ul>
 
           <h2>Order Tracking</h2>
           <p>
-            Once your package is dispatched, a courier tracking reference number will be sent via email or SMS. You can monitor your shipment's journey directly on the courier partner's portal.
+            Automated email/SMS tracking is not yet configured. If you need an update after placing an order, contact us through the Contact page and include your order reference.
           </p>
         </div>
       </section>
