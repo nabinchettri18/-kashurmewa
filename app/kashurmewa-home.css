@@ -235,3 +235,17 @@
     background:transparent!important;
   }
 }
+
+
+/* Keep the horizontal tone uniform across the entire hero; no vertical dark fade. */
+.km-home .km-hero{
+  background:#f3e8d6!important;
+}
+.km-home .km-hero-photo:after{
+  background:linear-gradient(90deg,rgba(243,232,214,.92) 0%,rgba(243,232,214,.65) 5%,rgba(243,232,214,.28) 14%,rgba(243,232,214,.08) 25%,transparent 38%)!important;
+}
+.km-home .km-hero-photo:before{display:none!important}
+@media(max-width:680px){
+  .km-home .km-hero{background:#f3e8d6!important}
+  .km-home .km-hero-photo:after{background:transparent!important}
+}
