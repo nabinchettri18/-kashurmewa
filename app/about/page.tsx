@@ -18,10 +18,10 @@ export default function AboutPage() {
 
       <section className="policy-page">
         <div className="policy-header">
-          <span className="commerce-eyebrow">OUR HERITAGE</span>
+          <span className="commerce-eyebrow">THE KASHURMEWA APPROACH</span>
           <h1>
-            Crafted by altitude.<br />
-            <i>Guided by nature.</i>
+            A focused range.<br />
+            <i>Clear choices.</i>
           </h1>
           <p className="detail-description">
             Kashurmewa is a focused walnut brand built around one product: walnuts in shell. We aim to make product details, pack sizes and current prices clear before checkout.
