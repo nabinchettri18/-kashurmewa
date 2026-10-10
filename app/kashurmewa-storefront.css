@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap');
+
+.km-store{--ks-ink:#18271e;--ks-green:#164b36;--ks-green2:#216447;--ks-cream:#f7f4ec;--ks-paper:#fffefa;--ks-sand:#e9e1d2;--ks-muted:#706f65;--ks-gold:#b68a4d;background:var(--ks-paper);color:var(--ks-ink);font-family:"DM Sans",Arial,sans-serif;overflow:hidden}
+.km-store *{box-sizing:border-box}
+.km-store a{color:inherit;text-decoration:none}
+.km-store button{font:inherit}
+.km-store .topbar{height:32px;padding:0 4.5vw;background:var(--ks-green);color:#fff8e9;display:flex;align-items:center;justify-content:space-between;font-size:9px;letter-spacing:1.1px}
+.km-store .site-header{min-height:76px;padding:12px 4.5vw!important;background:#fffefa!important;color:var(--ks-ink)!important;border-bottom:1px solid #e8e1d5!important;display:flex;align-items:center;gap:28px;position:relative;z-index:30}
+.km-store .site-header .kashurmewa-logo-img{width:124px!important;height:auto!important;max-width:100%}
+.km-store .site-header .kashurmewa-logo{flex:0 0 auto;max-width:145px}
+.km-store .site-header .main-nav{display:flex;align-items:center;justify-content:center;gap:clamp(15px,2vw,30px);flex:1}
+.km-store .site-header .main-nav a{font-size:10px;font-weight:600;letter-spacing:.25px;text-transform:none}
+.km-store .site-header .header-actions{display:flex;align-items:center;gap:16px;flex:0 0 auto}
+.km-store .site-header .bag{display:flex;align-items:center;gap:7px;border:0;padding:0;font-size:11px}
+.km-store .site-header .bag span{display:inline-grid;place-items:center;margin:0;width:22px;height:22px;border-radius:50%;background:var(--ks-green);color:white;font-size:10px}
+.km-store .site-header .mobile-menu{display:none}
+.ks-hero{display:grid;grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr);min-height:570px;background:var(--ks-cream)}
+.ks-hero-copy{padding:70px clamp(30px,6.5vw,100px);display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
+.ks-kicker{display:flex;align-items:center;gap:9px;color:#82633b;font-size:9px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase}
+.ks-kicker i{display:inline-block;width:24px;height:2px;background:var(--ks-gold)}
+.ks-hero h1,.ks-heading h2,.ks-story-copy h2,.ks-final-cta h2{font-family:"Playfair Display",Georgia,serif;font-weight:400;letter-spacing:-2.5px;line-height:.99}
+.ks-hero h1{font-size:clamp(48px,5.6vw,78px);margin:25px 0 19px}
+.ks-hero em,.ks-heading em,.ks-story-copy em,.ks-final-cta em{font-weight:400;color:#8d683c}
+.ks-hero-copy>p{max-width:450px;color:#696b60;font-size:14px;line-height:1.9;margin:0}
+.ks-actions{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:28px}
+.ks-button{display:inline-flex;align-items:center;justify-content:center;gap:17px;min-height:48px;padding:0 20px;background:var(--ks-green);color:#fff!important;border:1px solid var(--ks-green);font-size:11px;font-weight:700;transition:background .2s,transform .2s}
+.ks-button:hover{background:var(--ks-green2);transform:translateY(-1px)}
+.ks-price-note{font-size:11px;color:#67675d}
+.ks-proof{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:42px;padding-top:20px;border-top:1px solid #ded6c7}
+.ks-proof span{display:flex;align-items:center;gap:8px;font-size:10px;color:#4b5548;line-height:1.4}
+.ks-proof svg{flex:0 0 auto;color:#8b6b3f;stroke-width:1.7}
+.ks-hero-media{position:relative;min-height:570px;overflow:hidden;background:#d8c4a4}
+.ks-hero-media>img{display:block;width:100%;height:100%;min-height:570px;position:absolute;inset:0;object-fit:cover;object-position:center 55%}
+.ks-image-label{position:absolute;left:28px;right:28px;bottom:26px;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;padding:22px 24px;background:rgba(255,254,250,.94);color:var(--ks-ink)}
+.ks-image-label span{font-size:8px;letter-spacing:1.4px;font-weight:700;color:#6e705f}
+.ks-image-label b{font:italic 22px "Playfair Display",Georgia,serif;font-weight:400}
+.ks-round-label{position:absolute;right:7%;top:7%;width:104px;height:104px;border-radius:50%;background:var(--ks-green);color:#fff8e9;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-size:8px;letter-spacing:1.2px;line-height:1.7;transform:rotate(7deg);border:1px solid #ffffff8c}
+.ks-round-label strong{font:italic 15px "Playfair Display",serif;letter-spacing:0}
+.ks-benefit-bar{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--ks-sand);background:#fffefa;padding:20px 4.5vw;gap:18px}
+.ks-benefit-bar>div{display:flex;align-items:center;justify-content:center;gap:12px;padding:5px 10px;border-right:1px solid var(--ks-sand)}
+.ks-benefit-bar>div:last-child{border-right:0}
+.ks-benefit-bar svg{width:21px;height:21px;color:#987344;stroke-width:1.6;flex:0 0 auto}
+.ks-benefit-bar b,.ks-benefit-bar small{display:block}
+.ks-benefit-bar b{font-size:10px;font-weight:700}
+.ks-benefit-bar small{margin-top:4px;font-size:9px;color:var(--ks-muted)}
+.ks-shop{padding:80px 5vw 88px;background:#fffefa}
+.ks-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:25px;margin-bottom:30px}
+.ks-heading h2{font-size:clamp(37px,4.4vw,58px);margin:12px 0 10px}
+.ks-heading p{margin:0;color:var(--ks-muted);font-size:12px;line-height:1.7}
+.ks-inline-link{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;font-size:11px;font-weight:700;border-bottom:1px solid #b7a78f;padding:0 0 7px}
+.ks-products{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.ks-product-card{min-width:0;border:1px solid #e9e2d6;background:#fff;transition:box-shadow .2s,transform .2s}
+.ks-product-card:hover{box-shadow:0 12px 35px #1b2e1d12;transform:translateY(-3px)}
+.ks-product-image{height:255px;display:block;position:relative;overflow:hidden;background:#eee5d5}
+.ks-product-image img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .45s}
+.ks-product-card:hover .ks-product-image img{transform:scale(1.035)}
+.ks-product-image>span{position:absolute;top:14px;left:14px;padding:7px 9px;background:#fffefa;color:#4c583f;font-size:8px;font-weight:700;letter-spacing:1px}
+.ks-product-info{padding:19px}
+.ks-product-title{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.ks-product-title small{display:block;color:#8b6b3f;font-size:8px;font-weight:700;letter-spacing:1px}
+.ks-product-title h3{font:400 19px/1.25 "Playfair Display",Georgia,serif;margin:7px 0 0}
+.ks-product-title>strong{font:600 17px "DM Sans",sans-serif;white-space:nowrap}
+.ks-product-info>p{font-size:10px;color:var(--ks-muted);margin:11px 0 17px}
+.ks-product-info>p span{padding:0 5px;color:#b59b73}
+.ks-add-button{width:100%;min-height:44px;display:flex;align-items:center;justify-content:center;gap:10px;border:1px solid var(--ks-green);background:var(--ks-green);color:#fff;font-size:11px;font-weight:700;cursor:pointer;transition:background .2s}
+.ks-add-button:hover:not(:disabled){background:var(--ks-green2)}
+.ks-add-button:disabled{opacity:.45;cursor:not-allowed}
+.ks-stock{display:flex;align-items:center;gap:7px;margin-top:12px;font-size:9px;color:#6d7567}
+.ks-stock-dot{width:6px;height:6px;border-radius:50%;background:#52845a}
+.ks-sold-out{background:#b1a99b}
+.ks-state{padding:28px;border:1px solid var(--ks-sand);background:var(--ks-cream);font-size:12px;color:var(--ks-muted)}
+.ks-state a{text-decoration:underline}
+.ks-story{display:grid;grid-template-columns:1fr 1fr;background:#f1eadf}
+.ks-story-photo{position:relative;min-height:420px;overflow:hidden}
+.ks-story-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ks-story-photo>span{position:absolute;bottom:22px;left:24px;padding:9px 12px;background:#fffefaeb;font-size:8px;font-weight:700;letter-spacing:1.3px}
+.ks-story-copy{padding:70px clamp(30px,7vw,100px);display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+.ks-story-copy h2{font-size:clamp(38px,4.3vw,59px);margin:17px 0}
+.ks-story-copy>p{font-size:12px;line-height:1.95;color:#686b60;max-width:460px;margin:0 0 24px}
+.ks-button-light{background:transparent;color:var(--ks-green)!important}
+.ks-button-light:hover{color:white!important}
+.ks-why{padding:72px 5vw 80px;background:#fffefa}
+.ks-why .ks-heading{margin-bottom:25px}
+.ks-why-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--ks-sand)}
+.ks-why-grid>div{position:relative;padding:28px 30px 30px;border-right:1px solid var(--ks-sand)}
+.ks-why-grid>div:last-child{border-right:0}
+.ks-why-grid>div>span{position:absolute;right:20px;top:18px;font:18px "Playfair Display",serif;color:#b4a17f}
+.ks-why-grid svg{width:23px;height:23px;color:#8b6b3f;stroke-width:1.5}
+.ks-why-grid h3{font:400 21px "Playfair Display",serif;margin:18px 0 9px}
+.ks-why-grid p{font-size:11px;line-height:1.8;color:var(--ks-muted);margin:0;max-width:280px}
+.ks-final-cta{display:flex;align-items:center;justify-content:space-between;gap:25px;padding:44px 5vw;background:#eae1d2}
+.ks-final-cta h2{font-size:clamp(30px,3.7vw,47px);margin:11px 0 0}
+.ks-footer{padding:45px 5vw 18px;background:#153d2d;color:#f9f3e8}
+.ks-footer-main{display:grid;grid-template-columns:1.5fr .7fr .7fr 1fr;gap:35px;padding-bottom:38px}
+.ks-wordmark{font:400 28px "Playfair Display",Georgia,serif;letter-spacing:-1px}
+.ks-wordmark span{font-style:italic;color:#d8b87e}
+.ks-footer-brand p,.ks-footer-note p{font-size:11px;line-height:1.8;color:#d0d8ce;max-width:260px}
+.ks-footer-main>div:not(:first-child)>small{display:block;margin-bottom:16px;color:#d9b87a;font-size:8px;font-weight:700;letter-spacing:1.5px}
+.ks-footer-main>div>a{display:block;margin:10px 0;color:#f3eee4;font-size:11px}
+.ks-footer-note{border-left:1px solid #ffffff2b;padding-left:25px}
+.ks-footer-note>b{font:italic 21px "Playfair Display",serif;font-weight:400}
+.ks-footer-bottom{display:flex;justify-content:space-between;gap:20px;padding-top:16px;border-top:1px solid #ffffff2b;color:#c5d0c5;font-size:9px}
+.ks-toast{position:fixed;z-index:100;right:22px;top:130px;padding:14px 18px;background:var(--ks-green);color:white;box-shadow:0 10px 30px #0002;font-size:12px}
+@media(max-width:900px){.ks-hero{grid-template-columns:1fr 1fr;min-height:510px}.ks-hero-copy{padding:48px 28px}.ks-hero-media,.ks-hero-media>img{min-height:510px}.ks-hero h1{font-size:clamp(43px,6vw,60px)}.ks-proof{gap:7px}.ks-proof span{font-size:9px}.ks-benefit-bar{grid-template-columns:repeat(2,1fr)}.ks-benefit-bar>div:nth-child(2){border-right:0}.ks-benefit-bar>div{justify-content:flex-start}.ks-products{gap:14px}.ks-product-image{height:210px}.ks-product-info{padding:14px}.ks-product-title{display:block}.ks-product-title>strong{display:block;margin-top:9px}.ks-footer-main{grid-template-columns:1.2fr 1fr 1fr}.ks-footer-note{grid-column:1/-1;border-left:0;border-top:1px solid #ffffff2b;padding:20px 0 0}}
+@media(max-width:680px){.km-store .topbar{height:30px;justify-content:center;font-size:8px;letter-spacing:.8px}.km-store .topbar span:nth-child(2){display:none}.km-store .site-header{min-height:65px;padding:10px 16px!important;gap:12px}.km-store .site-header .kashurmewa-logo-img{width:105px!important}.km-store .site-header .main-nav{display:none}.km-store .site-header .mobile-menu{display:block;border:0;background:transparent;color:var(--ks-green);padding:5px}.km-store .site-header .header-actions{gap:10px}.km-store .site-header .header-actions>a:first-child{display:none}.km-store .site-header .bag{font-size:0;gap:5px}.ks-hero{grid-template-columns:1fr}.ks-hero-copy{padding:42px 22px 32px}.ks-hero h1{font-size:clamp(47px,12vw,65px);letter-spacing:-2px;margin:18px 0}.ks-hero-copy>p{font-size:13px}.ks-proof{margin-top:28px}.ks-proof span{font-size:8px;align-items:flex-start;flex-direction:column;gap:7px}.ks-hero-media,.ks-hero-media>img{min-height:340px;height:340px}.ks-image-label{left:12px;right:12px;bottom:12px;padding:14px}.ks-image-label b{font-size:18px}.ks-image-label span{font-size:7px}.ks-round-label{width:83px;height:83px;font-size:7px}.ks-round-label strong{font-size:12px}.ks-benefit-bar{padding:14px 12px;gap:4px}.ks-benefit-bar>div{padding:10px 7px;gap:8px}.ks-benefit-bar svg{width:18px;height:18px}.ks-benefit-bar b{font-size:9px}.ks-benefit-bar small{font-size:8px;line-height:1.5}.ks-shop{padding:52px 16px 58px}.ks-heading{align-items:flex-start;margin-bottom:23px}.ks-heading h2{font-size:38px;letter-spacing:-1.5px}.ks-heading p{font-size:11px}.ks-inline-link{font-size:10px;margin-top:24px}.ks-products{grid-template-columns:1fr;gap:16px}.ks-product-card{display:grid;grid-template-columns:42% 58%}.ks-product-image{height:100%;min-height:235px}.ks-product-image>span{top:8px;left:8px;padding:6px;font-size:7px}.ks-product-info{padding:14px 12px;display:flex;flex-direction:column;justify-content:center}.ks-product-title{display:block}.ks-product-title h3{font-size:17px}.ks-product-title>strong{font-size:16px;margin-top:8px}.ks-product-info>p{font-size:9px;line-height:1.5}.ks-add-button{min-height:39px;font-size:10px;gap:6px}.ks-stock{font-size:8px}.ks-story{grid-template-columns:1fr}.ks-story-photo{min-height:300px}.ks-story-copy{padding:42px 22px}.ks-story-copy h2{font-size:42px}.ks-why{padding:50px 16px}.ks-why-grid{grid-template-columns:1fr}.ks-why-grid>div{padding:22px;border-right:0;border-bottom:1px solid var(--ks-sand)}.ks-why-grid>div:last-child{border-bottom:0}.ks-final-cta{padding:32px 20px;align-items:flex-start;flex-direction:column}.ks-final-cta h2{font-size:36px}.ks-footer{padding:34px 20px 16px}.ks-footer-main{grid-template-columns:1fr 1fr;gap:28px 18px}.ks-footer-brand{grid-column:1/-1}.ks-footer-note{grid-column:1/-1}.ks-footer-bottom{font-size:8px}.ks-toast{left:12px;right:12px;top:105px;text-align:center}}
