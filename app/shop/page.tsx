@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { fetchAllProducts, Product } from "@/lib/catalog";
-import { KashurmewLogo } from "@/components/brand/Logo";
+import { NavigationHeader } from "@/components/navigation/Header";
 
 export default function ShopPage() {
   const [items, setItems] = useState<Product[]>([]);
@@ -11,8 +11,13 @@ export default function ShopPage() {
   const [sort, setSort] = useState("featured");
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem("kashurmewa-cart") || "[]");
+      setCartCount(saved.reduce((sum: number, item: { qty?: number }) => sum + Number(item.qty || 0), 0));
+    } catch {}
     let cancelled = false;
     (async () => {
       try {
@@ -39,15 +44,7 @@ export default function ShopPage() {
 
   return (
     <main className="commerce-page">
-      <header className="commerce-header">
-        <KashurmewLogo variant="dark" size="sm" />
-        <nav>
-          <Link className="active" href="/shop">Shop</Link>
-          <Link href="/about">About Us</Link>
-          <Link href="/account">Account</Link>
-        </nav>
-        <Link className="commerce-bag" href="/cart">Bag ↗</Link>
-      </header>
+      <NavigationHeader cartCount={cartCount} />
 
       <section className="shop-banner">
         <div>
@@ -111,8 +108,8 @@ export default function ShopPage() {
       </section>
 
       <footer className="commerce-footer">
-        <KashurmewLogo variant="dark" size="sm" />
-        <span>Authentic Kashmiri Produce.</span>
+        <Link className="premium-footer-brand" href="/">Kashurmewa</Link>
+        <span>Walnuts in shell, thoughtfully presented.</span>
         <Link href="/about">About Us</Link>
         <Link href="/policies/shipping">Shipping Policy</Link>
         <Link href="/cart">Your Bag</Link>
