@@ -30,12 +30,16 @@ export default function Home() {
 
   useEffect(() => {
     (async () => {
-      const p = await fetchProductBySlug("kashmiri-walnuts");
-      if (p) {
-        setProduct(p);
-        if (p.variants.length) {
-          setSize(p.variants[0].size);
+      try {
+        const p = await fetchProductBySlug("kashmiri-walnuts");
+        if (p) {
+          setProduct(p);
+          if (p.variants.length) {
+            setSize(p.variants[0].size);
+          }
         }
+      } catch (error) {
+        console.error("Unable to load Kashurmewa featured product from Supabase.", error);
       }
       try {
         const c = JSON.parse(localStorage.getItem("kashurmewa-cart") || "[]");
