@@ -1,15 +1,212 @@
 "use client";
+
 import Link from "next/link";
-import {useEffect,useState} from "react";
-import {useParams} from "next/navigation";
-import {supabase} from "../../../lib/supabase";
-type V={id:string;size:string;price_inr:number;stock:number};
-type P={id:string;name:string;slug:string;description:string;origin:string;ingredients:string;km_product_variants:V[];km_product_images:{url:string;sort_order:number}[]};
-export default function ProductPage(){
- const params=useParams<{slug:string}>();const [p,setP]=useState<P|null>(null);const [size,setSize]=useState("");const [qty,setQty]=useState(1);const [notice,setNotice]=useState("");
- useEffect(()=>{(async()=>{const r=await supabase.from("km_products").select("id,name,slug,description,origin,ingredients,km_product_variants(id,size,price_inr,stock),km_product_images(url,sort_order)").eq("slug",params.slug).eq("active",true).single();if(r.data){const d=r.data as P;d.km_product_variants.sort((a,b)=>a.price_inr-b.price_inr);d.km_product_images.sort((a,b)=>a.sort_order-b.sort_order);setP(d);setSize(d.km_product_variants[0]?.size||"")}})()},[params.slug]);
- const v=p?.km_product_variants.find(x=>x.size===size);const image=p?.km_product_images[0]?.url||"https://images.pexels.com/photos/8303558/pexels-photo-8303558.jpeg";
- const add=()=>{if(!p||!v)return;const cart=JSON.parse(localStorage.getItem("kashurmewa-cart")||"[]");const found=cart.find((i:{variantId:string})=>i.variantId===v.id);if(found)found.qty=Math.min(found.qty+qty,v.stock);else cart.push({productId:p.id,variantId:v.id,qty:Math.min(qty,v.stock)});localStorage.setItem("kashurmewa-cart",JSON.stringify(cart));setNotice("Added to your bag.")};
- if(!p)return <main className="commerce-page"><header className="commerce-header"><Link className="logo" href="/">KASHUR<span>MEWA</span></Link><Link href="/shop">← Back to shop</Link></header><div className="commerce-loading">Loading product…</div></main>;
- return <main className="commerce-page"><header className="commerce-header"><Link className="logo" href="/">KASHUR<span>MEWA</span></Link><nav><Link href="/shop">Shop</Link><Link href="/account">Account</Link></nav><Link className="commerce-bag" href="/cart">Bag ↗</Link></header><div className="product-breadcrumb"><Link href="/">Home</Link> / <Link href="/shop">Shop</Link> / {p.name}</div><section className="product-detail"><div><div className="detail-main-image"><img src={image} alt={p.name}/></div><div className="detail-image-note"><span>01 / ORIGIN</span><span>SELECTED WITH CARE</span></div></div><div className="detail-buy"><span className="commerce-eyebrow">KASHURMEWA SIGNATURE</span><h1>{p.name}</h1><p className="detail-description">{p.description}</p><div className="detail-rating">✦ Carefully selected · Packed for freshness</div><div className="detail-price">₹{v?v.price_inr.toLocaleString("en-IN"):"—"}<span>INR · Inclusive of applicable taxes</span></div><span className="commerce-eyebrow">CHOOSE YOUR PACK</span><div className="detail-variants">{p.km_product_variants.map(x=><button key={x.id} disabled={!x.stock} className={size===x.size?"chosen":""} onClick={()=>setSize(x.size)}><b>{x.size}</b><span>₹{x.price_inr.toLocaleString("en-IN")}</span></button>)}</div><div className="detail-quantity"><span>Quantity</span><div><button onClick={()=>setQty(Math.max(1,qty-1))}>−</button><b>{qty}</b><button onClick={()=>setQty(Math.min(v?.stock||1,qty+1))}>+</button></div><small>{v?.stock?v.stock+" available":"Out of stock"}</small></div><button className="detail-add" disabled={!v?.stock} onClick={add}>ADD TO BAG — ₹{v?(v.price_inr*qty).toLocaleString("en-IN"):"—"} <span>↗</span></button>{notice&&<p className="commerce-notice">{notice} <Link href="/cart">View bag →</Link></p>}<div className="detail-promises"><div><b>Thoughtfully packed</b><span>Care taken to protect freshness.</span></div><div><b>Pan-India delivery</b><span>Delivery details confirmed at checkout.</span></div><div><b>One simple ingredient</b><span>{p.ingredients||"See product label for ingredients."}</span></div></div></div></section><section className="detail-story"><span className="commerce-eyebrow">A LITTLE MORE ABOUT IT</span><h2>Simple by nature.<br/><i>Considered by design.</i></h2><p>{p.description} Our focus is on the ingredient, careful packing, and a thoughtful experience from selection to delivery.</p></section><footer className="commerce-footer"><Link className="logo" href="/">KASHUR<span>MEWA</span></Link><Link href="/shop">Continue shopping</Link><Link href="/cart">Your bag</Link></footer></main>
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import { fetchProductBySlug, Product, ProductVariant } from "@/lib/catalog";
+import { KashurmewLogo } from "@/components/brand/Logo";
+
+export default function ProductDetailPage() {
+  const params = useParams<{ slug: string }>();
+  const [product, setProduct] = useState<Product | null>(null);
+  const [size, setSize] = useState("");
+  const [qty, setQty] = useState(1);
+  const [notice, setNotice] = useState("");
+  const [selectedImage, setSelectedImage] = useState(0);
+
+  useEffect(() => {
+    (async () => {
+      const p = await fetchProductBySlug(params.slug || "kashmiri-walnuts");
+      if (p) {
+        setProduct(p);
+        if (p.variants.length) {
+          setSize(p.variants[0].size);
+        }
+      }
+    })();
+  }, [params.slug]);
+
+  const selectedVariant: ProductVariant | undefined = product?.variants.find((x) => x.size === size) || product?.variants[0];
+  const mainImage = product?.images[selectedImage]?.url || "https://images.pexels.com/photos/8303558/pexels-photo-8303558.jpeg";
+
+  const addToBag = () => {
+    if (!product || !selectedVariant) return;
+    try {
+      const cart = JSON.parse(localStorage.getItem("kashurmewa-cart") || "[]");
+      const found = cart.find((i: { variantId: string }) => i.variantId === selectedVariant.id);
+      if (found) {
+        found.qty = Math.min(found.qty + qty, selectedVariant.stock || 50);
+      } else {
+        cart.push({
+          productId: product.id,
+          variantId: selectedVariant.id,
+          qty: Math.min(qty, selectedVariant.stock || 50),
+        });
+      }
+      localStorage.setItem("kashurmewa-cart", JSON.stringify(cart));
+      setNotice(`Added ${qty} × ${selectedVariant.size} pack to your bag.`);
+      setTimeout(() => setNotice(""), 4000);
+    } catch {}
+  };
+
+  if (!product) {
+    return (
+      <main className="commerce-page">
+        <header className="commerce-header">
+          <KashurmewLogo variant="dark" size="sm" />
+          <Link href="/shop">← Back to shop</Link>
+        </header>
+        <div className="commerce-loading">Loading product catalog…</div>
+      </main>
+    );
+  }
+
+  return (
+    <main className="commerce-page">
+      <header className="commerce-header">
+        <KashurmewLogo variant="dark" size="sm" />
+        <nav>
+          <Link href="/shop">Shop</Link>
+          <Link href="/about">About</Link>
+          <Link href="/account">Account</Link>
+        </nav>
+        <Link className="commerce-bag" href="/cart">
+          Bag ↗
+        </Link>
+      </header>
+
+      <div className="product-breadcrumb">
+        <Link href="/">Home</Link> / <Link href="/shop">Shop</Link> / {product.name}
+      </div>
+
+      <section className="product-detail">
+        <div>
+          <div className="detail-main-image">
+            <img src={mainImage} alt={product.name} />
+          </div>
+          <div className="detail-image-note">
+            <span>01 / ORIGIN: {product.origin}</span>
+            <span>100% IN-SHELL NATURAL WALNUTS</span>
+          </div>
+          <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+            {product.images.map((img, idx) => (
+              <button
+                key={idx}
+                onClick={() => setSelectedImage(idx)}
+                style={{
+                  width: "70px",
+                  height: "70px",
+                  border: selectedImage === idx ? "2px solid #344B3A" : "1px solid #E7DED1",
+                  padding: 0,
+                  cursor: "pointer",
+                }}
+              >
+                <img src={img.url} alt={img.alt_text || product.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="detail-buy">
+          <span className="commerce-eyebrow">KASHURMEWA SIGNATURE</span>
+          <h1>{product.name}</h1>
+          <p className="detail-description">{product.description}</p>
+          <div className="detail-rating">
+            ✦ Sourced directly from high-altitude orchards in Kashmir · Packed for natural freshness
+          </div>
+
+          <div className="detail-price">
+            ₹{selectedVariant ? (selectedVariant.price_inr * qty).toLocaleString("en-IN") : "—"}
+            <span>INR · Inclusive of all applicable taxes · Free delivery above ₹999</span>
+          </div>
+
+          <span className="commerce-eyebrow" style={{ display: "block", marginTop: "20px" }}>
+            CHOOSE PACK SIZE
+          </span>
+          <div className="detail-variants">
+            {product.variants.map((v) => (
+              <button
+                key={v.id}
+                disabled={v.stock <= 0}
+                className={size === v.size ? "chosen" : ""}
+                onClick={() => setSize(v.size)}
+              >
+                <b>{v.size}</b>
+                <span>₹{v.price_inr.toLocaleString("en-IN")}</span>
+              </button>
+            ))}
+          </div>
+
+          <div className="detail-quantity">
+            <span>Quantity</span>
+            <div>
+              <button onClick={() => setQty(Math.max(1, qty - 1))} aria-label="Decrease quantity">
+                −
+              </button>
+              <b>{qty}</b>
+              <button
+                onClick={() => setQty(Math.min(selectedVariant?.stock || 50, qty + 1))}
+                aria-label="Increase quantity"
+              >
+                +
+              </button>
+            </div>
+            <small>{selectedVariant?.stock ? `${selectedVariant.stock} units available` : "In Stock"}</small>
+          </div>
+
+          <button className="detail-add" disabled={!selectedVariant || selectedVariant.stock <= 0} onClick={addToBag}>
+            {selectedVariant && selectedVariant.stock > 0
+              ? `ADD TO BAG — ₹${(selectedVariant.price_inr * qty).toLocaleString("en-IN")}`
+              : "OUT OF STOCK"}{" "}
+            <span>↗</span>
+          </button>
+
+          {notice && (
+            <p className="commerce-notice" style={{ marginTop: "14px", fontWeight: 600 }}>
+              {notice} <Link href="/cart">Proceed to cart & checkout →</Link>
+            </p>
+          )}
+
+          <div className="detail-promises">
+            <div>
+              <b>Net Weight & Packaging Note</b>
+              <span>
+                Net pack weight reflects whole walnuts inside natural shells. Walnuts in shell naturally maintain their crispness and kernel oils longer.
+              </span>
+            </div>
+            <div>
+              <b>Storage Instructions</b>
+              <span>{product.storage_instructions || "Store in a cool, dry place in an airtight container."}</span>
+            </div>
+            <div>
+              <b>Shelf Life</b>
+              <span>{product.shelf_life || "6 Months from packaging date."}</span>
+            </div>
+            <div>
+              <b>Ingredients</b>
+              <span>{product.ingredients}</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="detail-story">
+        <span className="commerce-eyebrow">THE KASHURMEWA COMMITMENT</span>
+        <h2>
+          Simple by nature.<br />
+          <i>Considered by design.</i>
+        </h2>
+        <p>
+          Our walnuts are carefully gathered from Kashmiri orchards, sorted to remove broken shells, and packed without chemical washing or bleaching. What you receive is authentic Kashmiri produce in its pure, natural state.
+        </p>
+      </section>
+
+      <footer className="commerce-footer">
+        <KashurmewLogo variant="dark" size="sm" />
+        <Link href="/shop">Continue shopping</Link>
+        <Link href="/cart">Your bag</Link>
+        <Link href="/policies/shipping">Shipping Policy</Link>
+      </footer>
+    </main>
+  );
 }

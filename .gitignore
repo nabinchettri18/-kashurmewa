@@ -1,6 +1,11 @@
 node_modules/
 .next/
-.env
-.env.local
-.env.*.local
 .vercel/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# TypeScript build cache
+*.tsbuildinfo
