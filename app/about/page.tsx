@@ -24,24 +24,24 @@ export default function AboutPage() {
             <i>Guided by nature.</i>
           </h1>
           <p className="detail-description">
-            Kashurmewa brings authentic Kashmiri dry fruits directly from mountain orchards to households across India.
+            Kashurmewa is a focused walnut brand built around one product: walnuts in shell. We aim to make product details, pack sizes and current prices clear before checkout.
           </p>
         </div>
 
         <div className="policy-content">
-          <h2>The Kashurmewa Philosophy</h2>
+          <h2>A product-first approach</h2>
           <p>
-            The temperate valleys of Kashmir present ideal agro-climatic conditions for walnut cultivation. High altitudes, cold winters, snowmelt river irrigation, and rich soil produce walnuts with superior oil concentration, crisp kernels, and thin natural shells.
+            We keep the range focused and the shopping experience straightforward. Each active pack is displayed with its current catalogue price and available stock, so customers can review the details before placing an order.
           </p>
 
-          <h2>Natural Quality, Zero Bleaching</h2>
+          <h2>Clear product information</h2>
           <p>
-            Unlike commercial market walnuts that undergo intense chlorine bleaching for uniform white outer shells, Kashurmewa walnuts are preserved in their natural state. We sort for structural shell integrity, clean manually, and pack them without chemical agents.
+            Check the product listing and the label on your delivered pack for its net weight, ingredients, storage guidance, packed-on date and best-before information. If you need clarification before ordering, please contact us.
           </p>
 
-          <h2>Careful Sourcing & Pan-India Dispatch</h2>
+          <h2>Delivery and order details</h2>
           <p>
-            Every batch is batch-checked for net weight, shell hardness, kernel fill percentage, and moisture levels before being sealed in food-grade packaging and dispatched across India.
+            Delivery charges and the free-shipping threshold are shown in our shipping policy and at checkout. We only confirm an order after the live catalogue, stock and order details have been checked.
           </p>
         </div>
       </section>
