@@ -28,7 +28,7 @@ export default function CartPage() {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [pincode, setPincode] = useState("");
-  const [paymentMethod] = useState<"cod">("cod");
+  const [paymentMethod, setPaymentMethod] = useState<"cod" | "razorpay">("cod");
 
   const load = async () => {
     setLoading(true);
