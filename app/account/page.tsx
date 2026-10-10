@@ -17,6 +17,13 @@ function AccountForm() {
   const router = useRouter();
   const search = useSearchParams();
 
+  const nextPath = () => {
+    const requestedPath = search.get("next");
+    return requestedPath?.startsWith("/") && !requestedPath.startsWith("//")
+      ? requestedPath
+      : "/cart";
+  };
+
   useEffect(() => {
     supabase.auth.getSession().then((r) => setSignedIn(r.data.session?.user.email || ""));
     const sub = supabase.auth.onAuthStateChange((_e, s) => setSignedIn(s?.user.email || ""));
@@ -60,7 +67,7 @@ function AccountForm() {
             <i>back.</i>
           </h1>
           <p>{signedIn}</p>
-          <button className="detail-add" onClick={() => router.push(search.get("next") || "/cart")}>
+          <button className="detail-add" onClick={() => router.push(nextPath())}>
             CONTINUE ↗
           </button>
           <button className="account-switch" onClick={signout}>
@@ -137,4 +144,4 @@ export default function AccountPage() {
       </footer>
     </main>
   );
-}
+}
