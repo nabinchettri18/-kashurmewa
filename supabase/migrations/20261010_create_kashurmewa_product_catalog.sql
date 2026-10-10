@@ -39,6 +39,8 @@ create table if not exists public.km_product_images (
 
 create index if not exists km_product_variants_product_id_idx on public.km_product_variants(product_id);
 create index if not exists km_product_images_product_id_sort_idx on public.km_product_images(product_id, sort_order);
+-- The original schema did not declare SKU unique; required by the seed's ON CONFLICT clause.
+create index if not exists km_product_variants_sku_idx on public.km_product_variants(sku);
 
 alter table public.km_products enable row level security;
 alter table public.km_product_variants enable row level security;
@@ -101,13 +103,9 @@ cross join (values
   ('1 kg', 1199, 50, 'KM-WAL-1KG')
 ) as v(size, price_inr, stock, sku)
 where p.slug = 'kashmiri-walnuts'
-on conflict (sku) do update set
-  product_id = excluded.product_id,
-  size = excluded.size,
-  price_inr = excluded.price_inr,
-  stock = excluded.stock,
-  active = true,
-  updated_at = now();
+and not exists (
+  select 1 from public.km_product_variants existing where existing.sku = v.sku
+); -- Preserve live price, availability and inventory on migration reruns.
 
 insert into public.km_product_images (product_id, url, alt_text, sort_order)
 select p.id, i.url, i.alt_text, i.sort_order

@@ -153,12 +153,10 @@ VALUES (
 
 INSERT INTO public.km_product_variants (id, product_id, size, price_inr, stock, sku, active)
 VALUES 
-    ('v1111111-1111-1111-1111-111111111111', 'a1b2c3d4-e5f6-7890-abcd-111111111111', '250 g', 349.00, 100, 'KM-WAL-250G', true),
-    ('v2222222-2222-2222-2222-222222222222', 'a1b2c3d4-e5f6-7890-abcd-111111111111', '500 g', 649.00, 75, 'KM-WAL-500G', true),
-    ('v3333333-3333-3333-3333-333333333333', 'a1b2c3d4-e5f6-7890-abcd-111111111111', '1 kg', 1199.00, 50, 'KM-WAL-1KG', true)
-ON CONFLICT (id) DO UPDATE SET
-    price_inr = EXCLUDED.price_inr,
-    stock = EXCLUDED.stock;
+    ('b1111111-1111-1111-1111-111111111111', 'a1b2c3d4-e5f6-7890-abcd-111111111111', '250 g', 349.00, 100, 'KM-WAL-250G', true),
+    ('b2222222-2222-2222-2222-222222222222', 'a1b2c3d4-e5f6-7890-abcd-111111111111', '500 g', 649.00, 75, 'KM-WAL-500G', true),
+    ('b3333333-3333-3333-3333-333333333333', 'a1b2c3d4-e5f6-7890-abcd-111111111111', '1 kg', 1199.00, 50, 'KM-WAL-1KG', true)
+ON CONFLICT (id) DO NOTHING; -- Never overwrite live prices or inventory during a migration rerun.
 
 INSERT INTO public.km_product_images (product_id, url, alt_text, sort_order)
 VALUES 

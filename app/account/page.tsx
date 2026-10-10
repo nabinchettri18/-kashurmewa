@@ -17,6 +17,16 @@ function AccountForm() {
   const router = useRouter();
   const search = useSearchParams();
 
+  const nextPath = () => {
+    const requestedPath = search.get("next");
+    return requestedPath?.startsWith("/") &&
+      !requestedPath.startsWith("//") &&
+      !requestedPath.includes("\\") &&
+      !/[\u0000-\u001f]/.test(requestedPath)
+      ? requestedPath
+      : "/cart";
+  };
+
   useEffect(() => {
     supabase.auth.getSession().then((r) => setSignedIn(r.data.session?.user.email || ""));
     const sub = supabase.auth.onAuthStateChange((_e, s) => setSignedIn(s?.user.email || ""));
@@ -35,7 +45,7 @@ function AccountForm() {
       } else {
         const r = await supabase.auth.signInWithPassword({ email, password });
         if (r.error) throw r.error;
-        router.push(search.get("next") || "/cart");
+        router.push(nextPath());
       }
     } catch (e) {
       setMessage(e instanceof Error ? e.message : "Could not complete account request.");
@@ -60,7 +70,7 @@ function AccountForm() {
             <i>back.</i>
           </h1>
           <p>{signedIn}</p>
-          <button className="detail-add" onClick={() => router.push(search.get("next") || "/cart")}>
+          <button className="detail-add" onClick={() => router.push(nextPath())}>
             CONTINUE ↗
           </button>
           <button className="account-switch" onClick={signout}>
@@ -74,7 +84,7 @@ function AccountForm() {
             <br />
             <i>{mode === "signin" ? "you again." : "the good stuff."}</i>
           </h1>
-          <p>Sign in or create an account to continue to checkout.</p>
+          <p>Sign in or create an account to manage your account. You can also check out as a guest from your bag.</p>
           <div className="account-tabs">
             <button className={mode === "signin" ? "selected" : ""} onClick={() => setMode("signin")}>
               SIGN IN
@@ -137,4 +147,4 @@ export default function AccountPage() {
       </footer>
     </main>
   );
-}
+}

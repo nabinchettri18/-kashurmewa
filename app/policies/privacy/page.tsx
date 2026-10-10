@@ -34,12 +34,12 @@ export default function PrivacyPolicyPage() {
 
           <h2>Data Security</h2>
           <p>
-            We implement strict security measures to safeguard your personal data. Payment details are processed through encrypted payment gateway providers; Kashurmewa never stores full credit card or bank details on our servers.
+            We use reasonable technical and organizational safeguards to protect personal information. Checkout currently supports Cash on Delivery only; online payment processing is not enabled. Contact-form messages are stored in our store support database so we can respond to enquiries.
           </p>
 
           <h2>Third-Party Sharing</h2>
           <p>
-            Your information is shared only with verified logistics and delivery courier partners for the sole purpose of fulfilling your order. We do not sell or rent customer data to third parties.
+            If an order is placed, necessary delivery details may be shared with a delivery provider to fulfil that order. We do not sell customer personal information. Only provide information needed to process your enquiry or order.
           </p>
         </div>
       </section>

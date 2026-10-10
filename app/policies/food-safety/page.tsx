@@ -31,7 +31,7 @@ export default function FoodSafetyPage() {
           <p>
             <strong>Product:</strong> Kashmiri In-Shell Walnuts (Juglans regia).<br />
             <strong>Category:</strong> Dry Fruits / Nuts.<br />
-            <strong>Ingredients:</strong> 100% Kashmiri In-Shell Walnuts. Contains no artificial colors, chemical preservatives, or synthetic bleaching agents.
+            <strong>Ingredients:</strong> In-shell walnuts. Confirm the final ingredient and processing declarations against the actual supplier and physical product label before sale.
           </p>
 
           <h2>Net Weight & Shell Weight Notice</h2>
@@ -41,7 +41,7 @@ export default function FoodSafetyPage() {
 
           <h2>Allergen Warning</h2>
           <p>
-            <strong>Contains Tree Nuts (Walnuts).</strong> Processed and packed in a facility that handles tree nuts.
+            <strong>Contains Tree Nuts (Walnuts).</strong> Add any cross-contact or shared-facility warning only after confirming the actual packing facility's allergen handling practices.
           </p>
 
           <h2>Storage & Handling Instructions</h2>

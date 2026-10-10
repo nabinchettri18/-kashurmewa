@@ -34,75 +34,97 @@ export default function AdminDashboard() {
   const [searchCustomer, setSearchCustomer] = useState("");
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [trackingInput, setTrackingInput] = useState("");
+  const [authLoading, setAuthLoading] = useState(true);
+  const [authorized, setAuthorized] = useState(false);
 
   const loadData = async () => {
     setLoading(true);
     try {
       // 1. Load Products & Variants
-      const { data: pData } = await supabase
+      const { data: pData, error: productError } = await supabase
         .from("km_products")
         .select("id,name,slug,active,description,km_product_variants(id,size,price_inr,stock,sku)")
         .eq("slug", "kashmiri-walnuts")
         .single();
+      if (productError) throw productError;
 
       if (pData) {
         const p = pData as any;
         p.variants = (p.km_product_variants || []).sort((a: Variant, b: Variant) => a.price_inr - b.price_inr);
         setProduct(p);
       } else {
-        // Fallback default product structure if DB not synced yet
-        setProduct({
-          id: "a1b2c3d4-e5f6-7890-abcd-111111111111",
-          name: "Kashmiri In-Shell Walnuts",
-          slug: "kashmiri-walnuts",
-          active: true,
-          variants: [
-            { id: "v1111111-1111-1111-1111-111111111111", size: "250 g", price_inr: 349, stock: 100 },
-            { id: "v2222222-2222-2222-2222-222222222222", size: "500 g", price_inr: 649, stock: 75 },
-            { id: "v3333333-3333-3333-3333-333333333333", size: "1 kg", price_inr: 1199, stock: 50 },
-          ],
-        });
+        setProduct(null);
+        setMessage("No live product was found. Add or activate the product in the catalogue before managing inventory.");
       }
 
       // 2. Load Orders
-      const { data: oData } = await supabase
+      const { data: oData, error: ordersError } = await supabase
         .from("km_orders")
         .select("*")
         .order("created_at", { ascending: false });
-
-      if (oData) {
-        setOrders(oData as Order[]);
-      }
-    } catch {
-      setMessage("Note: Running in standalone admin view mode.");
+      if (ordersError) throw ordersError;
+      setOrders((oData || []) as Order[]);
+    } catch (error) {
+      console.error("Admin data load failed:", error);
+      setMessage("Could not load admin data. Check your admin role and Supabase permissions, then refresh.");
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    void loadData();
+    let alive = true;
+
+    const checkAccess = async () => {
+      const { data } = await supabase.auth.getSession();
+      if (!alive) return;
+      const isAdmin = data.session?.user.app_metadata?.role === "admin";
+      setAuthorized(isAdmin);
+      setAuthLoading(false);
+      if (isAdmin) void loadData();
+    };
+
+    void checkAccess();
+
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "INITIAL_SESSION") return;
+      const isAdmin = session?.user.app_metadata?.role === "admin";
+      setAuthorized(isAdmin);
+      setAuthLoading(false);
+      if (isAdmin) {
+        void loadData();
+      } else {
+        setProduct(null);
+        setOrders([]);
+      }
+    });
+
+    return () => {
+      alive = false;
+      authListener.subscription.unsubscribe();
+    };
   }, []);
 
   const updateVariant = async (id: string, field: "price_inr" | "stock", value: string) => {
     const num = Number(value);
-    if (!Number.isFinite(num) || num < 0) return;
-
-    if (product) {
-      const updatedVariants = product.variants.map((v) => (v.id === id ? { ...v, [field]: num } : v));
-      setProduct({ ...product, variants: updatedVariants });
+    if (!Number.isFinite(num) || num < 0 || (field === "stock" && !Number.isInteger(num))) {
+      setMessage("Enter a valid non-negative value.");
+      return;
     }
-
     const { error } = await supabase
       .from("km_product_variants")
       .update({ [field]: num })
       .eq("id", id);
-
     if (error) {
-      setMessage("Stock updated locally. Database sync requires active admin connection.");
-    } else {
-      setMessage("Saved successfully!");
+      console.error("Variant update failed:", error);
+      setMessage("Save failed. Your displayed inventory was not changed; check admin permissions and retry.");
+      return;
     }
+    setProduct((current) => current ? {
+      ...current,
+      variants: current.variants.map((v) => v.id === id ? { ...v, [field]: num } : v),
+    } : current);
+    setMessage("Saved successfully.");
   };
 
   const updateOrderStatus = async (orderId: string, status: string, tracking?: string) => {
@@ -118,18 +140,38 @@ export default function AdminDashboard() {
       setOrders(orders.map((o) => (o.id === orderId ? { ...o, ...updateObj } : o)));
       setMessage(`Order ${orderId.slice(0, 8)} updated to ${status}.`);
     } else {
-      setMessage(`Updated order status locally.`);
-      setOrders(orders.map((o) => (o.id === orderId ? { ...o, ...updateObj } : o)));
+      console.error("Order status update failed:", error);
+      setMessage("Save failed. The order status was not changed; check admin permissions and retry.");
     }
   };
 
   // Metrics derivation
   const totalOrdersCount = orders.length;
   // ONLY count completed/paid orders for revenue (Rule #7)
-  const paidOrders = orders.filter((o) => o.payment_status === "paid" || o.fulfillment_status === "delivered");
+  const paidOrders = orders.filter((o) => o.payment_status === "paid");
   const totalPaidRevenue = paidOrders.reduce((sum, o) => sum + Number(o.total_amount_inr || 0), 0);
   const pendingOrdersCount = orders.filter((o) => o.fulfillment_status === "pending").length;
   const lowStockVariants = product?.variants.filter((v) => v.stock < 10) || [];
+
+  if (authLoading) {
+    return <div className="admin-shell"><main className="admin-main"><p>Checking admin access…</p></main></div>;
+  }
+
+  if (!authorized) {
+    return (
+      <div className="admin-shell">
+        <main className="admin-main">
+          <div className="admin-access-card">
+            <p className="eyebrow">RESTRICTED AREA</p>
+            <h1>Admin sign-in required</h1>
+            <p>Sign in with an account assigned the admin role to manage inventory and orders.</p>
+            <p><Link href="/account?next=/admin">Sign in to continue ↗</Link></p>
+            <p><Link href="/">Return to the storefront</Link></p>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="admin-shell">

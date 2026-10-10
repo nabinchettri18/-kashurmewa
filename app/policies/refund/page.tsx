@@ -34,12 +34,12 @@ export default function RefundPolicyPage() {
 
           <h2>Damaged or Defective Items</h2>
           <p>
-            If your package arrives physically damaged or compromised during transit, please notify us within 48 hours of delivery at support@kashurmewa.com with photos/videos of the package.
+            If an item arrives damaged, defective, or incorrect, contact us through the Contact page as soon as possible, ideally within 48 hours of delivery. Include your order reference and clear photos of the item and packaging so we can review the issue.
           </p>
 
           <h2>Refund Processing</h2>
           <p>
-            Approved refunds will be processed back to the original payment method within 5–7 business days, or provided as store credit upon request.
+            Checkout currently supports Cash on Delivery only, and automated refunds are not available. If a refund or other resolution is approved after review, our team will contact you to confirm the arrangement and expected timing. We do not promise a fixed refund timeline before reviewing the case.
           </p>
         </div>
       </section>
