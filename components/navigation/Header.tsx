@@ -42,7 +42,7 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
           {menuOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
 
-        <KashurmewLogo variant="light" size="sm" />
+        <KashurmewLogo variant="dark" size="sm" />
 
         <nav className="main-nav">
           <Link href="/shop" className="hover:text-[#B69A66] transition-colors">
