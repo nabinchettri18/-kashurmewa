@@ -41,11 +41,12 @@ export default function AdminDashboard() {
     setLoading(true);
     try {
       // 1. Load Products & Variants
-      const { data: pData } = await supabase
+      const { data: pData, error: productError } = await supabase
         .from("km_products")
         .select("id,name,slug,active,description,km_product_variants(id,size,price_inr,stock,sku)")
         .eq("slug", "kashmiri-walnuts")
         .single();
+      if (productError) throw productError;
 
       if (pData) {
         const p = pData as any;
@@ -57,16 +58,15 @@ export default function AdminDashboard() {
       }
 
       // 2. Load Orders
-      const { data: oData } = await supabase
+      const { data: oData, error: ordersError } = await supabase
         .from("km_orders")
         .select("*")
         .order("created_at", { ascending: false });
-
-      if (oData) {
-        setOrders(oData as Order[]);
-      }
-    } catch {
-      setMessage("Note: Running in standalone admin view mode.");
+      if (ordersError) throw ordersError;
+      setOrders((oData || []) as Order[]);
+    } catch (error) {
+      console.error("Admin data load failed:", error);
+      setMessage("Could not load admin data. Check your admin role and Supabase permissions, then refresh.");
     } finally {
       setLoading(false);
     }
@@ -107,23 +107,24 @@ export default function AdminDashboard() {
 
   const updateVariant = async (id: string, field: "price_inr" | "stock", value: string) => {
     const num = Number(value);
-    if (!Number.isFinite(num) || num < 0) return;
-
-    if (product) {
-      const updatedVariants = product.variants.map((v) => (v.id === id ? { ...v, [field]: num } : v));
-      setProduct({ ...product, variants: updatedVariants });
+    if (!Number.isFinite(num) || num < 0 || (field === "stock" && !Number.isInteger(num))) {
+      setMessage("Enter a valid non-negative value.");
+      return;
     }
-
     const { error } = await supabase
       .from("km_product_variants")
       .update({ [field]: num })
       .eq("id", id);
-
     if (error) {
-      setMessage("Stock updated locally. Database sync requires active admin connection.");
-    } else {
-      setMessage("Saved successfully!");
+      console.error("Variant update failed:", error);
+      setMessage("Save failed. Your displayed inventory was not changed; check admin permissions and retry.");
+      return;
     }
+    setProduct((current) => current ? {
+      ...current,
+      variants: current.variants.map((v) => v.id === id ? { ...v, [field]: num } : v),
+    } : current);
+    setMessage("Saved successfully.");
   };
 
   const updateOrderStatus = async (orderId: string, status: string, tracking?: string) => {
@@ -139,15 +140,15 @@ export default function AdminDashboard() {
       setOrders(orders.map((o) => (o.id === orderId ? { ...o, ...updateObj } : o)));
       setMessage(`Order ${orderId.slice(0, 8)} updated to ${status}.`);
     } else {
-      setMessage(`Updated order status locally.`);
-      setOrders(orders.map((o) => (o.id === orderId ? { ...o, ...updateObj } : o)));
+      console.error("Order status update failed:", error);
+      setMessage("Save failed. The order status was not changed; check admin permissions and retry.");
     }
   };
 
   // Metrics derivation
   const totalOrdersCount = orders.length;
   // ONLY count completed/paid orders for revenue (Rule #7)
-  const paidOrders = orders.filter((o) => o.payment_status === "paid" || o.fulfillment_status === "delivered");
+  const paidOrders = orders.filter((o) => o.payment_status === "paid");
   const totalPaidRevenue = paidOrders.reduce((sum, o) => sum + Number(o.total_amount_inr || 0), 0);
   const pendingOrdersCount = orders.filter((o) => o.fulfillment_status === "pending").length;
   const lowStockVariants = product?.variants.filter((v) => v.stock < 10) || [];
