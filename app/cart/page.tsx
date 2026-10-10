@@ -13,6 +13,7 @@ const CART_KEY = "kashurmewa-cart";
 export default function CartPage() {
   const [lines, setLines] = useState<Line[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState("");
   const [showCheckout, setShowCheckout] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [checkoutError, setCheckoutError] = useState("");
@@ -27,7 +28,7 @@ export default function CartPage() {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [pincode, setPincode] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState<"cod" | "razorpay">("cod");
+  const [paymentMethod] = useState<"cod">("cod");
 
   const load = async () => {
     setLoading(true);
@@ -45,19 +46,10 @@ export default function CartPage() {
         .in("id", variantIds)
         .eq("active", true);
 
-      if (error || !data || !data.length) {
-        // Fallback for demo/offline cart items
-        setLines(
-          saved.map((i) => ({
-            productId: i.productId,
-            variantId: i.variantId,
-            qty: i.qty,
-            productName: "Kashmiri In-Shell Walnuts",
-            size: i.variantId.includes("250") ? "250 g" : i.variantId.includes("500") ? "500 g" : "1 kg",
-            price: i.variantId.includes("250") ? 349 : i.variantId.includes("500") ? 649 : 1199,
-            stock: 50,
-          }))
-        );
+      if (error) throw error;
+      if (!data || data.length !== variantIds.length) {
+        setLoadError("Some items in your bag are no longer available in the live catalogue. Please return to the shop and add current packs again.");
+        setLines([]);
         return;
       }
 
@@ -77,7 +69,9 @@ export default function CartPage() {
       });
 
       setLines(mapped);
-    } catch {
+    } catch (error) {
+      console.error("Unable to validate cart against the live catalogue.", error);
+      setLoadError("We couldn’t verify current prices and stock. Please refresh or try again shortly.");
       setLines([]);
     } finally {
       setLoading(false);
@@ -170,21 +164,26 @@ export default function CartPage() {
           <div className="empty">
             <p>Loading your bag…</p>
           </div>
+        ) : loadError ? (
+          <div className="empty" role="alert">
+            <p>{loadError}</p>
+            <Link className="button dark" href="/shop">RETURN TO SHOP ↗</Link>
+          </div>
         ) : orderResult ? (
           <div className="order-success-card">
             <span className="badge">ORDER CONFIRMED</span>
             <h2>Thank you, {orderResult.customerName}!</h2>
-            <p>Your order has been received and is being prepared with care in our Kashmir repository.</p>
+            <p>Your order has been received. Keep your order reference for any delivery questions.</p>
             
             <div className="order-reference-box">
               ORDER REF: {orderResult.orderReference}
             </div>
 
             <p className="detail-description" style={{ margin: "20px auto" }}>
-              Total Paid / Amount Due: <strong>₹{orderResult.totalAmountInr?.toLocaleString("en-IN")}</strong> via{" "}
+              Order total: <strong>₹{orderResult.totalAmountInr?.toLocaleString("en-IN")}</strong>, payable via{" "}
               {orderResult.paymentMethod === "cod" ? "Cash on Delivery" : "Online Payment"}.
               <br />
-              Confirmation email sent to <strong>{orderResult.customerEmail}</strong>.
+              Order contact: <strong>{orderResult.customerEmail}</strong>.
             </p>
 
             <Link href="/shop" className="primary-btn" style={{ display: "inline-block", marginTop: "20px" }}>
@@ -392,18 +391,7 @@ export default function CartPage() {
                   />
                   <span>Cash on Delivery (COD)</span>
                 </div>
-                <div
-                  className={`payment-option ${paymentMethod === "razorpay" ? "active" : ""}`}
-                  onClick={() => setPaymentMethod("razorpay")}
-                >
-                  <input
-                    type="radio"
-                    name="pay"
-                    checked={paymentMethod === "razorpay"}
-                    onChange={() => setPaymentMethod("razorpay")}
-                  />
-                  <span>Online Payment / UPI</span>
-                </div>
+                <p className="online-payment-note">Online payment and UPI will be enabled after the payment gateway is securely connected. Cash on Delivery is available for now.</p>
               </div>
 
               <div className="modal-actions">
