@@ -34,6 +34,8 @@ export default function AdminDashboard() {
   const [searchCustomer, setSearchCustomer] = useState("");
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [trackingInput, setTrackingInput] = useState("");
+  const [authLoading, setAuthLoading] = useState(true);
+  const [authorized, setAuthorized] = useState(false);
 
   const loadData = async () => {
     setLoading(true);
@@ -50,18 +52,8 @@ export default function AdminDashboard() {
         p.variants = (p.km_product_variants || []).sort((a: Variant, b: Variant) => a.price_inr - b.price_inr);
         setProduct(p);
       } else {
-        // Fallback default product structure if DB not synced yet
-        setProduct({
-          id: "a1b2c3d4-e5f6-7890-abcd-111111111111",
-          name: "Kashmiri In-Shell Walnuts",
-          slug: "kashmiri-walnuts",
-          active: true,
-          variants: [
-            { id: "v1111111-1111-1111-1111-111111111111", size: "250 g", price_inr: 349, stock: 100 },
-            { id: "v2222222-2222-2222-2222-222222222222", size: "500 g", price_inr: 649, stock: 75 },
-            { id: "v3333333-3333-3333-3333-333333333333", size: "1 kg", price_inr: 1199, stock: 50 },
-          ],
-        });
+        setProduct(null);
+        setMessage("No live product was found. Add or activate the product in the catalogue before managing inventory.");
       }
 
       // 2. Load Orders
@@ -81,7 +73,36 @@ export default function AdminDashboard() {
   };
 
   useEffect(() => {
-    void loadData();
+    let alive = true;
+
+    const checkAccess = async () => {
+      const { data } = await supabase.auth.getSession();
+      if (!alive) return;
+      const isAdmin = data.session?.user.app_metadata?.role === "admin";
+      setAuthorized(isAdmin);
+      setAuthLoading(false);
+      if (isAdmin) void loadData();
+    };
+
+    void checkAccess();
+
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "INITIAL_SESSION") return;
+      const isAdmin = session?.user.app_metadata?.role === "admin";
+      setAuthorized(isAdmin);
+      setAuthLoading(false);
+      if (isAdmin) {
+        void loadData();
+      } else {
+        setProduct(null);
+        setOrders([]);
+      }
+    });
+
+    return () => {
+      alive = false;
+      authListener.subscription.unsubscribe();
+    };
   }, []);
 
   const updateVariant = async (id: string, field: "price_inr" | "stock", value: string) => {
@@ -130,6 +151,26 @@ export default function AdminDashboard() {
   const totalPaidRevenue = paidOrders.reduce((sum, o) => sum + Number(o.total_amount_inr || 0), 0);
   const pendingOrdersCount = orders.filter((o) => o.fulfillment_status === "pending").length;
   const lowStockVariants = product?.variants.filter((v) => v.stock < 10) || [];
+
+  if (authLoading) {
+    return <div className="admin-shell"><main className="admin-main"><p>Checking admin access…</p></main></div>;
+  }
+
+  if (!authorized) {
+    return (
+      <div className="admin-shell">
+        <main className="admin-main">
+          <div className="admin-panel">
+            <p className="eyebrow">RESTRICTED AREA</p>
+            <h1>Admin sign-in required</h1>
+            <p>Sign in with an account assigned the admin role to manage inventory and orders.</p>
+            <p><Link href="/account?next=/admin">Sign in to continue ↗</Link></p>
+            <p><Link href="/">Return to the storefront</Link></p>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="admin-shell">
