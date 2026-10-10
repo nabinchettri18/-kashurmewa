@@ -53,7 +53,7 @@ export default function ShopPage() {
         <div>
           <span className="commerce-eyebrow">THE KASHURMEWA CATALOGUE</span>
           <h1>Good things<br /><i>start here.</i></h1>
-          <p>Handpicked Kashmiri walnuts in shell. Sourced directly from mountain orchards and delivered fresh pan-India.</p>
+          <p>Explore available packs of Kashmiri walnuts in shell. Compare current pack sizes and prices before adding to your bag.</p>
         </div>
         <div className="shop-banner-image">
           <img src="https://images.pexels.com/photos/8303558/pexels-photo-8303558.jpeg" alt="Walnuts arranged on a natural surface" />
