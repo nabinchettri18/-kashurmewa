@@ -103,7 +103,9 @@ cross join (values
   ('1 kg', 1199, 50, 'KM-WAL-1KG')
 ) as v(size, price_inr, stock, sku)
 where p.slug = 'kashmiri-walnuts'
-on conflict (sku) do nothing; -- Preserve live price, availability and inventory on migration reruns.
+where not exists (
+  select 1 from public.km_product_variants existing where existing.sku = v.sku
+); -- Preserve live price, availability and inventory on migration reruns.
 
 insert into public.km_product_images (product_id, url, alt_text, sort_order)
 select p.id, i.url, i.alt_text, i.sort_order
