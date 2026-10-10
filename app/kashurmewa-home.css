@@ -224,3 +224,14 @@
     background:linear-gradient(0deg,rgba(27,42,29,.36) 0%,transparent 25%)!important;
   }
 }
+
+
+/* Fix horizontal band across hero: remove all horizontal overlay gradients. */
+.km-home .km-hero-photo:after{
+  background:linear-gradient(90deg,rgba(243,232,214,.92) 0%,rgba(243,232,214,.65) 5%,rgba(243,232,214,.28) 14%,rgba(243,232,214,.08) 25%,transparent 38%)!important;
+}
+@media(max-width:680px){
+  .km-home .km-hero-photo:after{
+    background:transparent!important;
+  }
+}
