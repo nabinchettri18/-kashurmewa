@@ -53,7 +53,7 @@ export default function ShopPage() {
           <p>Explore available packs of Kashmiri walnuts in shell. Compare current pack sizes and prices before adding to your bag.</p>
         </div>
         <div className="shop-banner-image">
-          <img src="https://images.pexels.com/photos/8303558/pexels-photo-8303558.jpeg" alt="Walnuts arranged on a natural surface" />
+          {items.find((p) => p.images[0]?.url)?.images[0]?.url ? <img src={items.find((p) => p.images[0]?.url)!.images[0].url} alt={items.find((p) => p.images[0]?.url)!.images[0].alt_text || items.find((p) => p.images[0]?.url)!.name} /> : <div className="commerce-muted">Add product photography in your catalogue to complete this frame.</div>}
         </div>
       </section>
 
