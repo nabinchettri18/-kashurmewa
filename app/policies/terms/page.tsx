@@ -1,4 +1,5 @@
 import Link from "next/link";
+import "../../kashurmewa-brand.css";
 
 export default function TermsPage() {
   return (

@@ -44,7 +44,7 @@ export function KashurmewLogo({
   const img = (
     <Image
       src={src}
-      alt="Kashurmewa — Premium Kashmiri Walnuts"
+      alt="Kashurmewa — The Taste of Kashmir"
       width={dims.width}
       height={dims.height}
       priority
@@ -58,7 +58,7 @@ export function KashurmewLogo({
     <Link
       href={href}
       className={`kashurmewa-logo ${className}`.trim()}
-      aria-label="Kashurmewa — Home"
+      aria-label="Kashurmewa — The Taste of Kashmir — Home"
     >
       {img}
     </Link>

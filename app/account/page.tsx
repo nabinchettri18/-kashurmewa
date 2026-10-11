@@ -5,6 +5,7 @@ import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "../../lib/supabase";
 import { KashurmewLogo } from "@/components/brand/Logo";
+import "../kashurmewa-brand.css";
 
 function AccountForm() {
   const [mode, setMode] = useState("signin");

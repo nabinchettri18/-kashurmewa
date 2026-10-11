@@ -2,18 +2,17 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ArrowRight, ArrowUpRight, Check, Leaf, PackageCheck, ShieldCheck, ShoppingBag, Sprout, Truck } from "lucide-react";
-import { fetchProductBySlug, Product, ProductVariant } from "@/lib/catalog";
+import { ArrowDownRight, ArrowRight, ArrowUpRight, Check, Leaf, ShoppingBag, Sparkles } from "lucide-react";
+import { fetchAllProducts, Product, ProductVariant } from "@/lib/catalog";
 import { NavigationHeader } from "@/components/navigation/Header";
+import { KashurmewLogo } from "@/components/brand/Logo";
 import "./kashurmewa-storefront.css";
+import "./kashurmewa-brand.css";
 
-const WALNUT_HERO = "https://images.pexels.com/photos/36040913/pexels-photo-36040913.jpeg?auto=compress&cs=tinysrgb&w=1800";
-const WALNUT_DETAIL = "https://images.pexels.com/photos/37309469/pexels-photo-37309469.jpeg?auto=compress&cs=tinysrgb&w=1200";
-const ORCHARD_IMAGE = "https://images.pexels.com/photos/17131011/pexels-photo-17131011.jpeg?auto=compress&cs=tinysrgb&w=1400";
 const money = (value: number) => new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 }).format(value);
 
 export default function Home() {
-  const [product, setProduct] = useState<Product | null>(null);
+  const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
   const [cartCount, setCartCount] = useState(0);
@@ -21,124 +20,143 @@ export default function Home() {
 
   useEffect(() => {
     let alive = true;
-    fetchProductBySlug("kashmiri-walnuts")
-      .then((result) => { if (alive) setProduct(result); })
-      .catch((error) => { console.error("Unable to load Kashurmewa product", error); if (alive) setLoadError(true); })
+    fetchAllProducts()
+      .then((items) => { if (alive) setProducts(items); })
+      .catch((error) => { console.error("Unable to load the live catalogue", error); if (alive) setLoadError(true); })
       .finally(() => { if (alive) setLoading(false); });
     try {
-      const cart = JSON.parse(localStorage.getItem("kashurmewa-cart") || "[]");
-      setCartCount(cart.reduce((sum: number, item: { qty: number }) => sum + Number(item.qty || 0), 0));
+      const saved = JSON.parse(localStorage.getItem("kashurmewa-cart") || "[]");
+      setCartCount(saved.reduce((sum: number, item: { qty?: number }) => sum + Number(item.qty || 0), 0));
     } catch {}
     return () => { alive = false; };
   }, []);
 
-  function addToBag(variant: ProductVariant) {
-    if (!product || variant.stock <= 0) { setNotice("This pack is currently unavailable."); return; }
+  function addToBag(product: Product, variant: ProductVariant) {
+    if (variant.stock <= 0) { setNotice("This option is currently unavailable."); return; }
     try {
-      const cart = JSON.parse(localStorage.getItem("kashurmewa-cart") || "[]");
-      const existing = cart.find((item: { variantId: string }) => item.variantId === variant.id);
+      const saved = JSON.parse(localStorage.getItem("kashurmewa-cart") || "[]");
+      const existing = saved.find((item: { variantId: string }) => item.variantId === variant.id);
       if (existing) {
-        if (Number(existing.qty) >= variant.stock) { setNotice("Your bag already has the available quantity for this pack."); return; }
+        if (Number(existing.qty) >= variant.stock) { setNotice("Your bag already contains the available quantity."); return; }
         existing.qty = Number(existing.qty) + 1;
-      } else cart.push({ productId: product.id, variantId: variant.id, qty: 1 });
-      localStorage.setItem("kashurmewa-cart", JSON.stringify(cart));
-      setCartCount(cart.reduce((sum: number, item: { qty: number }) => sum + Number(item.qty || 0), 0));
-      setNotice(variant.size + " added to your bag");
-      window.setTimeout(() => setNotice(""), 2600);
-    } catch { setNotice("We couldn't update your bag. Please try again."); }
+      } else {
+        saved.push({ productId: product.id, variantId: variant.id, qty: 1 });
+      }
+      localStorage.setItem("kashurmewa-cart", JSON.stringify(saved));
+      setCartCount(saved.reduce((sum: number, item: { qty?: number }) => sum + Number(item.qty || 0), 0));
+      setNotice(product.name + " added to your bag.");
+      window.setTimeout(() => setNotice(""), 2800);
+    } catch {
+      setNotice("We couldn't update your bag. Please try again.");
+    }
   }
 
   return (
-    <main className="km-store">
-      <div className="ks-announcement"><span>THE EVERYDAY WALNUT, REIMAGINED</span><span>Free delivery on orders above ₹999 <ArrowRight size={12} /></span></div>
+    <main className="km-store km-brand-home">
+      <div className="km-brand-announcement"><span>THE TASTE OF KASHMIR</span><span>A sense of place. A place at your table.</span></div>
       <NavigationHeader cartCount={cartCount} />
-      {notice && <div className="ks-toast" role="status">{notice}<button type="button" aria-label="Dismiss message" onClick={() => setNotice("")}>×</button></div>}
+      {notice && <div className="km-brand-toast" role="status">{notice}<button type="button" aria-label="Dismiss message" onClick={() => setNotice("")}>×</button></div>}
 
-      <section className="ks-hero">
-        <div className="ks-hero-copy">
-          <span className="ks-kicker"><i /> A LITTLE MORE NATURE, EVERY DAY</span>
-          <h1>Some things<br />are simply <em>worth cracking.</em></h1>
-          <p>Meet Kashurmewa: whole Kashmiri walnuts in shell, thoughtfully presented for slow mornings, family tables and the little rituals that make a day.</p>
-          <div className="ks-actions">
-            <Link className="ks-button" href="#shop">Find your pack <ArrowRight size={17} /></Link>
-            <Link className="ks-text-link" href="/about">The Kashurmewa story <ArrowUpRight size={15} /></Link>
+      <section className="km-brand-hero">
+        <img className="km-brand-hero-art" src="/kashurmewa-heritage-landscape.svg" alt="" fetchPriority="high" />
+        <div className="km-brand-hero-grain" />
+        <div className="km-brand-hero-copy">
+          <span className="km-brand-eyebrow"><i /> KASHURMEWA · A TASTE OF PLACE</span>
+          <h1>The Taste<br />of <em>Kashmir.</em></h1>
+          <p>A thoughtful world of regional flavours, pantry favourites and meaningful gifts — inspired by a place, made to feel at home.</p>
+          <div className="km-brand-hero-actions">
+            <Link href="/shop" className="km-brand-button">Explore the collection <ArrowRight size={16} /></Link>
+            <Link href="/about" className="km-brand-text-link">Our story <ArrowUpRight size={15} /></Link>
           </div>
-          <div className="ks-hero-note"><span className="ks-note-mark">✳</span><span><b>Simple by nature.</b><small>One considered product. A few good choices.</small></span></div>
+          <div className="km-brand-hero-foot"><span>ROOTED IN HERITAGE</span><span>MADE FOR MODERN HOMES</span></div>
         </div>
-        <div className="ks-hero-media">
-          <img src={WALNUT_HERO} alt="Whole walnuts in their natural shells, photographed close up" />
-          <div className="ks-photo-index"><span>01 / THE SIGNATURE</span><span>WHOLE WALNUTS · IN SHELL</span></div>
-          <div className="ks-hero-stamp"><span>THE</span><strong>WALNUT</strong><span>RITUAL</span><i>✳</i></div>
-        </div>
-      </section>
-
-      <section className="ks-benefit-bar" aria-label="Shopping information">
-        <div><ShieldCheck/><span><b>Clear prices</b><small>Current catalogue pricing</small></span></div>
-        <div><PackageCheck/><span><b>Thoughtful presentation</b><small>Made for your pantry</small></span></div>
-        <div><Truck/><span><b>Delivery across India</b><small>Details shown before ordering</small></span></div>
-        <div><ShoppingBag/><span><b>Cash on delivery</b><small>Available at checkout</small></span></div>
-      </section>
-
-      <section className="ks-shop" id="shop">
-        <div className="ks-heading">
-          <div><span className="ks-kicker">THE SIGNATURE COLLECTION</span><h2>Choose your <em>good thing.</em></h2><p>Same lovely walnut. A pack size for your kind of everyday.</p></div>
-          <Link className="ks-inline-link" href="/shop">Explore the shop <ArrowUpRight size={16}/></Link>
-        </div>
-        {loading ? <div className="ks-state"><span className="ks-loading-dot" /> Loading current pack sizes and prices…</div> :
-          loadError ? <div className="ks-state" role="alert">We couldn’t load the live catalogue. Please try the <Link href="/shop">shop page</Link> or come back shortly.</div> :
-          product?.variants?.length ? (
-            <div className="ks-products">
-              {product.variants.map((variant, index) => (
-                <article className={"ks-product-card " + (index === 1 ? "ks-product-featured" : "")} key={variant.id}>
-                  <Link className="ks-product-image" href={"/products/" + product.slug} aria-label={"View " + variant.size + " Kashmiri walnuts"}>
-                    <img src={product.images?.[index % Math.max(product.images.length, 1)]?.url || (index === 0 ? WALNUT_DETAIL : WALNUT_HERO)} alt={product.name} loading="lazy" />
-                    <span>{index === 0 ? "THE EVERYDAY PICK" : index === 1 ? "A LITTLE EXTRA" : "FOR SHARING"}</span>
-                    <i><ArrowUpRight size={18}/></i>
-                  </Link>
-                  <div className="ks-product-info">
-                    <div className="ks-product-title"><div><small>KASHURMEWA · SIGNATURE WALNUTS</small><Link href={"/products/" + product.slug}><h3>Whole Kashmiri walnuts</h3></Link></div><strong>{money(variant.price_inr)}</strong></div>
-                    <p>{variant.size} pack <span>·</span> In-shell walnuts</p>
-                    <div className="ks-card-bottom">
-                      <button className="ks-add-button" type="button" disabled={variant.stock <= 0} onClick={() => addToBag(variant)}>{variant.stock > 0 ? <>Add to bag <ShoppingBag size={15}/></> : <>Sold out</>}</button>
-                      <span className="ks-stock"><i className={variant.stock > 0 ? "ks-stock-dot" : "ks-stock-dot ks-sold-out"}/>{variant.stock > 0 ? "In stock" : "Unavailable"}</span>
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
-          ) : <div className="ks-state">The collection is being prepared. Please check back soon or <Link href="/contact">contact us</Link>.</div>}
-        <p className="ks-catalogue-note"><Check size={14}/> Prices and availability are read from the live catalogue. Final delivery charges appear in your bag.</p>
-      </section>
-
-      <section className="ks-manifesto">
-        <div className="ks-manifesto-art"><img src={WALNUT_DETAIL} alt="A close, tactile view of whole walnuts" /><span>CRACK OPEN<br/>A SMALL MOMENT.</span><i>✳</i></div>
-        <div className="ks-manifesto-copy"><span className="ks-kicker">A SMALL DAILY RITUAL</span><h2>Good things don’t need to be <em>complicated.</em></h2><p>A bowl on the table. A little pause between things. Something wholesome to share. We believe the best pantry staples earn their place through simplicity, usefulness and care in the details.</p><Link className="ks-button ks-button-outline" href={"/products/" + (product?.slug || "kashmiri-walnuts")}>Discover the walnuts <ArrowRight size={16}/></Link></div>
-      </section>
-
-      <section className="ks-story" id="story">
-        <div className="ks-story-photo"><img src={ORCHARD_IMAGE} alt="A leafy orchard setting" loading="lazy"/><span>ROOTED IN A DISTINCTIVE HARVEST</span></div>
-        <div className="ks-story-copy"><span className="ks-kicker">A BRAND WITH ROOTS</span><h2>From a beloved harvest to <em>your home.</em></h2><p>Kashurmewa is built around one simple idea: bring the character of Kashmiri walnuts into everyday life with clear choices and thoughtful presentation. No complicated catalogue. Just a product worth getting to know.</p><Link className="ks-text-link" href="/about">Get to know us <ArrowRight size={15}/></Link></div>
-      </section>
-
-      <section className="ks-why">
-        <div className="ks-heading"><div><span className="ks-kicker">THE KASHURMEWA WAY</span><h2>Considered at <em>every step.</em></h2></div><p>We keep the experience as simple as the product should be.</p></div>
-        <div className="ks-why-grid">
-          <div><span className="ks-step">01</span><Sprout/><h3>Keep it simple</h3><p>A focused product range that makes choosing easier.</p></div>
-          <div><span className="ks-step">02</span><PackageCheck/><h3>Know what you’re buying</h3><p>See pack sizes, live prices and availability before ordering.</p></div>
-          <div><span className="ks-step">03</span><Truck/><h3>Shop with clarity</h3><p>Review delivery charges and order details before you confirm.</p></div>
+        <div className="km-brand-hero-side">
+          <div className="km-brand-seal"><span>KM</span><i /><small>THE TASTE OF KASHMIR</small></div>
+          <p>Not just a product.<br /><em>A sense of place.</em></p>
+          <ArrowDownRight size={22} />
         </div>
       </section>
 
-      <section className="ks-final-cta"><div><span className="ks-kicker">YOUR PANTRY, A LITTLE MORE THOUGHTFUL</span><h2>Ready to crack <em>into something good?</em></h2></div><Link className="ks-button" href="#shop">Shop Kashurmewa <ArrowRight size={17}/></Link></section>
+      <section className="km-brand-assurances" aria-label="Shopping information">
+        <div><Check /><span><b>Clear product details</b><small>Know what you’re choosing</small></span></div>
+        <div><ShoppingBag /><span><b>Live catalogue</b><small>Current prices and pack options</small></span></div>
+        <div><Leaf /><span><b>Rooted in a sense of place</b><small>Inspired by regional character</small></span></div>
+        <div><Sparkles /><span><b>Thoughtful by design</b><small>A calm, considered experience</small></span></div>
+      </section>
 
-      <footer className="ks-footer">
-        <div className="ks-footer-main">
-          <div className="ks-footer-brand"><Link href="/" className="ks-wordmark">kashur<span>mewa</span></Link><p>Whole Kashmiri walnuts, thoughtfully brought to your everyday.</p><Link className="ks-footer-contact" href="/contact">Questions? Talk to us <ArrowUpRight size={14}/></Link></div>
-          <div><small>SHOP</small><Link href="/shop">All walnuts</Link><Link href="/cart">Your bag</Link><Link href="/account">My account</Link></div>
-          <div><small>OUR WORLD</small><Link href="/about">Our approach</Link><Link href="/#story">Our story</Link><Link href="/contact">Contact us</Link></div>
+      <section className="km-brand-intro">
+        <span className="km-brand-eyebrow km-brand-eyebrow-dark">MORE THAN WHAT’S IN THE BAG</span>
+        <h2>A little heritage.<br /><em>A lot of heart.</em></h2>
+        <p>Kashurmewa is being built as a premium regional pantry brand — a place for flavours, traditions and thoughtful finds that bring a little of Kashmir closer to home.</p>
+        <Link href="/about" className="km-brand-underlink">Get to know Kashurmewa <ArrowUpRight size={15} /></Link>
+      </section>
+
+      <section className="km-brand-discovery">
+        <div className="km-brand-discovery-card km-brand-discovery-story">
+          <img src="/kashurmewa-heritage-landscape.svg" alt="" loading="lazy" />
+          <div><span className="km-brand-eyebrow">OUR POINT OF VIEW</span><h2>Inspired by a place.<br /><em>Made for home.</em></h2><Link href="/about">Discover our story <ArrowRight size={15} /></Link></div>
+          <span className="km-brand-discovery-index">01 / THE BRAND</span>
+        </div>
+        <div className="km-brand-discovery-card km-brand-discovery-shop">
+          <div className="km-brand-discovery-mark">K<span>M</span></div>
+          <div><span className="km-brand-eyebrow km-brand-eyebrow-dark">WHAT’S HERE TODAY</span><h2>Meet the<br /><em>current collection.</em></h2><p>Explore the products currently available, with live prices and pack options.</p><Link href="/shop">Shop the collection <ArrowRight size={15} /></Link></div>
+          <span className="km-brand-discovery-index">02 / THE COLLECTION</span>
+        </div>
+      </section>
+
+      <section className="km-brand-products" id="featured">
+        <div className="km-brand-section-heading">
+          <div><span className="km-brand-eyebrow km-brand-eyebrow-dark">THE PANTRY, AS IT GROWS</span><h2>Discover what’s <em>on the table.</em></h2></div>
+          <Link href="/shop" className="km-brand-underlink">View all products <ArrowUpRight size={15} /></Link>
+        </div>
+        {loading ? <div className="km-brand-state">Loading the current collection…</div> :
+          loadError ? <div className="km-brand-state" role="alert">We couldn’t load the live catalogue. Please visit the <Link href="/shop">shop</Link> or try again shortly.</div> :
+          products.length === 0 ? <div className="km-brand-state">Our first collection is being prepared. <Link href="/contact">Get in touch</Link> if you have a question.</div> :
+          <div className="km-brand-product-grid">
+            {products.slice(0, 4).map((product) => {
+              const variants = [...product.variants].sort((a, b) => a.price_inr - b.price_inr);
+              const available = variants.filter((variant) => variant.stock > 0);
+              const firstVariant = available[0] || variants[0];
+              const minPrice = variants.length ? variants[0].price_inr : null;
+              const image = product.images[0];
+              return <article className="km-brand-product-card" key={product.id}>
+                <Link className="km-brand-product-image" href={"/products/" + product.slug}>
+                  {image ? <img src={image.url} alt={image.alt_text || product.name} loading="lazy" /> : <div className="km-brand-image-placeholder"><span>KASHURMEWA</span><small>THE TASTE OF KASHMIR</small></div>}
+                  <span className="km-brand-product-open"><ArrowUpRight size={17} /></span>
+                </Link>
+                <div className="km-brand-product-info">
+                  <div className="km-brand-product-meta"><span>THE COLLECTION</span><span>{variants.length} {variants.length === 1 ? "option" : "options"}</span></div>
+                  <Link href={"/products/" + product.slug}><h3>{product.name}</h3></Link>
+                  <div className="km-brand-product-price"><span>{minPrice === null ? "Price unavailable" : "From " + money(minPrice)}</span><small>{variants.map((variant) => variant.size).join(" · ")}</small></div>
+                  {firstVariant && firstVariant.stock > 0
+                    ? <button type="button" onClick={() => addToBag(product, firstVariant)}>Add {firstVariant.size} to bag <ShoppingBag size={14} /></button>
+                    : <Link className="km-brand-product-unavailable" href={"/products/" + product.slug}>View product options <ArrowRight size={14} /></Link>}
+                </div>
+              </article>;
+            })}
+          </div>}
+        <p className="km-brand-live-note"><Check size={14} /> Prices and availability are taken from the live catalogue. Delivery details are shown before you place an order.</p>
+      </section>
+
+      <section className="km-brand-manifesto">
+        <div className="km-brand-manifesto-art"><img src="/kashurmewa-heritage-landscape.svg" alt="" loading="lazy" /><span>THE TASTE OF KASHMIR</span></div>
+        <div className="km-brand-manifesto-copy"><span className="km-brand-eyebrow km-brand-eyebrow-dark">THE KASHURMEWA WAY</span><h2>Good things carry<br /><em>a sense of place.</em></h2><p>We believe the things we bring home can mean more than what’s on the label. Our aim is to build a considered collection that honours regional character while fitting naturally into modern everyday life.</p><Link href="/about" className="km-brand-underlink">Read our story <ArrowRight size={15} /></Link></div>
+      </section>
+
+      <section className="km-brand-last-call">
+        <span className="km-brand-eyebrow">KASHURMEWA · THE TASTE OF KASHMIR</span>
+        <h2>Find something<br /><em>that feels like home.</em></h2>
+        <Link href="/shop" className="km-brand-button km-brand-button-light">Explore what’s available <ArrowRight size={16} /></Link>
+      </section>
+
+      <footer className="km-brand-footer">
+        <div className="km-brand-footer-main">
+          <div className="km-brand-footer-about"><KashurmewLogo variant="light" size="lg" /><p>A premium regional pantry brand inspired by the tastes, textures and traditions that make a place memorable.</p><Link href="/contact">Questions? Talk to us <ArrowUpRight size={14} /></Link></div>
+          <div><small>EXPLORE</small><Link href="/shop">Shop the collection</Link><Link href="/cart">Your bag</Link><Link href="/account">My account</Link></div>
+          <div><small>THE BRAND</small><Link href="/about">Our story</Link><Link href="/contact">Contact us</Link></div>
           <div><small>HELP & POLICIES</small><Link href="/policies/shipping">Shipping</Link><Link href="/policies/refund">Returns & refunds</Link><Link href="/policies/privacy">Privacy</Link><Link href="/policies/terms">Terms</Link></div>
         </div>
-        <div className="ks-footer-bottom"><span>© Kashurmewa</span><span>THE TASTE OF KASHMIR.</span><Link href="/policies/food-safety">Food safety information</Link></div>
+        <div className="km-brand-footer-bottom"><span>© Kashurmewa</span><span>THE TASTE OF KASHMIR.</span><Link href="/policies/food-safety">Food safety information</Link></div>
       </footer>
     </main>
   );

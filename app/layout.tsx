@@ -4,23 +4,23 @@ import "./kashurmewa-polish.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "Kashurmewa — Premium Kashmiri Walnuts & Dry Fruits",
+    default: "Kashurmewa — The Taste of Kashmir",
     template: "%s | Kashurmewa",
   },
   description:
-    "Explore Kashurmewa Kashmiri walnuts in shell. Compare available pack sizes, current prices and delivery details before ordering.",
+    "Discover KASHURMEWA — The Taste of Kashmir. Explore our current regional pantry collection, product details, live prices and delivery information.",
   keywords: [
-    "Kashmiri walnuts",
-    "Walnuts in shell",
     "Kashurmewa",
-    "Kashmir dry fruits",
-    "Buy walnuts online",
+    "The Taste of Kashmir",
+    "Kashmiri regional pantry",
+    "Kashmiri food gifts",
+    "Regional gourmet foods",
   ],
   authors: [{ name: "Kashurmewa" }],
   creator: "Kashurmewa",
   openGraph: {
-    title: "Kashurmewa — Authentic Kashmiri In-Shell Walnuts",
-    description: "Kashmiri walnuts in shell, with clear pack sizes and current catalogue prices.",
+    title: "Kashurmewa — The Taste of Kashmir",
+    description: "A premium regional pantry brand inspired by the tastes, textures and traditions that make a place memorable.",
     url: "https://kashurmewa.com",
     siteName: "Kashurmewa",
     locale: "en_IN",

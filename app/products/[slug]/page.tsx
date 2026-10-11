@@ -6,6 +6,9 @@ import { useParams } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, Check, Minus, Plus, ShieldCheck, Truck, Leaf } from "lucide-react";
 import { fetchProductBySlug, Product, ProductVariant } from "@/lib/catalog";
 import { NavigationHeader } from "@/components/navigation/Header";
+import { KashurmewLogo } from "@/components/brand/Logo";
+import "../../kashurmewa-storefront.css";
+import "../../kashurmewa-brand.css";
 
 export default function ProductDetailPage() {
   const params = useParams<{ slug: string }>();
@@ -78,7 +81,8 @@ export default function ProductDetailPage() {
 
   if (loading || loadError || !product) {
     return (
-      <main className="commerce-page">
+      <main className="km-store ks-v2-product-page">
+        <div className="ks-announcement"><span>THE TASTE OF KASHMIR</span><span>Thoughtfully chosen. Beautifully brought home. <ArrowUpRight size={12} /></span></div>
         <NavigationHeader />
         <div className="product-state">
           <span className="commerce-eyebrow">KASHURMEWA SIGNATURE</span>
@@ -91,8 +95,8 @@ export default function ProductDetailPage() {
   }
 
   return (
-    <main className="commerce-page premium-product-page">
-      <NavigationHeader cartCount={cartCount} />
+    <main className="km-store ks-v2-product-page">
+      <div className="ks-announcement"><span>THE TASTE OF KASHMIR</span><span>Thoughtfully chosen. Beautifully brought home. <ArrowUpRight size={12} /></span></div>\n      <NavigationHeader cartCount={cartCount} />
 
       <div className="premium-breadcrumb">
         <Link href="/">Home</Link><span>/</span><Link href="/shop">Shop</Link><span>/</span><span>{product.name}</span>
@@ -139,7 +143,7 @@ export default function ProductDetailPage() {
               <span className="premium-price-caption">YOUR SELECTED PACK</span>
               <strong>{selectedVariant ? `₹${selectedVariant.price_inr.toLocaleString("en-IN")}` : "Price unavailable"}</strong>
             </div>
-            <span className="premium-tax-note">INR · Inclusive of applicable taxes</span>
+            <span className="premium-tax-note">INR · Price shown in INR</span>
           </div>
 
           <div className="premium-option-heading">
@@ -185,7 +189,7 @@ export default function ProductDetailPage() {
 
           <div className="premium-delivery-note">
             <Truck size={17} />
-            <div><strong>Delivery across India</strong><span>Free delivery on orders above ₹999. Delivery timelines are confirmed at checkout.</span></div>
+            <div><strong>Delivery across India</strong><span>Delivery charges and timelines are shown at checkout before you place your order.</span></div>
           </div>
 
           <div className="premium-assurances">
@@ -217,11 +221,14 @@ export default function ProductDetailPage() {
         <Link href="/shop">Explore the collection <ArrowUpRight size={15} /></Link>
       </section>
 
-      <footer className="commerce-footer">
-        <Link href="/" className="premium-footer-brand">Kashurmewa</Link>
-        <span>Authentic produce, thoughtfully presented.</span>
-        <Link href="/policies/shipping">Shipping policy</Link>
-        <Link href="/cart">Your bag</Link>
+      <footer className="ks-v2-footer">
+        <div className="ks-v2-footer-main">
+          <div className="ks-v2-footer-brand"><Link href="/"><KashurmewLogo variant="light" size="lg" /></Link><p>The taste of Kashmir.</p><Link href="/contact">Questions? Get in touch <ArrowUpRight size={14} /></Link></div>
+          <div><small>SHOP</small><Link href="/shop">Shop the collection</Link><Link href="/cart">Your bag</Link><Link href="/account">My account</Link></div>
+          <div><small>THE BRAND</small><Link href="/about">Our story</Link><Link href="/">Home</Link><Link href="/contact">Contact us</Link></div>
+          <div><small>HELP & POLICIES</small><Link href="/policies/shipping">Shipping</Link><Link href="/policies/refund">Returns & refunds</Link><Link href="/policies/privacy">Privacy</Link><Link href="/policies/terms">Terms</Link></div>
+        </div>
+        <div className="ks-v2-footer-bottom"><span>© Kashurmewa</span><span>THE TASTE OF KASHMIR.</span><Link href="/policies/food-safety">Food safety information</Link></div>
       </footer>
     </main>
   );

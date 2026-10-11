@@ -21,15 +21,15 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
   return (
     <>
       <div className="topbar">
-        <span>THE EVERYDAY WALNUT, REIMAGINED</span>
-        <span>FREE DELIVERY ON ORDERS ABOVE ₹999</span>
+        <span>THE TASTE OF KASHMIR</span>
+        <span>A SENSE OF PLACE · A PLACE AT YOUR TABLE</span>
       </div>
 
       <header
         className={`site-header transition-all duration-500 ${
           scrolled
-            ? "shadow-md bg-[#10291f]/95 backdrop-blur-md border-b border-[#345043]/80 py-3"
-            : "bg-[#10291f] border-b border-[#345043]/40 py-5"
+            ? "shadow-md bg-[#FFFCF7]/95 backdrop-blur-md border-b border-[#E6D9C8] py-3"
+            : "bg-[#FFFCF7] border-b border-[#E6D9C8] py-5"
         }`}
       >
         <button
@@ -44,19 +44,19 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
         <KashurmewLogo variant="dark" size="sm" />
 
         <nav className="main-nav">
-          <Link href="/shop" className="hover:text-[#B69A66] transition-colors">
-            Shop Walnuts
+          <Link href="/shop" className="hover:text-[#754D36] transition-colors">
+            Collections
           </Link>
-          <a href="/#story" className="hover:text-[#B69A66] transition-colors">
+          <Link href="/about" className="hover:text-[#754D36] transition-colors">
             Our Story
-          </a>
-          <Link href="/about" className="hover:text-[#B69A66] transition-colors">
-            Our Approach
+          </Link>
+          <Link href="/contact" className="hover:text-[#754D36] transition-colors">
+            Contact
           </Link>
         </nav>
 
         <div className="header-actions">
-          <Link href="/account" aria-label="Account" className="flex items-center gap-1.5 hover:text-[#B69A66]">
+          <Link href="/account" aria-label="Account" className="flex items-center gap-1.5 hover:text-[#754D36]">
             <User size={16} />
             <span className="hidden sm:inline text-xs">Account</span>
           </Link>
@@ -64,7 +64,7 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
           <Link href="/cart" className="bag">
             <ShoppingBag size={15} />
             <span className="bag-label">Bag</span>
-            <span className="bg-[#B69A66] text-[#10291F] font-bold rounded-full w-5 h-5 flex items-center justify-center text-[10px] ml-1">
+            <span className="bg-[#4A2028] text-[#F6F0E6] font-bold rounded-full w-5 h-5 flex items-center justify-center text-[10px] ml-1">
               {cartCount}
             </span>
           </Link>
@@ -79,22 +79,22 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="km-mobile-menu fixed inset-x-0 top-[100px] bg-[#10291f] border-b border-[#345043] p-6 shadow-2xl z-50 md:hidden"
+            className="km-mobile-menu fixed inset-x-0 top-[100px] bg-[#4A2028] border-b border-[#63313B] p-6 shadow-2xl z-50 md:hidden"
           >
-            <div className="flex flex-col gap-5 text-sm uppercase tracking-widest text-[#f5f0e5]">
-              <Link href="/shop" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pb-3 border-b border-[#345043]">
+            <div className="flex flex-col gap-5 text-sm uppercase tracking-widest text-[#F6F0E6]">
+              <Link href="/shop" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pb-3 border-b border-[#E6D9C8]">
                 <span>Shop Catalogue</span>
-                <ArrowRight size={16} className="text-[#B69A66]" />
+                <ArrowRight size={16} className="text-[#C8A66A]" />
               </Link>
-              <a href="/#story" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pb-3 border-b border-[#345043]">
+              <Link href="/about" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pb-3 border-b border-[#E6D9C8]">
                 <span>Our Story</span>
-                <ArrowRight size={16} className="text-[#B69A66]" />
-              </a>
-              <Link href="/about" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pb-3 border-b border-[#345043]">
-                <span>Our Approach</span>
-                <ArrowRight size={16} className="text-[#B69A66]" />
+                <ArrowRight size={16} className="text-[#C8A66A]" />
               </Link>
-              <Link href="/cart" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pt-2 text-[#B69A66] font-semibold">
+              <Link href="/contact" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pb-3 border-b border-[#E6D9C8]">
+                <span>Contact us</span>
+                <ArrowRight size={16} className="text-[#C8A66A]" />
+              </Link>
+              <Link href="/cart" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pt-2 text-[#C8A66A] font-semibold">
                 <span>Your Bag ({cartCount})</span>
                 <ArrowRight size={16} />
               </Link>
