@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { fetchAllProducts } from "@/lib/catalog";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\\/$/, "");
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
   // A custom domain has not been configured yet. Avoid publishing localhost or a guessed domain.
   if (!siteUrl) return [];
 
