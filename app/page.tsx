@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { ArrowDownRight, ArrowRight, ArrowUpRight, Check, Leaf, PackageCheck, ShoppingBag, Sparkles, Truck } from "lucide-react";
 import { fetchAllProducts, Product, ProductVariant } from "@/lib/catalog";
 import { NavigationHeader } from "@/components/navigation/Header";
 import "./kashurmewa-editorial-v2.css";
@@ -87,27 +86,27 @@ export default function Home() {
     <main className="km-store kv2">
       <div className="kv2-ribbon">
         <span>THE TASTE OF KASHMIR</span>
-        <span className="kv2-ribbon-center"><Sparkles size={12} /> A LITTLE CLOSER TO NATURE</span>
+        <span className="kv2-ribbon-center"> A LITTLE CLOSER TO NATURE</span>
         <span>THOUGHTFULLY BROUGHT TO YOUR TABLE</span>
       </div>
       <NavigationHeader cartCount={cartCount} />
-      {notice && <div className="kv2-toast" role="status">{notice}<Link href="/cart">View bag <ArrowUpRight size={14} /></Link><button type="button" aria-label="Dismiss message" onClick={() => setNotice("")}>×</button></div>}
+      {notice && <div className="kv2-toast" role="status">{notice}<Link href="/cart">View bag ↗</Link><button type="button" aria-label="Dismiss message" onClick={() => setNotice("")}>×</button></div>}
 
-      <section className="kv2-hero" aria-label="Kashurmewa — The Taste of Kashmir">
+      <section className="kv2-hero" aria-label="Kashurmewa ,  The Taste of Kashmir">
         <div className="kv2-hero-copy">
           <div className="kv2-eyebrow"><span /> THE ORCHARD, REIMAGINED</div>
           <p className="kv2-hero-overline">KASHURMEWA PRESENTS</p>
           <h1>A little of<br />the valley.<br /><em>A lot of home.</em></h1>
           <p className="kv2-hero-description">A familiar harvest, thoughtfully brought into everyday life. Discover Kashmiri walnuts with a sense of place, presented for the tables and rituals that bring us together.</p>
           <div className="kv2-hero-actions">
-            <Link href="#collection" className="kv2-primary">Explore the collection <ArrowRight size={17} /></Link>
-            <Link href="/about" className="kv2-underlink">Our story <ArrowUpRight size={15} /></Link>
+            <Link href="#collection" className="kv2-primary">Explore the collection →</Link>
+            <Link href="/about" className="kv2-underlink">Our story ↗</Link>
           </div>
           <div className="kv2-hero-foot">
-            <span className="kv2-seal"><Leaf size={17} /></span>
+            <span className="kv2-seal"></span>
             <span><b>Rooted in a distinctive harvest.</b><small>The Taste of Kashmir · Since the first crack.</small></span>
           </div>
-          <span className="kv2-hero-index">01 — 04 / THE KASHURMEWA EDIT</span>
+          <span className="kv2-hero-index">01 ,  04 / THE KASHURMEWA EDIT</span>
         </div>
 
         <div className={`kv2-hero-art ${heroImage ? "" : "kv2-no-image"}`}>
@@ -120,7 +119,7 @@ export default function Home() {
             <span>MEET THE COLLECTION</span>
             <b>{leadProduct?.name || "A considered kind of good."}</b>
             <small>{startingPrice !== null ? `Packs from ${money(startingPrice)}` : "Explore the current collection"}</small>
-            <Link href="#collection" aria-label="Explore the collection"><ArrowDownRight size={19} /></Link>
+            <Link href="#collection" aria-label="Explore the collection">↘</Link>
           </div>
           <div className="kv2-vertical-note">HARVEST · HOME · HERITAGE</div>
         </div>
@@ -138,7 +137,7 @@ export default function Home() {
           </div>
           <div className="kv2-section-aside">
             <p>A considered collection for everyday rituals, shared tables and thoughtful gifting. Choose the pack that feels right for you.</p>
-            <Link href="/shop" className="kv2-underlink">View the full shop <ArrowUpRight size={15} /></Link>
+            <Link href="/shop" className="kv2-underlink">View the full shop ↗</Link>
           </div>
         </div>
 
@@ -147,7 +146,7 @@ export default function Home() {
         ) : loadError ? (
           <div className="kv2-state" role="alert">We couldn’t load the live collection. Please visit the <Link href="/shop">shop</Link> or try again shortly.</div>
         ) : !packs.length ? (
-          <div className="kv2-empty"><span>THE COLLECTION IS TAKING SHAPE</span><h3>Something good is growing.</h3><p>Published products, pack sizes, prices and photographs will appear here from the live catalogue.</p><Link href="/contact" className="kv2-underlink">Speak with us <ArrowRight size={15} /></Link></div>
+          <div className="kv2-empty"><span>THE COLLECTION IS TAKING SHAPE</span><h3>Something good is growing.</h3><p>Published products, pack sizes, prices and photographs will appear here from the live catalogue.</p><Link href="/contact" className="kv2-underlink">Speak with us →</Link></div>
         ) : (
           <div className="kv2-product-grid">
             {packs.slice(0, 6).map(({ product, variant, image }, index) => (
@@ -158,13 +157,13 @@ export default function Home() {
                     : <div className="kv2-product-placeholder"><span>KASHURMEWA</span><small>THE TASTE OF KASHMIR</small></div>}
                   <span className="kv2-product-number">0{index + 1}</span>
                   <span className="kv2-product-size">{variant.size}</span>
-                  <i><ArrowUpRight size={18} /></i>
+                  <i>↗</i>
                 </Link>
                 <div className="kv2-product-meta">
                   <div className="kv2-product-title"><div><span>{product.name}</span><small>{variant.size} · WALNUTS IN SHELL</small></div><strong>{money(variant.price_inr)}</strong></div>
                   <p>{product.description || "A thoughtful pantry staple, ready for your table."}</p>
                   <div className="kv2-product-actions">
-                    <button type="button" onClick={() => addToBag(product, variant)} disabled={variant.stock <= 0}>{variant.stock > 0 ? <>Add to bag <ArrowRight size={15} /></> : "Currently unavailable"}</button>
+                    <button type="button" onClick={() => addToBag(product, variant)} disabled={variant.stock <= 0}>{variant.stock > 0 ? <>Add to bag →</> : "Currently unavailable"}</button>
                     <span className={variant.stock > 0 ? "kv2-stock" : "kv2-stock kv2-stock-empty"}><i />{variant.stock > 0 ? "In stock" : "Sold out"}</span>
                   </div>
                 </div>
@@ -172,7 +171,7 @@ export default function Home() {
             ))}
           </div>
         )}
-        <div className="kv2-catalogue-note"><Check size={15} /><span>Live catalogue pricing and availability</span><span className="kv2-note-divider" /><span>Pack details before you buy</span><span className="kv2-note-divider" /><span>Delivery information at checkout</span></div>
+        <div className="kv2-catalogue-note"><span>Live catalogue pricing and availability</span><span className="kv2-note-divider" /><span>Pack details before you buy</span><span className="kv2-note-divider" /><span>Delivery information at checkout</span></div>
       </section>
 
       <section className="kv2-manifesto">
@@ -186,17 +185,17 @@ export default function Home() {
           <h2>Some flavours<br />take you <em>somewhere.</em></h2>
           <p>To the warmth of a table with room for everyone. To the small pause between a busy day and a good evening. To the pleasure of something simple, shared slowly.</p>
           <p>Kashurmewa celebrates the character of Kashmiri walnuts with a thoughtful, modern approach to the everyday pantry.</p>
-          <Link href="/about" className="kv2-dark-link">Discover our point of view <ArrowRight size={16} /></Link>
-          <div className="kv2-manifesto-signature">Kashurmewa <span>— The Taste of Kashmir</span></div>
+          <Link href="/about" className="kv2-dark-link">Discover our point of view →</Link>
+          <div className="kv2-manifesto-signature">Kashurmewa <span>,  The Taste of Kashmir</span></div>
         </div>
       </section>
 
       <section className="kv2-values">
         <div className="kv2-values-head"><span className="kv2-eyebrow"><span /> THE KASHURMEWA STANDARD</span><h2>Less noise.<br /><em>More meaning.</em></h2></div>
         <div className="kv2-value-list">
-          <article><span>01</span><div><h3>A focused collection</h3><p>Clear choices, useful pack sizes and a product story that stays close to its roots.</p></div><Leaf size={21} /></article>
-          <article><span>02</span><div><h3>Honest details</h3><p>Prices, available quantities and product photographs come from the live catalogue.</p></div><PackageCheck size={21} /></article>
-          <article><span>03</span><div><h3>Considered shopping</h3><p>A simple path from choosing your pack to reviewing the details before ordering.</p></div><Truck size={21} /></article>
+          <article><span>01</span><div><h3>A focused collection</h3><p>Clear choices, useful pack sizes and a product story that stays close to its roots.</p></div></article>
+          <article><span>02</span><div><h3>Honest details</h3><p>Prices, available quantities and product photographs come from the live catalogue.</p></div></article>
+          <article><span>03</span><div><h3>Considered shopping</h3><p>A simple path from choosing your pack to reviewing the details before ordering.</p></div></article>
         </div>
       </section>
 
@@ -204,7 +203,7 @@ export default function Home() {
         <div className="kv2-final-orbit">K<br /><i>✳</i><br />M</div>
         <span>THE TASTE OF KASHMIR</span>
         <h2>Bring a little<br /><em>more meaning</em> to the table.</h2>
-        <Link href="#collection" className="kv2-primary kv2-primary-light">Find your favourite <ArrowRight size={17} /></Link>
+        <Link href="#collection" className="kv2-primary kv2-primary-light">Find your favourite →</Link>
       </section>
 
       <footer className="kv2-footer">
