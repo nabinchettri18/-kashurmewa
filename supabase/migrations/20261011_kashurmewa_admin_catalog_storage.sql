@@ -98,3 +98,5 @@ create policy "Admins can read all product variants" on public.km_product_varian
 drop policy if exists "Admins can read all product images" on public.km_product_images;
 create policy "Admins can read all product images" on public.km_product_images
   for select to authenticated using ((select public.km_is_admin()));
+
+alter table public.km_product_images add column if not exists storage_path text;
