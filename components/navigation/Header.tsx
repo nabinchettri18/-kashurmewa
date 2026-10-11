@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShoppingBag, User, Menu, X, ArrowRight } from "lucide-react";
 import { KashurmewLogo } from "@/components/brand/Logo";
 
 export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
@@ -38,7 +37,7 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((v) => !v)}
         >
-          {menuOpen ? <X size={20} /> : <Menu size={20} />}
+          {menuOpen ? "×" : "☰"}
         </button>
 
         <KashurmewLogo variant="dark" size="sm" />
@@ -57,12 +56,12 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
 
         <div className="header-actions">
           <Link href="/account" aria-label="Account" className="flex items-center gap-1.5 hover:text-[#B69A66]">
-            <User size={16} />
+            
             <span className="hidden sm:inline text-xs">Account</span>
           </Link>
 
           <Link href="/cart" className="bag">
-            <ShoppingBag size={15} />
+            
             <span className="bag-label">Bag</span>
             <span className="bg-[#B69A66] text-[#10291F] font-bold rounded-full w-5 h-5 flex items-center justify-center text-[10px] ml-1">
               {cartCount}
@@ -84,19 +83,19 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
             <div className="flex flex-col gap-5 text-sm uppercase tracking-widest text-[#f5f0e5]">
               <Link href="/shop" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pb-3 border-b border-[#345043]">
                 <span>Shop Catalogue</span>
-                <ArrowRight size={16} className="text-[#B69A66]" />
+                →
               </Link>
               <a href="/#story" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pb-3 border-b border-[#345043]">
                 <span>Our Story</span>
-                <ArrowRight size={16} className="text-[#B69A66]" />
+                →
               </a>
               <Link href="/about" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pb-3 border-b border-[#345043]">
                 <span>Our Approach</span>
-                <ArrowRight size={16} className="text-[#B69A66]" />
+                →
               </Link>
               <Link href="/cart" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pt-2 text-[#B69A66] font-semibold">
                 <span>Your Bag ({cartCount})</span>
-                <ArrowRight size={16} />
+                →
               </Link>
             </div>
           </motion.div>
