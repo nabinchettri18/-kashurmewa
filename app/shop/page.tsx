@@ -53,7 +53,19 @@ export default function ShopPage() {
           <p>Explore available packs of Kashmiri walnuts in shell. Compare current pack sizes and prices before adding to your bag.</p>
         </div>
         <div className="shop-banner-image">
-          <img src="https://images.pexels.com/photos/8303558/pexels-photo-8303558.jpeg" alt="Walnuts arranged on a natural surface" />
+          {items[0]?.images[0]?.url ? (
+            <img
+              src={items[0].images[0].url}
+              alt={items[0].images[0].alt_text || items[0].name}
+              loading="eager"
+            />
+          ) : (
+            <div className="shop-banner-placeholder" role="img" aria-label="Kashurmewa product photography will appear here">
+              <span>KASHURMEWA</span>
+              <strong>The Taste of Kashmir</strong>
+              <small>Product photography managed from the catalogue</small>
+            </div>
+          )}
         </div>
       </section>
 
@@ -74,11 +86,14 @@ export default function ShopPage() {
         </div>
 
         {loading ? (
-          <p className="commerce-muted">Loading collection from Supabase…</p>
+          <p className="commerce-muted" role="status" aria-live="polite">Loading the collection…</p>
         ) : loadError ? (
           <p className="commerce-muted" role="alert">We couldn’t load the catalogue. Check the Supabase connection and product-table permissions, then refresh.</p>
         ) : !filtered.length ? (
-          <p className="commerce-muted">No active products match your search. Add or activate products in Supabase to display them here.</p>
+          <div className="commerce-muted" role="status">
+            <p>No active products match your search.</p>
+            {query && <button type="button" onClick={() => setQuery("")}>Clear search</button>}
+          </div>
         ) : (
           <div className="commerce-grid">
             {filtered.map((p) => {
@@ -89,7 +104,7 @@ export default function ShopPage() {
               return (
                 <Link className="commerce-product" href={`/products/${p.slug}`} key={p.id}>
                   <div className="commerce-product-image">
-                    {image ? <img src={image} alt={p.name} /> : <div className="commerce-muted">Image coming soon</div>}
+                    {image ? <img src={image} alt={p.images[0]?.alt_text || p.name} loading="lazy" /> : <div className="commerce-muted commerce-image-placeholder"><span>KASHURMEWA</span><small>Product photography coming soon</small></div>}
                     <span>EXPLORE ↗</span>
                   </div>
                   <div className="commerce-product-info">
