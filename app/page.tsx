@@ -7,7 +7,7 @@ import { fetchProductBySlug, Product, ProductVariant } from "@/lib/catalog";
 import { NavigationHeader } from "@/components/navigation/Header";
 import "./kashurmewa-storefront.css";
 
-const WALNUT_HERO = "https://images.pexels.com/photos/36040913/pexels-photo-36040913.jpeg?auto=compress&cs=tinysrgb&w=1800";
+const WALNUT_HERO = "https://images.pexels.com/photos/36040913/pexels-photo-36040913.jpeg?auto=compress&cs=tinysrgb&w=2000";
 const WALNUT_DETAIL = "https://images.pexels.com/photos/37309469/pexels-photo-37309469.jpeg?auto=compress&cs=tinysrgb&w=1200";
 const ORCHARD_IMAGE = "https://images.pexels.com/photos/17131011/pexels-photo-17131011.jpeg?auto=compress&cs=tinysrgb&w=1400";
 const money = (value: number) => new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 }).format(value);
@@ -51,41 +51,53 @@ export default function Home() {
   return (
     <main className="km-store">
       <NavigationHeader cartCount={cartCount} />
-      {notice && <div className="ks-toast" role="status">{notice}</div>}
+      {notice && <div className="ks-toast" role="status">{notice}<Link href="/cart"> View bag →</Link></div>}
 
-      <section className="ks-hero">
+      <section className="ks-hero" aria-label="Kashurmewa walnuts">
         <div className="ks-hero-copy">
-          <span className="ks-kicker"><i /> THE WALNUT, RECONSIDERED</span>
-          <h1>A better kind of<br /><em>everyday good.</em></h1>
-          <p>Discover Kashmiri walnuts in shell, thoughtfully packed for your everyday pantry, family tables and moments worth sharing.</p>
+          <span className="ks-kicker"><i /> A LITTLE CLOSER TO NATURE</span>
+          <h1>From the valley,<br /><em>with goodness.</em></h1>
+          <p>Whole Kashmiri walnuts for everyday rituals, shared tables and the simple pleasure of something naturally good.</p>
           <div className="ks-actions">
-            <Link className="ks-button" href="#shop">Shop walnuts <ArrowRight size={17} /></Link>
-            <span className="ks-price-note">{loading ? "Discover the collection" : product?.variants?.length ? `Packs from ${money(Math.min(...product.variants.map(v => v.price_inr)))}` : "Explore the collection"}</span>
+            <Link className="ks-button" href="#shop">Discover the collection <ArrowRight size={17} /></Link>
+            <span className="ks-price-note">{loading ? "Explore our walnut collection" : product?.variants?.length ? `Packs from ${money(Math.min(...product.variants.map(v => v.price_inr)))}` : "Thoughtfully packed walnuts"}</span>
           </div>
           <div className="ks-proof">
-            <span><Leaf size={18}/><b>Walnuts in shell</b></span>
-            <span><PackageCheck size={18}/><b>Packed with care</b></span>
-            <span><Truck size={18}/><b>Pan-India shopping</b></span>
+            <span><Leaf size={18}/><b>Whole walnuts</b></span>
+            <span><PackageCheck size={18}/><b>Thoughtful packs</b></span>
+            <span><Truck size={18}/><b>Made to order</b></span>
           </div>
         </div>
         <div className="ks-hero-media">
-          <img src={WALNUT_HERO} alt="Close-up of whole walnuts in their natural shells" />
-          <div className="ks-image-label"><span>THE SIGNATURE COLLECTION</span><b>Simple by nature.</b></div>
-          <div className="ks-round-label">NATURAL<br/><strong>GOODNESS</strong><br/>IN EVERYDAY LIFE</div>
+          <img src={WALNUT_HERO} alt="A natural still life of whole walnuts" />
+          <div className="ks-image-label"><span>THE KASHURMEWA EDIT</span><b>Nature, made part of your day.</b></div>
+          <div className="ks-round-label">GOODNESS<br/><strong>BY NATURE</strong><br/>KASHURMEWA</div>
         </div>
       </section>
 
       <section className="ks-benefit-bar" aria-label="Shopping benefits">
-        <div><ShieldCheck/><span><b>Clear pack options</b><small>Choose the size that suits you</small></span></div>
-        <div><PackageCheck/><span><b>Considered packaging</b><small>Made for your pantry</small></span></div>
-        <div><Truck/><span><b>Delivery across India</b><small>Review delivery at checkout</small></span></div>
-        <div><ShoppingBag/><span><b>Easy to shop</b><small>Choose, add to bag, checkout</small></span></div>
+        <div><ShieldCheck/><span><b>Clear pack options</b><small>Choose what suits your home</small></span></div>
+        <div><PackageCheck/><span><b>Considered packaging</b><small>Presented with care</small></span></div>
+        <div><Truck/><span><b>Online ordering</b><small>Delivery details at checkout</small></span></div>
+        <div><ShoppingBag/><span><b>Simple shopping</b><small>Browse, choose and add to bag</small></span></div>
+      </section>
+
+      <section className="ks-collections" aria-labelledby="collection-title">
+        <div className="ks-collection-heading"><span className="ks-kicker">FIND YOUR EVERYDAY FAVOURITE</span><h2 id="collection-title">Shop by <em>pack size.</em></h2><p>One signature walnut. A size for every kind of table.</p></div>
+        <div className="ks-collection-list">
+          {loading ? <div className="ks-state">Finding available pack sizes…</div> : loadError ? <div className="ks-state">We couldn’t load pack sizes right now. Please visit the <Link href="/shop">shop</Link>.</div> : product?.variants?.length ? product.variants.map((variant, index) => (
+            <a className="ks-collection-item" href="#shop" key={variant.id}>
+              <span className={`ks-collection-image ks-collection-image-${index % 3}`}><img src={index % 2 === 0 ? WALNUT_DETAIL : WALNUT_HERO} alt="" /></span>
+              <strong>{variant.size}</strong><small>{money(variant.price_inr)}</small>
+            </a>
+          )) : <div className="ks-state">Our collection is being prepared. Please check back soon.</div>}
+        </div>
       </section>
 
       <section className="ks-shop" id="shop">
         <div className="ks-heading">
-          <div><span className="ks-kicker">SHOP THE COLLECTION</span><h2>Your pantry’s new <em>favourite.</em></h2><p>One signature product. Find the pack size that works for you.</p></div>
-          <Link className="ks-inline-link" href="/shop">View shop <ArrowUpRight size={16}/></Link>
+          <div><span className="ks-kicker">THE SIGNATURE COLLECTION</span><h2>Good things come <em>in shells.</em></h2><p>Explore our available packs and choose the size that works for you.</p></div>
+          <Link className="ks-inline-link" href="/shop">Explore the shop <ArrowUpRight size={16}/></Link>
         </div>
         {loading ? <div className="ks-state">Loading current pack sizes and prices…</div> :
           loadError ? <div className="ks-state">We couldn’t load the current catalogue. Please visit the <Link href="/shop">shop</Link>.</div> :
@@ -94,8 +106,9 @@ export default function Home() {
               {product.variants.map((variant, index) => (
                 <article className="ks-product-card" key={variant.id}>
                   <Link className="ks-product-image" href="/shop" aria-label={`View ${variant.size} Kashmiri walnuts`}>
-                    <img src={index === 0 ? WALNUT_DETAIL : WALNUT_HERO} alt="Kashmiri walnuts in shell" />
-                    <span>{index === 0 ? "THE SIGNATURE" : "PANTRY ESSENTIAL"}</span>
+                    <img src={index % 2 === 0 ? WALNUT_DETAIL : WALNUT_HERO} alt="Whole walnuts in their natural shells" />
+                    <span>{index === 0 ? "THE SIGNATURE" : "FOR YOUR PANTRY"}</span>
+                    <span className="ks-image-index">0{index + 1}</span>
                   </Link>
                   <div className="ks-product-info">
                     <div className="ks-product-title"><div><small>KASHURMEWA · WALNUTS</small><h3>Whole Kashmiri walnuts</h3></div><strong>{money(variant.price_inr)}</strong></div>
@@ -111,12 +124,17 @@ export default function Home() {
           ) : <div className="ks-state">Our collection is being prepared. Please check back soon.</div>}
       </section>
 
-      <section className="ks-story">
-        <div className="ks-story-photo"><img src={ORCHARD_IMAGE} alt="Green walnuts growing on a tree in an orchard"/><span>FROM ORCHARD TO EVERYDAY</span></div>
-        <div className="ks-story-copy"><span className="ks-kicker">A BRAND WITH ROOTS</span><h2>Good food starts<br/>with <em>good choices.</em></h2><p>Kashurmewa is built around one simple idea: make it easier to bring a distinctive harvest into everyday life. We focus on the product, clear pack choices and thoughtful presentation—without making shopping complicated.</p><Link className="ks-button ks-button-light" href="/about">Meet Kashurmewa <ArrowRight size={16}/></Link></div>
+      <section className="ks-story" id="story">
+        <div className="ks-story-photo"><img src={ORCHARD_IMAGE} alt="Walnuts growing on a tree in an orchard"/><span>ROOTED IN NATURE</span></div>
+        <div className="ks-story-copy"><span className="ks-kicker">A BRAND WITH ROOTS</span><h2>Keep it simple.<br/>Keep it <em>natural.</em></h2><p>Kashurmewa brings the familiar goodness of walnuts into everyday life. We believe buying well should feel simple: clear pack sizes, transparent pricing and a considered experience from browsing to bag.</p><Link className="ks-button ks-button-light" href="/about">Meet Kashurmewa <ArrowRight size={16}/></Link></div>
       </section>
 
-      <section className="ks-why">
+      <section className="ks-origin" id="origin">
+        <div className="ks-origin-copy"><span className="ks-kicker">A MOMENT FOR YOURSELF</span><h2>Little rituals.<br/><em>Lasting goodness.</em></h2><p>Crack a few walnuts for your breakfast, add them to a favourite recipe, or bring a bowl to the table to share. A simple ingredient can be part of so many everyday moments.</p><Link href="/shop" className="ks-origin-link">SHOP THE WALNUTS <ArrowRight size={15}/></Link></div>
+        <div className="ks-origin-photo"><img src={WALNUT_DETAIL} alt="A close-up of natural walnuts ready to enjoy"/><span>THE EVERYDAY WALNUT</span></div>
+      </section>
+
+      <section className="ks-why" id="faq">
         <div className="ks-heading"><div><span className="ks-kicker">THE KASHURMEWA DIFFERENCE</span><h2>Thoughtful from <em>the start.</em></h2></div></div>
         <div className="ks-why-grid">
           <div><span>01</span><Sprout/><h3>A product-led approach</h3><p>We keep the focus on walnuts, not an endless catalogue of distractions.</p></div>
@@ -125,10 +143,10 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="ks-final-cta"><div><span className="ks-kicker">READY WHEN YOU ARE</span><h2>Make room for <em>something good.</em></h2></div><Link className="ks-button" href="#shop">Find your pack <ArrowRight size={17}/></Link></section>
+      <section className="ks-final-cta"><div><span className="ks-kicker">YOUR PANTRY, REIMAGINED</span><h2>Make room for <em>something good.</em></h2></div><Link className="ks-button" href="#shop">Find your pack <ArrowRight size={17}/></Link></section>
 
       <footer className="ks-footer">
-        <div className="ks-footer-main"><div className="ks-footer-brand"><span className="ks-wordmark">kashur<span>mewa</span></span><p>Kashmiri walnuts, thoughtfully brought to your everyday.</p></div><div><small>SHOP</small><Link href="/shop">All walnuts</Link><Link href="/cart">Your bag</Link><Link href="/account">My account</Link></div><div><small>DISCOVER</small><Link href="/about">Our story</Link><a href="#shop">Pack sizes</a><a href="#shop">The collection</a></div><div className="ks-footer-note"><b>Goodness, grown naturally.</b><p>Thank you for shopping Kashurmewa.</p></div></div>
+        <div className="ks-footer-main"><div className="ks-footer-brand"><span className="ks-wordmark">kashur<span>mewa</span></span><p>Walnuts for everyday rituals, thoughtfully brought to your table.</p></div><div><small>SHOP</small><Link href="/shop">All walnuts</Link><Link href="/cart">Your bag</Link><Link href="/account">My account</Link></div><div><small>DISCOVER</small><Link href="/about">Our story</Link><a href="#shop">Pack sizes</a><a href="#origin">Everyday inspiration</a></div><div className="ks-footer-note"><b>Goodness, grown naturally.</b><p>Thank you for shopping Kashurmewa.</p></div></div>
         <div className="ks-footer-bottom"><span>© {new Date().getFullYear()} Kashurmewa</span><span>Made for everyday rituals.</span></div>
       </footer>
     </main>
