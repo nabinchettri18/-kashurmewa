@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "./kashurmewa-polish.css";
 
-const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\\/$/, "");
+const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
 
 export const metadata: Metadata = {
   ...(configuredSiteUrl ? { metadataBase: new URL(configuredSiteUrl) } : {}),
