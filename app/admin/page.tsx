@@ -29,6 +29,7 @@ type Order = {
 export default function AdminDashboard() {
   const [tab, setTab] = useState("Overview");
   const [product, setProduct] = useState<Product | null>(null);
+  const [products, setProducts] = useState<Product[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
@@ -45,17 +46,17 @@ export default function AdminDashboard() {
       const { data: pData, error: productError } = await supabase
         .from("km_products")
         .select("id,name,slug,active,description,km_product_variants(id,size,price_inr,stock,sku)")
-        .eq("slug", "kashmiri-walnuts")
-        .single();
+        .order("name", { ascending: true });
       if (productError) throw productError;
 
-      if (pData) {
-        const p = pData as any;
-        p.variants = (p.km_product_variants || []).sort((a: Variant, b: Variant) => a.price_inr - b.price_inr);
-        setProduct(p);
-      } else {
-        setProduct(null);
-        setMessage("No live product was found. Add or activate the product in the catalogue before managing inventory.");
+      const catalogue = ((pData || []) as any[]).map((p) => ({
+        ...p,
+        variants: (p.km_product_variants || []).sort((a: Variant, b: Variant) => a.price_inr - b.price_inr),
+      })) as Product[];
+      setProducts(catalogue);
+      setProduct(catalogue.find((p) => p.slug === "kashmiri-walnuts") || catalogue[0] || null);
+      if (!catalogue.length) {
+        setMessage("No products were returned by the catalogue query. Check the product records and admin permissions.");
       }
 
       // 2. Load Orders
@@ -121,6 +122,10 @@ export default function AdminDashboard() {
       setMessage("Save failed. Your displayed inventory was not changed; check admin permissions and retry.");
       return;
     }
+    setProducts((current) => current.map((p) => ({
+      ...p,
+      variants: p.variants.map((v) => v.id === id ? { ...v, [field]: num } : v),
+    })));
     setProduct((current) => current ? {
       ...current,
       variants: current.variants.map((v) => v.id === id ? { ...v, [field]: num } : v),
@@ -152,7 +157,7 @@ export default function AdminDashboard() {
   const paidOrders = orders.filter((o) => o.payment_status === "paid");
   const totalPaidRevenue = paidOrders.reduce((sum, o) => sum + Number(o.total_amount_inr || 0), 0);
   const pendingOrdersCount = orders.filter((o) => o.fulfillment_status === "pending").length;
-  const lowStockVariants = product?.variants.filter((v) => v.stock < 10) || [];
+  const lowStockVariants = products.flatMap((p) => p.variants.filter((v) => v.stock < 10).map((v) => ({ ...v, productName: p.name })));
 
   if (authLoading) {
     return <div className="admin-shell"><main className="admin-main"><p>Checking admin access…</p></main></div>;
@@ -211,7 +216,7 @@ export default function AdminDashboard() {
         {tab === "Overview" && (
           <>
             <div className="metrics">
-              <Metric label="Catalogue" value={product ? `${product.variants.length} Variants` : "—"} note="Active products" />
+              <Metric label="Catalogue" value={`${products.length} Products`} note={`${products.reduce((sum, p) => sum + p.variants.length, 0)} pack variants`} />
               <Metric label="Total Orders" value={String(totalOrdersCount)} note="Database records" />
               <Metric label="Paid Revenue" value={`₹${totalPaidRevenue.toLocaleString("en-IN")}`} note="Completed orders only" />
               <Metric label="Pending Fulfillment" value={String(pendingOrdersCount)} note="Requires dispatch" />
@@ -263,36 +268,39 @@ export default function AdminDashboard() {
             </div>
 
             {loading ? (
-              <p className="muted">Loading product catalog…</p>
+              <p className="muted">Loading product catalogue…</p>
+            ) : !products.length ? (
+              <p className="muted">No products are available to manage with the current admin permissions.</p>
             ) : (
-              product?.variants.map((v) => (
-                <div className="product-admin" key={v.id} style={{ display: "flex", gap: "20px", padding: "16px 0", borderBottom: "1px solid #E7DED1" }}>
-                  <div style={{ flex: 1 }}>
-                    <b>{product.name}</b>
-                    <span style={{ display: "block", fontSize: "11px", color: "#777e73" }}>{v.size} pack size</span>
+              products.map((catalogueProduct) => (
+                <div key={catalogueProduct.id} className="admin-product-group">
+                  <div className="admin-product-heading">
+                    <div>
+                      <b>{catalogueProduct.name}</b>
+                      <span>/{catalogueProduct.slug}</span>
+                    </div>
+                    <em className={catalogueProduct.active ? "admin-status-active" : "admin-status-inactive"}>
+                      {catalogueProduct.active ? "ACTIVE" : "INACTIVE"}
+                    </em>
                   </div>
-
-                  <label style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                    <span>Price ₹</span>
-                    <input
-                      className="admin-input"
-                      type="number"
-                      min="0"
-                      value={v.price_inr}
-                      onChange={(e) => updateVariant(v.id, "price_inr", e.target.value)}
-                    />
-                  </label>
-
-                  <label style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                    <span>Stock Units</span>
-                    <input
-                      className="admin-input small"
-                      type="number"
-                      min="0"
-                      value={v.stock}
-                      onChange={(e) => updateVariant(v.id, "stock", e.target.value)}
-                    />
-                  </label>
+                  {catalogueProduct.variants.length ? catalogueProduct.variants.map((v) => (
+                    <div className="product-admin" key={v.id}>
+                      <div className="admin-pack-label">
+                        <b>{v.size}</b>
+                        <span>{v.sku || "No SKU assigned"}</span>
+                      </div>
+                      <label className="admin-edit-field">
+                        <span>Price (₹)</span>
+                        <input className="admin-input" type="number" min="0" step="1" value={v.price_inr}
+                          onChange={(e) => updateVariant(v.id, "price_inr", e.target.value)} />
+                      </label>
+                      <label className="admin-edit-field">
+                        <span>Stock units</span>
+                        <input className="admin-input small" type="number" min="0" step="1" value={v.stock}
+                          onChange={(e) => updateVariant(v.id, "stock", e.target.value)} />
+                      </label>
+                    </div>
+                  )) : <p className="muted">No pack variants are linked to this product yet.</p>}
                 </div>
               ))
             )}
@@ -310,21 +318,22 @@ export default function AdminDashboard() {
 
             {lowStockVariants.length > 0 && (
               <div style={{ background: "#fef2f2", border: "1px solid #fca5a5", padding: "14px", color: "#991b1b", marginBottom: "20px" }}>
-                ⚠️ Low Stock Alert: {lowStockVariants.map((v) => `${v.size} (${v.stock} remaining)`).join(", ")}
+                ⚠️ Low Stock Alert: {lowStockVariants.map((v) => `${v.productName} · ${v.size} (${v.stock} remaining)`).join(", ")}
               </div>
             )}
 
-            {product?.variants.map((v) => (
-              <div key={v.id} className="stock-row" style={{ display: "flex", justifyContent: "space-between", padding: "16px 0", borderBottom: "1px solid #E7DED1" }}>
+            {!products.length ? <p className="muted">No catalogue inventory was returned.</p> : products.flatMap((catalogueProduct) => catalogueProduct.variants.map((v) => (
+              <div key={v.id} className="stock-row admin-stock-row">
                 <div>
-                  <strong>{product.name} — {v.size}</strong>
-                  <span style={{ display: "block", fontSize: "11px", color: "#777e73" }}>SKU: {v.sku || `KM-WAL-${v.size}`}</span>
+                  <strong>{catalogueProduct.name} — {v.size}</strong>
+                  <span>SKU: {v.sku || "Not assigned"}</span>
                 </div>
                 <div>
-                  <b style={{ color: v.stock < 10 ? "#991b1b" : "#344B3A", fontSize: "18px" }}>{v.stock} units</b>
+                  <b className={v.stock < 10 ? "admin-stock-low" : "admin-stock-ok"}>{v.stock} units</b>
+                  <small>{v.stock < 10 ? "LOW STOCK" : "IN STOCK"}</small>
                 </div>
               </div>
-            ))}
+            )))}
           </section>
         )}
 
@@ -424,10 +433,10 @@ export default function AdminDashboard() {
             <h2>Kashurmewa Business Settings</h2>
             <div style={{ marginTop: "20px", fontSize: "13px", lineHeight: "2" }}>
               <p>
-                <strong>Brand Name:</strong> Kashurmewa Dry Fruits<br />
-                <strong>Primary Product:</strong> Kashmiri In-Shell Walnuts<br />
-                <strong>Shipping:</strong> Existing checkout calculation retained pending policy confirmation<br />
-                <strong>Payment Gateways Configured:</strong> Cash on Delivery (COD), Online Payments structure
+                <strong>Brand:</strong> KASHURMEWA — The Taste of Kashmir<br />
+                <strong>Launch product:</strong> Kashmiri walnuts in shell<br />
+                <strong>Shipping:</strong> Existing checkout calculation retained; delivery policy still needs confirmation<br />
+                <strong>Payment status:</strong> Cash on Delivery is the active checkout method. Online payments are not enabled.
               </p>
             </div>
           </section>
