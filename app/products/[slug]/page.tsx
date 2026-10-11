@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { ArrowLeft, ArrowUpRight, Check, Minus, Plus, ShieldCheck, Truck, Leaf } from "lucide-react";
 import { fetchProductBySlug, Product, ProductVariant } from "@/lib/catalog";
 import { NavigationHeader } from "@/components/navigation/Header";
 
@@ -84,7 +83,7 @@ export default function ProductDetailPage() {
           <span className="commerce-eyebrow">KASHURMEWA SIGNATURE</span>
           <h1>{loading ? "A moment, please." : loadError ? "We couldn’t load this harvest." : "This product is unavailable."}</h1>
           <p>{loading ? "Loading the latest product details and prices…" : loadError ? "Please check your connection and refresh the page." : "This item may be temporarily unavailable. Explore the shop for current selections."}</p>
-          <Link className="product-back-link" href="/shop"><ArrowLeft size={15} /> Back to shop</Link>
+          <Link className="product-back-link" href="/shop">← Back to shop</Link>
         </div>
       </main>
     );
@@ -132,7 +131,7 @@ export default function ProductDetailPage() {
           <h1>{product.name}</h1>
           <p className="premium-description">{product.description}</p>
 
-          <div className="premium-quality-line"><Leaf size={15} /><span>Whole walnuts · Natural shells · Thoughtfully packed</span></div>
+          <div className="premium-quality-line"><span>Whole walnuts · Natural shells · Thoughtfully packed</span></div>
 
           <div className="premium-price-block">
             <div>
@@ -167,9 +166,9 @@ export default function ProductDetailPage() {
             <div>
               <span>Quantity</span>
               <div className="premium-quantity-control">
-                <button type="button" aria-label="Decrease quantity" disabled={qty <= 1} onClick={() => setQty((value) => Math.max(1, value - 1))}><Minus size={14} /></button>
+                <button type="button" aria-label="Decrease quantity" disabled={qty <= 1} onClick={() => setQty((value) => Math.max(1, value - 1))}>−</button>
                 <strong>{qty}</strong>
-                <button type="button" aria-label="Increase quantity" disabled={!selectedVariant || qty >= selectedVariant.stock} onClick={() => setQty((value) => Math.min(selectedVariant?.stock || 1, value + 1))}><Plus size={14} /></button>
+                <button type="button" aria-label="Increase quantity" disabled={!selectedVariant || qty >= selectedVariant.stock} onClick={() => setQty((value) => Math.min(selectedVariant?.stock || 1, value + 1))}>+</button>
               </div>
             </div>
             <small className={selectedVariant?.stock ? "in-stock" : "out-of-stock"}>
@@ -179,18 +178,18 @@ export default function ProductDetailPage() {
 
           <button type="button" className="premium-add-button" disabled={!selectedVariant || selectedVariant.stock <= 0 || qty > selectedVariant.stock} onClick={addToBag}>
             <span>{selectedVariant && selectedVariant.stock > 0 ? `ADD TO BAG · ₹${(selectedVariant.price_inr * qty).toLocaleString("en-IN")}` : "SOLD OUT"}</span>
-            <ArrowUpRight size={17} />
+            ↗
           </button>
-          {notice && <div className="premium-cart-notice" role="status"><Check size={15} /><span>{notice}</span><Link href="/cart">View bag →</Link></div>}
+          {notice && <div className="premium-cart-notice" role="status"><span>{notice}</span><Link href="/cart">View bag →</Link></div>}
 
           <div className="premium-delivery-note">
-            <Truck size={17} />
+            
             <div><strong>Delivery across India</strong><span>Free delivery on orders above ₹999. Delivery timelines are confirmed at checkout.</span></div>
           </div>
 
           <div className="premium-assurances">
-            <div><ShieldCheck size={17} /><span>Secure checkout</span></div>
-            <div><Leaf size={17} /><span>Simple ingredients</span></div>
+            <div><span>Secure checkout</span></div>
+            <div><span>Simple ingredients</span></div>
           </div>
 
           <div className="premium-details">
@@ -214,7 +213,7 @@ export default function ProductDetailPage() {
         <span className="commerce-eyebrow">THE KASHURMEWA APPROACH</span>
         <h2>Simple by nature.<br /><i>Considered by design.</i></h2>
         <p>We keep the focus on the walnut itself: a familiar ingredient, a natural shell, and thoughtful presentation for everyday use or gifting.</p>
-        <Link href="/shop">Explore the collection <ArrowUpRight size={15} /></Link>
+        <Link href="/shop">Explore the collection ↗</Link>
       </section>
 
       <footer className="commerce-footer">

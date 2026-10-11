@@ -147,3 +147,41 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .cart-stock-warning{display:block;margin-top:7px;color:#9a4f43;font-size:10px;line-height:1.5}
 .payment-option input{accent-color:var(--km-luxe-forest)}
 @media(max-width:520px){.modal-actions .btn-primary{font-size:10px;letter-spacing:.6px;padding:14px 10px}.payment-option{display:flex;align-items:center;gap:10px}.payment-option input{min-height:auto;width:16px}}
+
+
+
+/* KASHURMEWA DESIGN DISCIPLINE: quiet materials, clear edges, no template effects. */
+:root{
+  --km-luxe-forest:#183b2d;
+  --km-luxe-forest-deep:#102b21;
+  --km-luxe-cream:#f3ead9;
+  --km-luxe-paper:#e9dfcd;
+  --km-luxe-walnut:#6f4935;
+  --km-luxe-gold:#ad8b50;
+  --km-luxe-ink:#24251f;
+  --km-luxe-muted:#716d61;
+}
+html,body{background:#f3ead9;color:#24251f}
+button,input,select,textarea{font:inherit}
+:where(.commerce-product,.premium-buy-panel,.premium-product-story,.cart-item,.summary,.account-card,.modal-card,.commerce-footer,.online-payment-note,.cart-stock-warning){
+  box-shadow:none!important;
+  background-image:none!important;
+}
+:where(.commerce-product,.premium-main-image,.premium-buy-panel,.cart-item,.summary,.account-card,.modal-card,.payment-option,.commerce-product-image,.premium-pack-options button){
+  border-radius:0!important;
+}
+:where(.commerce-product,.premium-buy-panel,.cart-item,.summary,.account-card,.modal-card,.online-payment-note){
+  border-left:0!important;
+}
+:where(.commerce-product,.premium-buy-panel,.cart-item,.summary,.account-card,.modal-card,.payment-option,.premium-pack-options button){
+  box-shadow:none!important;
+}
+:where(.commerce-product-image,.premium-main-image) img{border-radius:0!important;filter:none!important}
+:where(.commerce-product,.premium-buy-panel,.cart-item,.summary,.account-card,.modal-card,.payment-option,.premium-pack-options button):hover{
+  transform:none!important;box-shadow:none!important;filter:none!important;
+}
+@media(prefers-reduced-motion:no-preference){
+  :where(.commerce-product,.premium-buy-panel,.cart-item,.summary,.account-card,.modal-card,.payment-option,.premium-pack-options button,button,a){
+    transition:none!important;animation:none!important;
+  }
+}

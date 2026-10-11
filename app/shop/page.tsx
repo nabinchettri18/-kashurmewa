@@ -1,9 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { fetchAllProducts, Product } from "@/lib/catalog";
 import { NavigationHeader } from "@/components/navigation/Header";
+import "./kashurmewa-shop-v2.css";
+
+const money = (value: number) => new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 }).format(value);
 
 export default function ShopPage() {
   const [items, setItems] = useState<Product[]>([]);
@@ -15,105 +18,76 @@ export default function ShopPage() {
 
   useEffect(() => {
     try {
-      const saved = JSON.parse(localStorage.getItem("kashurmewa-cart") || "[]");
-      setCartCount(saved.reduce((sum: number, item: { qty?: number }) => sum + Number(item.qty || 0), 0));
+      const cart = JSON.parse(localStorage.getItem("kashurmewa-cart") || "[]");
+      setCartCount(cart.reduce((sum: number, item: { qty?: number }) => sum + Number(item.qty || 0), 0));
     } catch {}
     let cancelled = false;
-    (async () => {
-      try {
-        const data = await fetchAllProducts();
-        if (!cancelled) setItems(data);
-      } catch {
-        if (!cancelled) setLoadError(true);
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    })();
+    fetchAllProducts()
+      .then((data) => { if (!cancelled) setItems(data); })
+      .catch(() => { if (!cancelled) setLoadError(true); })
+      .finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };
   }, []);
 
-  const filtered = items
-    .filter((p) => p.name.toLowerCase().includes(query.toLowerCase()) || p.description.toLowerCase().includes(query.toLowerCase()))
+  const filtered = useMemo(() => items
+    .filter((product) => product.name.toLowerCase().includes(query.toLowerCase()) || product.description.toLowerCase().includes(query.toLowerCase()))
     .sort((a, b) => {
-      const minA = a.variants.length ? Math.min(...a.variants.map((v) => v.price_inr)) : 0;
-      const minB = b.variants.length ? Math.min(...b.variants.map((v) => v.price_inr)) : 0;
-      if (sort === "low") return minA - minB;
-      if (sort === "high") return minB - minA;
-      return 0;
-    });
+      const priceA = a.variants.length ? Math.min(...a.variants.map((variant) => variant.price_inr)) : 0;
+      const priceB = b.variants.length ? Math.min(...b.variants.map((variant) => variant.price_inr)) : 0;
+      return sort === "low" ? priceA - priceB : sort === "high" ? priceB - priceA : 0;
+    }), [items, query, sort]);
+
+  const totalPacks = items.reduce((count, product) => count + product.variants.length, 0);
+  const heroImage = items.find((product) => product.images[0]?.url)?.images[0];
 
   return (
-    <main className="commerce-page">
+    <main className="km-shop-v2">
+      <div className="kshop-ribbon"><span>THE TASTE OF KASHMIR</span><span className="kshop-ribbon-center"> A CONSIDERED KIND OF GOOD</span><span>THE KASHURMEWA EDIT</span></div>
       <NavigationHeader cartCount={cartCount} />
 
-      <section className="shop-banner">
-        <div>
-          <span className="commerce-eyebrow">THE KASHURMEWA CATALOGUE</span>
-          <h1>Good things<br /><i>start here.</i></h1>
-          <p>Explore available packs of Kashmiri walnuts in shell. Compare current pack sizes and prices before adding to your bag.</p>
+      <section className="kshop-hero">
+        <div className="kshop-copy">
+          <span className="kshop-eyebrow">THE KASHURMEWA COLLECTION</span>
+          <p className="kshop-overline">A LITTLE MORE MEANING, IN EVERY PACK</p>
+          <h1>Good things<br />start <em>here.</em></h1>
+          <p className="kshop-intro">Discover the character of Kashmiri walnuts, thoughtfully brought to your table. Choose a pack for your everyday ritual, your family table or a little something to share.</p>
+          <div className="kshop-facts"><span><b>{String(items.length).padStart(2, "0")}</b> PRODUCTS</span><i /><span><b>{String(totalPacks).padStart(2, "0")}</b> PACK OPTIONS</span><i /><span>LIVE CATALOGUE</span></div>
         </div>
-        <div className="shop-banner-image">
-          <img src="https://images.pexels.com/photos/8303558/pexels-photo-8303558.jpeg" alt="Walnuts arranged on a natural surface" />
+        <div className="kshop-art">
+          {heroImage?.url ? <img src={heroImage.url} alt={heroImage.alt_text || "Kashurmewa walnut product"} /> : <div className="kshop-placeholder"><span>KASHURMEWA</span><b>The Taste of Kashmir</b><small>Product photography from your live catalogue will appear here.</small></div>}
+          <div className="kshop-art-shade" />
+          <span className="kshop-art-top">THE SIGNATURE HARVEST <i>01 / KM</i></span>
+          <div className="kshop-art-note"><small>THE COLLECTION</small><b>Find your everyday favourite.</b><span>Thoughtfully chosen. Simply presented.</span></div>
         </div>
       </section>
 
-      <section className="catalogue">
-        <div className="catalogue-top">
-          <div>
-            <span className="commerce-eyebrow">SIGNATURE HARVEST</span>
-            <h2>Shop All Products</h2>
-          </div>
-          <div className="catalogue-controls">
-            <input placeholder="Search products..." aria-label="Search products" value={query} onChange={(e) => setQuery(e.target.value)} />
-            <select aria-label="Sort products" value={sort} onChange={(e) => setSort(e.target.value)}>
-              <option value="featured">Featured</option>
-              <option value="low">Price: Low to High</option>
-              <option value="high">Price: High to Low</option>
-            </select>
-          </div>
+      <div className="kshop-ticker"><span>ROOTED IN NATURE</span><i>✳</i><span>MADE FOR SHARING</span><i>✳</i><span>THE TASTE OF KASHMIR</span><i>✳</i><span>ROOTED IN NATURE</span></div>
+
+      <section className="kshop-catalogue" id="collection">
+        <div className="kshop-heading"><div><span className="kshop-eyebrow">SHOP THE COLLECTION</span><h2>Choose your <em>good thing.</em></h2><p>Clear pack options. Current prices. No guesswork.</p></div><span className="kshop-count">{String(filtered.length).padStart(2, "0")} ITEMS</span></div>
+        <div className="kshop-toolbar">
+          <label><span className="kshop-search-mark" aria-hidden="true">⌕</span><input placeholder="Search the collection" aria-label="Search products" value={query} onChange={(event) => setQuery(event.target.value)} />{query && <button type="button" onClick={() => setQuery("")} aria-label="Clear search">×</button>}</label>
+          <div><span>SORT BY</span><select aria-label="Sort products" value={sort} onChange={(event) => setSort(event.target.value)}><option value="featured">Featured</option><option value="low">Price: Low to High</option><option value="high">Price: High to Low</option></select></div>
         </div>
-
-        {loading ? (
-          <p className="commerce-muted">Loading collection from Supabase…</p>
-        ) : loadError ? (
-          <p className="commerce-muted" role="alert">We couldn’t load the catalogue. Check the Supabase connection and product-table permissions, then refresh.</p>
-        ) : !filtered.length ? (
-          <p className="commerce-muted">No active products match your search. Add or activate products in Supabase to display them here.</p>
-        ) : (
-          <div className="commerce-grid">
-            {filtered.map((p) => {
-              const vs = [...p.variants].sort((a, b) => a.price_inr - b.price_inr);
-              const minPrice = vs.length ? vs[0].price_inr : null;
-              const image = p.images[0]?.url;
-
-              return (
-                <Link className="commerce-product" href={`/products/${p.slug}`} key={p.id}>
-                  <div className="commerce-product-image">
-                    {image ? <img src={image} alt={p.name} /> : <div className="commerce-muted">Image coming soon</div>}
-                    <span>EXPLORE ↗</span>
-                  </div>
-                  <div className="commerce-product-info">
-                    <div>
-                      <small>KASHMIRI IN-SHELL WALNUTS</small>
-                      <h3>{p.name}</h3>
-                      <p>{vs.map((v) => v.size).join(" · ")}</p>
-                    </div>
-                    <strong>{minPrice === null ? "Price unavailable" : `From ₹${minPrice.toLocaleString("en-IN")}`}</strong>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        )}
+        {loading ? <div className="kshop-state"><span className="kshop-spinner" /> Gathering the current collection…</div>
+          : loadError ? <div className="kshop-state" role="alert">We couldn’t load the catalogue. Please refresh or try again shortly.</div>
+          : !filtered.length ? <div className="kshop-empty"><span>THE KASHURMEWA COLLECTION</span><h3>{query ? "Nothing found just yet." : "The next good thing is on its way."}</h3><p>{query ? "Try another search or clear the search field to see all available products." : "Products will appear here when they are published in the live catalogue."}</p>{query && <button type="button" onClick={() => setQuery("")}>CLEAR SEARCH →</button>}</div>
+          : <div className="kshop-grid">{filtered.map((product, index) => {
+            const variants = [...product.variants].sort((a, b) => a.price_inr - b.price_inr);
+            const minPrice = variants.length ? variants[0].price_inr : null;
+            const image = product.images[0];
+            const available = variants.some((variant) => variant.stock > 0);
+            return <Link className="kshop-card" href={"/products/" + product.slug} key={product.id}>
+              <div className="kshop-card-image">{image?.url ? <img src={image.url} alt={image.alt_text || product.name} loading="lazy" /> : <div className="kshop-placeholder"><span>KASHURMEWA</span><small>THE TASTE OF KASHMIR</small></div>}<span className="kshop-index">{String(index + 1).padStart(2, "0")}</span><span className="kshop-pack-count">{variants.length} PACK OPTIONS</span><i>↗</i></div>
+              <div className="kshop-card-info"><div><small>THE SIGNATURE COLLECTION</small><h3>{product.name}</h3><p>{variants.map((variant) => variant.size).join(" · ") || "Details coming soon"}</p></div><strong>{minPrice === null ? "Price on request" : "From " + money(minPrice)}</strong></div>
+              <div className="kshop-card-bottom"><span>{available ? "Explore the product" : "View product details"}</span><span className={available ? "kshop-stock" : "kshop-stock kshop-stock-out"}><i />{available ? "IN STOCK" : "CHECK AVAILABILITY"}</span>→</div>
+            </Link>;
+          })}</div>}
+        <div className="kshop-bottom-note"><span>✳</span> Prices and availability are taken from the live catalogue. Delivery details are shown before ordering.</div>
       </section>
 
-      <footer className="commerce-footer">
-        <Link className="premium-footer-brand" href="/">Kashurmewa</Link>
-        <span>Walnuts in shell, thoughtfully presented.</span>
-        <Link href="/about">About Us</Link>
-        <Link href="/policies/shipping">Shipping Policy</Link>
-        <Link href="/cart">Your Bag</Link>
-      </footer>
+      <section className="kshop-story"><div><span className="kshop-eyebrow">A THOUGHTFUL EVERYDAY</span><h2>From a distinctive harvest<br />to <em>your home.</em></h2></div><p>Kashurmewa is about keeping good things close: considered choices, honest product details and the pleasure of sharing something simple. Thank you for making a place for us at your table.</p><Link href="/about">OUR STORY ↗</Link></section>
+      <footer className="kshop-footer"><Link href="/" className="kshop-wordmark">kashur<span>mewa</span></Link><span>THE TASTE OF KASHMIR</span><div><Link href="/about">Our story</Link><Link href="/contact">Contact</Link><Link href="/policies/shipping">Shipping</Link><Link href="/cart">Your bag ({cartCount})</Link></div><small>© {new Date().getFullYear()} KASHURMEWA · MADE TO BE SHARED</small></footer>
     </main>
   );
 }

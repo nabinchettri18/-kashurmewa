@@ -592,3 +592,42 @@ a,button{-webkit-tap-highlight-color:transparent}
  .premium-pack-options button strong{font-size:10px}
  .premium-tax-note{max-width:110px}
 }
+
+/* Editorial shop route — distinct from the old generic catalogue */
+.commerce-page{background:#f7f3e9;color:#1b2a20}
+.commerce-page .site-header{background:#f7f3e9!important;border-bottom:1px solid #d9d0be}
+.commerce-page .shop-banner{display:grid;grid-template-columns:.9fr 1.1fr;min-height:590px;background:#f7f3e9;padding:0;gap:0}
+.commerce-page .shop-banner>div:first-child{padding:75px clamp(28px,7vw,100px);display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+.commerce-page .commerce-eyebrow{display:flex;align-items:center;gap:10px;font-size:8px;font-weight:700;letter-spacing:2.1px;color:#987344}
+.commerce-page .commerce-eyebrow:before{content:"";display:block;width:24px;height:1px;background:#bd9860}
+.commerce-page .shop-banner h1{font:400 clamp(62px,7vw,96px)/.92 "Playfair Display",Georgia,serif;letter-spacing:-4px;margin:35px 0 24px;color:#1b2a20}
+.commerce-page .shop-banner h1 i{color:#9b7443;font-weight:400}
+.commerce-page .shop-banner p{max-width:430px;color:#6d7167;font-size:12px;line-height:1.95}
+.commerce-page .shop-banner-image{position:relative;min-height:590px;overflow:hidden;background:#c9b493}
+.commerce-page .shop-banner-image:after{content:"THE SIGNATURE HARVEST  /  KASHURMEWA";position:absolute;left:26px;right:26px;bottom:25px;padding:20px 22px;background:#f7f3e9ed;color:#987344;font-size:8px;letter-spacing:2px}
+.commerce-page .shop-banner-image img{width:100%;height:100%;position:absolute;inset:0;object-fit:cover;filter:saturate(.82)}
+.commerce-page .catalogue{padding:90px 7vw 85px;background:#f7f3e9}
+.commerce-page .catalogue-top{display:flex;justify-content:space-between;align-items:flex-end;gap:25px;border-bottom:1px solid #d9d0be;padding-bottom:28px;margin-bottom:30px}
+.commerce-page .catalogue-top h2{font:400 clamp(40px,5vw,65px)/1 "Playfair Display",Georgia,serif;letter-spacing:-2.5px;margin:17px 0 0}
+.commerce-page .catalogue-controls{display:flex;align-items:center;gap:12px}
+.commerce-page .catalogue-controls input,.commerce-page .catalogue-controls select{background:transparent;border:0;border-bottom:1px solid #c8bda8;padding:12px 5px;color:#1b2a20;font-size:10px;max-width:190px}
+.commerce-page .catalogue-controls input::placeholder{color:#77786d}
+.commerce-page .commerce-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px;align-items:start}
+.commerce-page .commerce-product{display:block;min-width:0;background:transparent;transition:transform .3s}
+.commerce-page .commerce-product:nth-child(3n+2){margin-top:32px}
+.commerce-page .commerce-product-image{height:clamp(260px,31vw,420px);position:relative;overflow:hidden;background:#d6c7ae}
+.commerce-page .commerce-product-image img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.84);transition:transform .6s}
+.commerce-page .commerce-product:hover .commerce-product-image img{transform:scale(1.04)}
+.commerce-page .commerce-product-image>span{position:absolute;left:13px;bottom:13px;background:#f7f3e9;padding:8px 10px;color:#1b2a20;font-size:7px;letter-spacing:1.2px}
+.commerce-page .commerce-product-info{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:17px 0 13px}
+.commerce-page .commerce-product-info small{font-size:7px;letter-spacing:1.2px;color:#987344}
+.commerce-page .commerce-product-info h3{font:400 22px "Playfair Display",Georgia,serif;margin:8px 0}
+.commerce-page .commerce-product-info p{font-size:9px;color:#77786d;margin:0}
+.commerce-page .commerce-product-info strong{font-size:11px;white-space:nowrap;padding-top:20px}
+.commerce-page .commerce-product:after{content:"EXPLORE THE PRODUCT  ↗";display:block;border-top:1px solid #d9d0be;padding-top:13px;font-size:8px;letter-spacing:1px;color:#102e23}
+.commerce-page .commerce-footer{display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap;padding:35px 7vw;background:#0b2119;color:#eee8db}
+.commerce-page .commerce-footer .premium-footer-brand{font:30px "Playfair Display",Georgia,serif;color:#eee8db}
+.commerce-page .commerce-footer span{font-size:8px;letter-spacing:1.8px;color:#c9aa70}
+.commerce-page .commerce-footer>a:not(.premium-footer-brand){font-size:9px;color:#d4d6cc}
+@media(max-width:760px){.commerce-page .shop-banner{grid-template-columns:1fr;min-height:0}.commerce-page .shop-banner>div:first-child{padding:48px 24px 32px}.commerce-page .shop-banner h1{font-size:68px;letter-spacing:-3px;margin:28px 0 18px}.commerce-page .shop-banner-image{height:390px;min-height:390px}.commerce-page .catalogue{padding:60px 20px}.commerce-page .catalogue-top{display:block}.commerce-page .catalogue-top h2{font-size:45px}.commerce-page .catalogue-controls{margin-top:22px;justify-content:space-between;gap:8px}.commerce-page .catalogue-controls input{width:48%;max-width:48%}.commerce-page .catalogue-controls select{width:48%;max-width:48%}.commerce-page .commerce-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:25px 12px}.commerce-page .commerce-product:nth-child(3n+2){margin-top:0}.commerce-page .commerce-product:nth-child(even){margin-top:22px}.commerce-page .commerce-product-image{height:clamp(205px,58vw,320px)}.commerce-page .commerce-product-info{display:block;padding-top:12px}.commerce-page .commerce-product-info h3{font-size:17px}.commerce-page .commerce-product-info strong{display:block;padding-top:9px}.commerce-page .commerce-footer{padding:32px 22px;justify-content:flex-start}.commerce-page .commerce-footer>*{margin-right:10px}}
+@media(max-width:370px){.commerce-page .commerce-grid{grid-template-columns:1fr}.commerce-page .commerce-product:nth-child(even){margin-top:0}.commerce-page .commerce-product-image{height:300px}}

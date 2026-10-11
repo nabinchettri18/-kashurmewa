@@ -282,3 +282,21 @@
 @media(max-width:680px){
   .km-home .km-hero-photo:after{background:transparent!important}
 }
+
+
+
+/* Editorial restraint pass: preserve the brand palette and remove decorative UI effects. */
+.km-home{--km-home-cream:#f3ead9;--km-home-ink:#24251f;--km-home-forest:#183b2d;--km-home-walnut:#6f4935;background:#f3ead9;color:#24251f}
+.km-home :where(.kv2-card,.kv2-value-card,.kv2-feature-card,.kv2-hero-photo,.kv2-seal,.kv2-primary,.kv2-secondary,.kv2-toast,.kv2-empty){
+  box-shadow:none!important;border-radius:0!important;filter:none!important;
+}
+.km-home :where(.kv2-card,.kv2-value-card,.kv2-feature-card,.kv2-toast,.kv2-empty){background-image:none!important}
+.km-home :where(.kv2-card,.kv2-value-card,.kv2-feature-card){border-left:0!important}
+.km-home :where(a,button,.kv2-card,.kv2-feature-card,.kv2-hero-photo img){transition:none!important;animation:none!important}
+.km-home :where(a,button,.kv2-card,.kv2-feature-card,.kv2-hero-photo img):hover{transform:none!important;box-shadow:none!important;filter:none!important}
+.km-home .kv2-values,.km-home .kv2-features{display:block!important}
+.km-home .kv2-value-list article{display:grid!important;grid-template-columns:56px minmax(0,1fr) auto!important;gap:20px!important;padding:24px 0!important;border-top:1px solid rgba(36,37,31,.22)!important;border-radius:0!important;box-shadow:none!important;background:transparent!important}
+.km-home .kv2-value-list article:last-child{border-bottom:1px solid rgba(36,37,31,.22)!important}
+.km-home .kv2-values article svg,.km-home .kv2-features article svg{display:none!important}
+.km-home .kv2-hero-photo:before,.km-home .kv2-hero-photo:after{display:none!important;background:none!important}
+@media(max-width:640px){.km-home .kv2-value-list article{grid-template-columns:34px minmax(0,1fr)!important;gap:12px!important}}
