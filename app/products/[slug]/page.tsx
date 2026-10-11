@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, Check, Minus, Plus, ShieldCheck, Truck, Leaf } from "lucide-react";
 import { fetchProductBySlug, Product, ProductVariant } from "@/lib/catalog";
 import { NavigationHeader } from "@/components/navigation/Header";
+import "../../kashurmewa-storefront.css";
 
 export default function ProductDetailPage() {
   const params = useParams<{ slug: string }>();
