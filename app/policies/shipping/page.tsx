@@ -33,11 +33,10 @@ export default function ShippingPolicyPage() {
             Orders are prepared after confirmation. Processing time can vary with stock, destination, and operating days; any delay or dispatch update should be confirmed with our team.
           </p>
 
-          <h2>Shipping Charges & Free Delivery</h2>
-          <ul>
-            <li><strong>Orders above ₹999 INR:</strong> FREE Pan-India Shipping.</li>
-            <li><strong>Orders below ₹999 INR:</strong> Flat ₹99 INR standard delivery charge.</li>
-          </ul>
+          <h2>Shipping Charges</h2>
+          <p>
+            Applicable delivery charges are shown in your bag before you place an order. Please review the delivery fee and final total carefully before confirming checkout. For help with a delivery estimate, contact our team before ordering.
+          </p>
 
           <h2>Estimated Delivery Periods</h2>
           <ul>
