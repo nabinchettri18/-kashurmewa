@@ -2,9 +2,12 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "./kashurmewa-polish.css";
 
+const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\\/$/, "");
+
 export const metadata: Metadata = {
+  ...(configuredSiteUrl ? { metadataBase: new URL(configuredSiteUrl) } : {}),
   title: {
-    default: "Kashurmewa — Premium Kashmiri Walnuts & Dry Fruits",
+    default: "Kashurmewa | The Taste of Kashmir",
     template: "%s | Kashurmewa",
   },
   description:
@@ -19,9 +22,9 @@ export const metadata: Metadata = {
   authors: [{ name: "Kashurmewa" }],
   creator: "Kashurmewa",
   openGraph: {
-    title: "Kashurmewa — Authentic Kashmiri In-Shell Walnuts",
-    description: "Kashmiri walnuts in shell, with clear pack sizes and current catalogue prices.",
-    url: "https://kashurmewa.com",
+    title: "Kashurmewa | The Taste of Kashmir",
+    description: "Discover Kashurmewa's collection with current pack sizes, catalogue prices and product details.",
+    ...(configuredSiteUrl ? { url: configuredSiteUrl } : {}),
     siteName: "Kashurmewa",
     locale: "en_IN",
     type: "website",
