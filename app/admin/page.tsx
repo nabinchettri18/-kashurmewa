@@ -100,6 +100,7 @@ export default function AdminDashboard() {
       const name = draft.name.trim();
       const slug = slugify(draft.slug || name);
       if (!name || !slug) throw new Error("Product name and a valid slug are required.");
+      if (draft.active && variants.length === 0) throw new Error("Add at least one pack size before publishing this product.");
       if (variants.some((v) => !v.size.trim() || !Number.isInteger(Number(v.price_inr)) || Number(v.price_inr) < 0 || !Number.isInteger(Number(v.stock)) || Number(v.stock) < 0)) {
         throw new Error("Each pack needs a size, a whole-number price, and a non-negative whole-number stock count.");
       }
