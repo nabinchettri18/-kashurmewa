@@ -775,3 +775,151 @@
  .ks-v2-cart-page .summary{padding:21px}
  .ks-v2-cart-page .modal-card{padding:23px 16px}
 }
+
+
+/* KASHURMEWA 2.0 — confirmed oxblood / walnut / ivory / champagne design tokens.
+   Scoped to the redesigned storefront so legacy routes keep their current styling. */
+.km-store.ks-visual-store,
+.km-store.ks-v2-shop-page,
+.km-store.ks-v2-product-page,
+.km-store.ks-v2-about-page,
+.km-store.ks-v2-contact-page,
+.km-store.ks-v2-cart-page {
+  --ks-oxblood: #4A2028;
+  --ks-walnut: #754D36;
+  --ks-ivory: #F6F0E6;
+  --ks-champagne: #C8A66A;
+  --ks-ink: #282522;
+  --ks-green: #4A2028;
+  --ks-green2: #63313B;
+  --ks-cream: #F6F0E6;
+  --ks-paper: #FFFCF7;
+  --ks-sand: #E6D9C8;
+  --ks-muted: #766E65;
+  --ks-gold: #C8A66A;
+  background: var(--ks-paper);
+  color: var(--ks-ink);
+}
+.km-store.ks-visual-store .ks-announcement,
+.km-store.ks-v2-shop-page .ks-announcement,
+.km-store.ks-v2-product-page .ks-announcement,
+.km-store.ks-v2-about-page .ks-announcement,
+.km-store.ks-v2-contact-page .ks-announcement,
+.km-store.ks-v2-cart-page .ks-announcement {
+  background: var(--ks-oxblood);
+  color: var(--ks-ivory);
+}
+.km-store.ks-visual-store .site-header,
+.km-store.ks-v2-shop-page .site-header,
+.km-store.ks-v2-product-page .site-header,
+.km-store.ks-v2-about-page .site-header,
+.km-store.ks-v2-contact-page .site-header,
+.km-store.ks-v2-cart-page .site-header {
+  background: var(--ks-paper) !important;
+  color: var(--ks-ink) !important;
+  border-bottom-color: var(--ks-sand) !important;
+}
+.km-store.ks-visual-store .site-header .main-nav a:hover,
+.km-store.ks-visual-store .site-header .header-actions a:hover,
+.km-store.ks-v2-shop-page .site-header .main-nav a:hover,
+.km-store.ks-v2-shop-page .site-header .header-actions a:hover,
+.km-store.ks-v2-product-page .site-header .main-nav a:hover,
+.km-store.ks-v2-product-page .site-header .header-actions a:hover,
+.km-store.ks-v2-about-page .site-header .main-nav a:hover,
+.km-store.ks-v2-about-page .site-header .header-actions a:hover,
+.km-store.ks-v2-contact-page .site-header .main-nav a:hover,
+.km-store.ks-v2-contact-page .site-header .header-actions a:hover {
+  color: var(--ks-walnut);
+}
+.km-store.ks-visual-store .site-header .bag span,
+.km-store.ks-v2-shop-page .site-header .bag span,
+.km-store.ks-v2-product-page .site-header .bag span,
+.km-store.ks-v2-about-page .site-header .bag span,
+.km-store.ks-v2-contact-page .site-header .bag span {
+  background: var(--ks-oxblood);
+  color: var(--ks-ivory);
+}
+.km-store.ks-visual-store .ks-v2-button,
+.km-store.ks-visual-store .ks-v2-add,
+.km-store.ks-v2-shop-page .ks-v2-shop-state button,
+.km-store.ks-v2-shop-page .ks-v2-shop-card-link,
+.km-store.ks-v2-contact-page .ks-v2-contact-form button,
+.km-store.ks-v2-product-page .premium-add-button {
+  background: var(--ks-oxblood);
+  border-color: var(--ks-oxblood);
+}
+.km-store.ks-visual-store .ks-v2-button:hover,
+.km-store.ks-visual-store .ks-v2-add:hover:not(:disabled),
+.km-store.ks-v2-shop-page .ks-v2-shop-state button:hover,
+.km-store.ks-v2-contact-page .ks-v2-contact-form button:hover:not(:disabled),
+.km-store.ks-v2-product-page .premium-add-button:hover:not(:disabled) {
+  background: #63313B;
+  border-color: #63313B;
+}
+.km-store.ks-visual-store .ks-v2-eyebrow,
+.km-store.ks-v2-shop-page .ks-v2-eyebrow,
+.km-store.ks-v2-product-page .commerce-eyebrow,
+.km-store.ks-v2-about-page .ks-v2-eyebrow,
+.km-store.ks-v2-contact-page .ks-v2-eyebrow,
+.km-store.ks-v2-cart-page .ks-v2-eyebrow {
+  --ks-gold: #C8A66A;
+}
+.km-store.ks-visual-store .ks-v2-footer,
+.km-store.ks-v2-shop-page .ks-v2-footer,
+.km-store.ks-v2-about-page .ks-v2-footer,
+.km-store.ks-v2-contact-page .ks-v2-footer {
+  background: var(--ks-oxblood);
+}
+.km-store.ks-visual-store .ks-v2-footer-bottom span:nth-child(2),
+.km-store.ks-v2-shop-page .ks-v2-footer-bottom span:nth-child(2),
+.km-store.ks-v2-about-page .ks-v2-footer-bottom span:nth-child(2),
+.km-store.ks-v2-contact-page .ks-v2-footer-bottom span:nth-child(2) {
+  color: var(--ks-champagne);
+}
+.km-store.ks-visual-store .ks-v2-values,
+.km-store.ks-v2-shop-page .ks-v2-catalogue,
+.km-store.ks-v2-about-page .ks-v2-about-intro {
+  background: var(--ks-paper);
+}
+.km-store.ks-visual-store .ks-v2-editorial,
+.km-store.ks-v2-shop-page .ks-v2-shop-note,
+.km-store.ks-v2-about-page .ks-v2-about-values {
+  background: var(--ks-ivory);
+}
+.km-store.ks-visual-store .ks-v2-final {
+  background: var(--ks-walnut);
+}
+.km-store.ks-v2-product-page .premium-pack-options button.selected {
+  border-color: var(--ks-oxblood);
+  background: #F2E5E2;
+  box-shadow: inset 0 0 0 1px var(--ks-oxblood);
+}
+.km-store.ks-v2-product-page .premium-product-story {
+  background: var(--ks-ivory);
+}
+.km-store.ks-v2-product-page .premium-product-story h2 i,
+.km-store.ks-v2-product-page .premium-breadcrumb a:hover,
+.km-store.ks-v2-product-page .product-back-link {
+  color: var(--ks-walnut);
+}
+.km-store.ks-v2-product-page .premium-image-label {
+  background: #4A2028ED;
+}
+.km-store.ks-v2-contact-page .ks-v2-contact-form button:focus-visible,
+.km-store.ks-visual-store .ks-v2-add:focus-visible,
+.km-store.ks-visual-store .ks-v2-button:focus-visible {
+  outline: 3px solid var(--ks-champagne);
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .km-store.ks-visual-store *,
+  .km-store.ks-v2-shop-page *,
+  .km-store.ks-v2-product-page *,
+  .km-store.ks-v2-about-page *,
+  .km-store.ks-v2-contact-page * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
