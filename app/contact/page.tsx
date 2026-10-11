@@ -3,6 +3,9 @@
 import Link from "next/link";
 import { useState } from "react";
 import { KashurmewLogo } from "@/components/brand/Logo";
+import { NavigationHeader } from "@/components/navigation/Header";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
+import "../kashurmewa-storefront.css";
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
