@@ -57,7 +57,7 @@ export default function Home() {
       {notice && <div className="ks-toast" role="status">{notice}<button type="button" aria-label="Dismiss message" onClick={() => setNotice("")}>×</button></div>}
 
       <section className="ks-v2-hero" aria-label="Kashurmewa signature collection">
-        <img className="ks-v2-hero-image" src={WALNUT_HERO} alt="A close, natural view of whole walnuts" fetchPriority="high" />
+        <img className="ks-v2-hero-image" src={product?.images?.[0]?.url || WALNUT_HERO} alt={product?.images?.[0]?.alt_text || "Whole walnuts in their natural shells"} fetchPriority="high" />
         <div className="ks-v2-hero-shade" />
         <div className="ks-v2-hero-content">
           <span className="ks-v2-eyebrow"><i /> KASHURMEWA · THE SIGNATURE COLLECTION</span>
