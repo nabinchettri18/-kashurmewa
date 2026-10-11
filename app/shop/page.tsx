@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { ArrowRight, ArrowUpRight, Search, SlidersHorizontal, Sparkles } from "lucide-react";
 import { fetchAllProducts, Product } from "@/lib/catalog";
 import { NavigationHeader } from "@/components/navigation/Header";
 import "./kashurmewa-shop-v2.css";
@@ -43,7 +42,7 @@ export default function ShopPage() {
 
   return (
     <main className="km-shop-v2">
-      <div className="kshop-ribbon"><span>THE TASTE OF KASHMIR</span><span className="kshop-ribbon-center"><Sparkles size={12} /> A CONSIDERED KIND OF GOOD</span><span>THE KASHURMEWA EDIT</span></div>
+      <div className="kshop-ribbon"><span>THE TASTE OF KASHMIR</span><span className="kshop-ribbon-center"> A CONSIDERED KIND OF GOOD</span><span>THE KASHURMEWA EDIT</span></div>
       <NavigationHeader cartCount={cartCount} />
 
       <section className="kshop-hero">
@@ -67,8 +66,8 @@ export default function ShopPage() {
       <section className="kshop-catalogue" id="collection">
         <div className="kshop-heading"><div><span className="kshop-eyebrow">SHOP THE COLLECTION</span><h2>Choose your <em>good thing.</em></h2><p>Clear pack options. Current prices. No guesswork.</p></div><span className="kshop-count">{String(filtered.length).padStart(2, "0")} ITEMS</span></div>
         <div className="kshop-toolbar">
-          <label><Search size={16} /><input placeholder="Search the collection" aria-label="Search products" value={query} onChange={(event) => setQuery(event.target.value)} />{query && <button type="button" onClick={() => setQuery("")} aria-label="Clear search">×</button>}</label>
-          <div><SlidersHorizontal size={15} /><span>SORT BY</span><select aria-label="Sort products" value={sort} onChange={(event) => setSort(event.target.value)}><option value="featured">Featured</option><option value="low">Price: Low to High</option><option value="high">Price: High to Low</option></select></div>
+          <label><span className="kshop-search-mark" aria-hidden="true">⌕</span><input placeholder="Search the collection" aria-label="Search products" value={query} onChange={(event) => setQuery(event.target.value)} />{query && <button type="button" onClick={() => setQuery("")} aria-label="Clear search">×</button>}</label>
+          <div><span>SORT BY</span><select aria-label="Sort products" value={sort} onChange={(event) => setSort(event.target.value)}><option value="featured">Featured</option><option value="low">Price: Low to High</option><option value="high">Price: High to Low</option></select></div>
         </div>
         {loading ? <div className="kshop-state"><span className="kshop-spinner" /> Gathering the current collection…</div>
           : loadError ? <div className="kshop-state" role="alert">We couldn’t load the catalogue. Please refresh or try again shortly.</div>
@@ -79,15 +78,15 @@ export default function ShopPage() {
             const image = product.images[0];
             const available = variants.some((variant) => variant.stock > 0);
             return <Link className="kshop-card" href={"/products/" + product.slug} key={product.id}>
-              <div className="kshop-card-image">{image?.url ? <img src={image.url} alt={image.alt_text || product.name} loading="lazy" /> : <div className="kshop-placeholder"><span>KASHURMEWA</span><small>THE TASTE OF KASHMIR</small></div>}<span className="kshop-index">{String(index + 1).padStart(2, "0")}</span><span className="kshop-pack-count">{variants.length} PACK OPTIONS</span><i><ArrowUpRight size={18} /></i></div>
+              <div className="kshop-card-image">{image?.url ? <img src={image.url} alt={image.alt_text || product.name} loading="lazy" /> : <div className="kshop-placeholder"><span>KASHURMEWA</span><small>THE TASTE OF KASHMIR</small></div>}<span className="kshop-index">{String(index + 1).padStart(2, "0")}</span><span className="kshop-pack-count">{variants.length} PACK OPTIONS</span><i>↗</i></div>
               <div className="kshop-card-info"><div><small>THE SIGNATURE COLLECTION</small><h3>{product.name}</h3><p>{variants.map((variant) => variant.size).join(" · ") || "Details coming soon"}</p></div><strong>{minPrice === null ? "Price on request" : "From " + money(minPrice)}</strong></div>
-              <div className="kshop-card-bottom"><span>{available ? "Explore the product" : "View product details"}</span><span className={available ? "kshop-stock" : "kshop-stock kshop-stock-out"}><i />{available ? "IN STOCK" : "CHECK AVAILABILITY"}</span><ArrowRight size={16} /></div>
+              <div className="kshop-card-bottom"><span>{available ? "Explore the product" : "View product details"}</span><span className={available ? "kshop-stock" : "kshop-stock kshop-stock-out"}><i />{available ? "IN STOCK" : "CHECK AVAILABILITY"}</span>→</div>
             </Link>;
           })}</div>}
         <div className="kshop-bottom-note"><span>✳</span> Prices and availability are taken from the live catalogue. Delivery details are shown before ordering.</div>
       </section>
 
-      <section className="kshop-story"><div><span className="kshop-eyebrow">A THOUGHTFUL EVERYDAY</span><h2>From a distinctive harvest<br />to <em>your home.</em></h2></div><p>Kashurmewa is about keeping good things close: considered choices, honest product details and the pleasure of sharing something simple. Thank you for making a place for us at your table.</p><Link href="/about">OUR STORY <ArrowUpRight size={15} /></Link></section>
+      <section className="kshop-story"><div><span className="kshop-eyebrow">A THOUGHTFUL EVERYDAY</span><h2>From a distinctive harvest<br />to <em>your home.</em></h2></div><p>Kashurmewa is about keeping good things close: considered choices, honest product details and the pleasure of sharing something simple. Thank you for making a place for us at your table.</p><Link href="/about">OUR STORY ↗</Link></section>
       <footer className="kshop-footer"><Link href="/" className="kshop-wordmark">kashur<span>mewa</span></Link><span>THE TASTE OF KASHMIR</span><div><Link href="/about">Our story</Link><Link href="/contact">Contact</Link><Link href="/policies/shipping">Shipping</Link><Link href="/cart">Your bag ({cartCount})</Link></div><small>© {new Date().getFullYear()} KASHURMEWA · MADE TO BE SHARED</small></footer>
     </main>
   );
