@@ -53,7 +53,7 @@ export default function ShopPage() {
       <NavigationHeader cartCount={cartCount} />
 
       <section className="ks-v2-shop-hero">
-        <img src="https://images.pexels.com/photos/8303558/pexels-photo-8303558.jpeg?auto=compress&cs=tinysrgb&w=1800" alt="Walnuts arranged on a natural surface" fetchPriority="high" />
+        <img src={items[0]?.images?.[0]?.url || "https://images.pexels.com/photos/8303558/pexels-photo-8303558.jpeg?auto=compress&cs=tinysrgb&w=1800"} alt={items[0]?.images?.[0]?.alt_text || "Walnuts arranged on a natural surface"} fetchPriority="high" />
         <div className="ks-v2-shop-hero-shade" />
         <div className="ks-v2-shop-hero-copy"><span className="ks-v2-eyebrow">THE KASHURMEWA COLLECTION</span><h1>Good things<br /><em>start here.</em></h1><p>Explore our current collection, compare pack sizes and find a considered addition to your pantry.</p><div className="ks-v2-shop-breadcrumb"><Link href="/">Home</Link><span>/</span><span>Shop</span></div></div>
         <span className="ks-v2-shop-hero-label">THE SIGNATURE EDIT · 01</span>
