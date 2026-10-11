@@ -8,13 +8,13 @@ export const metadata: Metadata = {
     template: "%s | Kashurmewa",
   },
   description:
-    "Explore Kashurmewa Kashmiri walnuts in shell. Compare available pack sizes, current prices and delivery details before ordering.",
+    "Discover KASHURMEWA — The Taste of Kashmir. Explore our current regional pantry collection, product details, live prices and delivery information.",
   keywords: [
-    "Kashmiri walnuts",
-    "Walnuts in shell",
     "Kashurmewa",
-    "Kashmir dry fruits",
-    "Buy walnuts online",
+    "The Taste of Kashmir",
+    "Kashmiri regional pantry",
+    "Kashmiri food gifts",
+    "Regional gourmet foods",
   ],
   authors: [{ name: "Kashurmewa" }],
   creator: "Kashurmewa",
