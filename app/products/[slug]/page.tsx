@@ -78,8 +78,8 @@ export default function ProductDetailPage() {
 
   if (loading || loadError || !product) {
     return (
-      <main className="commerce-page">
-        <NavigationHeader />
+      <main className="km-store ks-v2-product-page">
+        <div className="ks-announcement"><span>THE TASTE OF KASHMIR</span><span>Thoughtfully chosen. Beautifully brought home. <ArrowUpRight size={12} /></span></div>\n        <NavigationHeader />
         <div className="product-state">
           <span className="commerce-eyebrow">KASHURMEWA SIGNATURE</span>
           <h1>{loading ? "A moment, please." : loadError ? "We couldn’t load this harvest." : "This product is unavailable."}</h1>
@@ -91,8 +91,8 @@ export default function ProductDetailPage() {
   }
 
   return (
-    <main className="commerce-page premium-product-page">
-      <NavigationHeader cartCount={cartCount} />
+    <main className="km-store ks-v2-product-page">
+      <div className="ks-announcement"><span>THE TASTE OF KASHMIR</span><span>Thoughtfully chosen. Beautifully brought home. <ArrowUpRight size={12} /></span></div>\n      <NavigationHeader cartCount={cartCount} />
 
       <div className="premium-breadcrumb">
         <Link href="/">Home</Link><span>/</span><Link href="/shop">Shop</Link><span>/</span><span>{product.name}</span>
