@@ -51,12 +51,14 @@ export default function ShopPage() {
 
       <section className="shop-banner">
         <div>
-          <span className="commerce-eyebrow">THE KASHURMEWA CATALOGUE</span>
-          <h1>Good things<br /><i>start here.</i></h1>
-          <p>Handpicked Kashmiri walnuts in shell. Sourced directly from mountain orchards and delivered fresh pan-India.</p>
+          <span className="commerce-eyebrow">KASHURMEWA · THE TASTE OF KASHMIR</span>
+          <h1>A taste of<br /><i>where we belong.</i></h1>
+          <p>Discover a collection rooted in Kashmir, thoughtfully presented for the moments and tables that bring us together.</p>
         </div>
         <div className="shop-banner-image">
-          <img src="https://images.pexels.com/photos/8303558/pexels-photo-8303558.jpeg" alt="Walnuts arranged on a natural surface" />
+          {items[0]?.images[0]?.url
+            ? <img src={items[0].images[0].url} alt={items[0].images[0].alt_text || items[0].name} />
+            : <div className="shop-banner-placeholder"><span>KASHURMEWA</span><b>The Taste of Kashmir</b><small>Product photography will appear here when added in admin.</small></div>}
         </div>
       </section>
 

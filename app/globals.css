@@ -592,3 +592,12 @@ a,button{-webkit-tap-highlight-color:transparent}
  .premium-pack-options button strong{font-size:10px}
  .premium-tax-note{max-width:110px}
 }
+
+
+/* Kashurmewa — The Taste of Kashmir: dynamic catalogue image fallback */
+.shop-banner-image{position:relative;background:#e8ddca}
+.shop-banner-placeholder{height:100%;min-height:420px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:28px;color:#304331;background:repeating-linear-gradient(135deg,#e9dfce,#e9dfce 14px,#e4d7c2 14px,#e4d7c2 28px)}
+.shop-banner-placeholder>span{font-size:10px;font-weight:700;letter-spacing:3px}
+.shop-banner-placeholder>b{font:italic clamp(28px,3.2vw,44px) 'Playfair Display',Georgia,serif;margin-top:14px;font-weight:400}
+.shop-banner-placeholder>small{font-size:10px;line-height:1.7;max-width:250px;margin-top:12px;color:#716858}
+@media(max-width:760px){.shop-banner-placeholder{min-height:260px}}

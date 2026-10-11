@@ -21,9 +21,9 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
   return (
     <>
       <div className="topbar">
-        <span>KASHURMEWA — HARVEST 2026</span>
-        <span>100% NATURAL KASHMIRI WALNUTS IN SHELL</span>
-        <span>FREE PAN-INDIA DELIVERY ABOVE ₹999</span>
+        <span>KASHURMEWA — THE TASTE OF KASHMIR</span>
+        <span>A SENSE OF PLACE · MADE FOR SHARING</span>
+        <span>A TASTE THAT FEELS LIKE HOME</span>
       </div>
 
       <header
@@ -52,7 +52,7 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
             Our Story
           </a>
           <a href="/#origin" className="hover:text-[#B69A66] transition-colors">
-            Kashmir Origin
+            Our Philosophy
           </a>
           <Link href="/about" className="hover:text-[#B69A66] transition-colors">
             About Brand
@@ -98,7 +98,7 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
                 <ArrowRight size={16} className="text-[#B69A66]" />
               </a>
               <a href="/#origin" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pb-3 border-b border-[#345043]">
-                <span>The Kashmir Valley</span>
+                <span>The Kashurmewa Story</span>
                 <ArrowRight size={16} className="text-[#B69A66]" />
               </a>
               <Link href="/about" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pb-3 border-b border-[#345043]">
