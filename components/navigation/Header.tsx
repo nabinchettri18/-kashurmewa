@@ -21,8 +21,8 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
   return (
     <>
       <div className="topbar">
-        <span>THE EVERYDAY WALNUT, REIMAGINED</span>
-        <span>EXPLORE THE COLLECTION · SHIPPING SHOWN AT CHECKOUT</span>
+        <span>THE TASTE OF KASHMIR</span>
+        <span>A SENSE OF PLACE · A PLACE AT YOUR TABLE</span>
       </div>
 
       <header
@@ -45,13 +45,13 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
 
         <nav className="main-nav">
           <Link href="/shop" className="hover:text-[#754D36] transition-colors">
-            Shop Walnuts
+            Collections
           </Link>
           <Link href="/about" className="hover:text-[#754D36] transition-colors">
             Our Story
           </Link>
-          <Link href="/about" className="hover:text-[#754D36] transition-colors">
-            Our Approach
+          <Link href="/contact" className="hover:text-[#754D36] transition-colors">
+            Contact
           </Link>
         </nav>
 
@@ -90,8 +90,8 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
                 <span>Our Story</span>
                 <ArrowRight size={16} className="text-[#C8A66A]" />
               </Link>
-              <Link href="/about" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pb-3 border-b border-[#E6D9C8]">
-                <span>Our Approach</span>
+              <Link href="/contact" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pb-3 border-b border-[#E6D9C8]">
+                <span>Contact us</span>
                 <ArrowRight size={16} className="text-[#C8A66A]" />
               </Link>
               <Link href="/cart" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pt-2 text-[#C8A66A] font-semibold">
