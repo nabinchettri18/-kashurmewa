@@ -92,7 +92,7 @@ export default function Home() {
       <NavigationHeader cartCount={cartCount} />
       {notice && <div className="kv2-toast" role="status">{notice}<Link href="/cart">View bag ↗</Link><button type="button" aria-label="Dismiss message" onClick={() => setNotice("")}>×</button></div>}
 
-      <section className="kv2-hero" aria-label="Kashurmewa ,  The Taste of Kashmir">
+      <section className="kv2-hero" aria-label="Kashurmewa ·  The Taste of Kashmir">
         <div className="kv2-hero-copy">
           <div className="kv2-eyebrow"><span /> THE ORCHARD, REIMAGINED</div>
           <p className="kv2-hero-overline">KASHURMEWA PRESENTS</p>
@@ -106,7 +106,7 @@ export default function Home() {
             <span className="kv2-seal"></span>
             <span><b>Rooted in a distinctive harvest.</b><small>The Taste of Kashmir · Since the first crack.</small></span>
           </div>
-          <span className="kv2-hero-index">01 ,  04 / THE KASHURMEWA EDIT</span>
+          <span className="kv2-hero-index">01 ·  04 / THE KASHURMEWA EDIT</span>
         </div>
 
         <div className={`kv2-hero-art ${heroImage ? "" : "kv2-no-image"}`}>
@@ -126,7 +126,7 @@ export default function Home() {
       </section>
 
       <section className="kv2-marquee" aria-label="Brand values">
-        <span>THE TASTE OF KASHMIR</span><i>✳</i><span>MADE FOR SHARING</span><i>✳</i><span>ROOTED IN NATURE</span><i>✳</i><span>THE TASTE OF KASHMIR</span>
+        <span>THE TASTE OF KASHMIR</span><i></i><span>MADE FOR SHARING</span><i></i><span>ROOTED IN NATURE</span><i></i><span>THE TASTE OF KASHMIR</span>
       </section>
 
       <section className="kv2-collection" id="collection">
@@ -177,7 +177,7 @@ export default function Home() {
       <section className="kv2-manifesto">
         <div className="kv2-manifesto-photo">
           {storyImage ? <img src={storyImage} alt={leadProduct?.images[1]?.alt_text || leadProduct?.name || "Kashurmewa walnuts"} loading="lazy" /> : <div className="kv2-image-placeholder"><span>KASHURMEWA</span><b>A harvest with a story.</b></div>}
-          <span className="kv2-photo-stamp">K / M<br /><i>✳</i><br />EST. WITH CARE</span>
+          <span className="kv2-photo-stamp">K / M<br /><i></i><br />EST. WITH CARE</span>
           <span className="kv2-manifesto-photo-label">A SENSE OF PLACE, AT YOUR TABLE.</span>
         </div>
         <div className="kv2-manifesto-copy">
@@ -200,7 +200,7 @@ export default function Home() {
       </section>
 
       <section className="kv2-final">
-        <div className="kv2-final-orbit">K<br /><i>✳</i><br />M</div>
+        <div className="kv2-final-orbit">K<br /><i></i><br />M</div>
         <span>THE TASTE OF KASHMIR</span>
         <h2>Bring a little<br /><em>more meaning</em> to the table.</h2>
         <Link href="#collection" className="kv2-primary kv2-primary-light">Find your favourite →</Link>
