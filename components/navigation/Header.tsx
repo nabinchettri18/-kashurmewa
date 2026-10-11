@@ -47,16 +47,16 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
           <Link href="/shop" className="hover:text-[#754D36] transition-colors">
             Shop Walnuts
           </Link>
-          <a href="/#story" className="hover:text-[#C8A66A] transition-colors">
+          <a href="/#story" className="hover:text-[#754D36] transition-colors">
             Our Story
           </a>
-          <Link href="/about" className="hover:text-[#B69A66] transition-colors">
+          <Link href="/about" className="hover:text-[#754D36] transition-colors">
             Our Approach
           </Link>
         </nav>
 
         <div className="header-actions">
-          <Link href="/account" aria-label="Account" className="flex items-center gap-1.5 hover:text-[#B69A66]">
+          <Link href="/account" aria-label="Account" className="flex items-center gap-1.5 hover:text-[#754D36]">
             <User size={16} />
             <span className="hidden sm:inline text-xs">Account</span>
           </Link>
@@ -84,7 +84,7 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
             <div className="flex flex-col gap-5 text-sm uppercase tracking-widest text-[#F6F0E6]">
               <Link href="/shop" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pb-3 border-b border-[#E6D9C8]">
                 <span>Shop Catalogue</span>
-                <ArrowRight size={16} className="text-[#B69A66]" />
+                <ArrowRight size={16} className="text-[#C8A66A]" />
               </Link>
               <a href="/#story" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pb-3 border-b border-[#345043]">
                 <span>Our Story</span>
