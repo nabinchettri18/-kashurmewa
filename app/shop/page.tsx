@@ -6,6 +6,7 @@ import { ArrowRight, ArrowUpRight, Search, SlidersHorizontal } from "lucide-reac
 import { fetchAllProducts, Product } from "@/lib/catalog";
 import { NavigationHeader } from "@/components/navigation/Header";
 import { KashurmewLogo } from "@/components/brand/Logo";
+import "../kashurmewa-storefront.css";
 
 const money = (value: number) => new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 }).format(value);
 
