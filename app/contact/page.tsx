@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { KashurmewLogo } from "@/components/brand/Logo";
 import { NavigationHeader } from "@/components/navigation/Header";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
 import "../kashurmewa-storefront.css";
 
 export default function ContactPage() {
@@ -37,65 +37,39 @@ export default function ContactPage() {
   };
 
   return (
-    <main className="commerce-page">
-      <header className="commerce-header">
-        <KashurmewLogo variant="dark" size="sm" />
-        <nav>
-          <Link href="/shop">Shop</Link>
-          <Link href="/about">About Us</Link>
-          <Link className="active" href="/contact">Contact</Link>
-        </nav>
-        <Link className="commerce-bag" href="/cart">Bag ↗</Link>
-      </header>
-      <section className="policy-page">
-        <div className="policy-header">
-          <span className="commerce-eyebrow">CUSTOMER SUPPORT</span>
-          <h1>We are here<br /><i>to help.</i></h1>
-          <p className="detail-description">Have questions about an order, wholesale inquiry, or pack details? Reach out to our team.</p>
+    <main className="km-store ks-v2-contact-page">
+      <div className="ks-announcement"><span>THE TASTE OF KASHMIR</span><span>Thoughtfully chosen. Beautifully brought home. <ArrowRight size={12} /></span></div>
+      <NavigationHeader />
+      <section className="ks-v2-contact-layout">
+        <div className="ks-v2-contact-intro">
+          <span className="ks-v2-eyebrow ks-v2-eyebrow-dark">CUSTOMER CARE</span>
+          <h1>Here to help.<br /><em>Happy to hear from you.</em></h1>
+          <p>Questions about an order, product details or a future collaboration? Send us a message and our team will get back to you.</p>
+          <div className="ks-v2-contact-note"><span>01</span><div><strong>Order support</strong><small>Include your order reference if you already placed an order.</small></div></div>
+          <div className="ks-v2-contact-note"><span>02</span><div><strong>Product questions</strong><small>Ask us about pack sizes, ingredients or product information before ordering.</small></div></div>
+          <img src="https://images.pexels.com/photos/37309469/pexels-photo-37309469.jpeg?auto=compress&cs=tinysrgb&w=1000" alt="Natural walnut texture" loading="lazy" />
         </div>
-        {submitted ? (
-          <div className="order-success-card" style={{ background: "#F7F3EB", border: "1px solid #E7DED1", padding: "40px" }}>
-            <span className="badge">MESSAGE RECEIVED</span>
-            <h2>Thank you, {name}!</h2>
-            <p>Your message has been saved to our support inbox. We will reply to <strong>{email}</strong> when our team reviews it.</p>
-            <Link href="/shop" className="primary-btn" style={{ display: "inline-block", marginTop: "20px" }}>RETURN TO SHOP ↗</Link>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} style={{ background: "#FFFDF8", border: "1px solid #E7DED1", padding: "36px" }}>
-            <div className="checkout-grid">
-              <div className="checkout-field">
-                <label htmlFor="ct-name">Full Name *</label>
-                <input id="ct-name" type="text" required maxLength={120} value={name} onChange={(e) => setName(e.target.value)} placeholder="Your full name" />
+        <div className="ks-v2-contact-form-wrap">
+          <span className="ks-v2-eyebrow ks-v2-eyebrow-dark">WRITE TO US</span>
+          <h2>{submitted ? "Message received." : "Send a message."}</h2>
+          {submitted ? (
+            <div className="ks-v2-contact-success" role="status"><span>THANK YOU, {name.toUpperCase()}</span><p>Your message has been sent to our support inbox. We will reply to <strong>{email}</strong> when our team reviews it.</p><Link className="ks-v2-text-link" href="/shop">Return to the collection <ArrowRight size={15} /></Link></div>
+          ) : (
+            <form className="ks-v2-contact-form" onSubmit={handleSubmit}>
+              <div className="ks-v2-contact-fields">
+                <div><label htmlFor="ct-name">Full name *</label><input id="ct-name" type="text" required maxLength={120} value={name} onChange={(e) => setName(e.target.value)} placeholder="Your full name" /></div>
+                <div><label htmlFor="ct-email">Email address *</label><input id="ct-email" type="email" required maxLength={254} value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" /></div>
               </div>
-              <div className="checkout-field">
-                <label htmlFor="ct-email">Email Address *</label>
-                <input id="ct-email" type="email" required maxLength={254} value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" />
-              </div>
-            </div>
-            <div className="checkout-grid full">
-              <div className="checkout-field">
-                <label htmlFor="ct-subject">Subject / Order Ref (Optional)</label>
-                <input id="ct-subject" type="text" maxLength={160} value={subject} onChange={(e) => setSubject(e.target.value)} placeholder="Order Inquiry / Product Question" />
-              </div>
-            </div>
-            <div className="checkout-grid full">
-              <div className="checkout-field">
-                <label htmlFor="ct-message">Message *</label>
-                <textarea id="ct-message" required maxLength={5000} rows={5} value={message} onChange={(e) => setMessage(e.target.value)} placeholder="How can we assist you today?" style={{ padding: "12px", border: "1px solid #E7DED1", background: "#F7F3EB", fontFamily: "inherit", fontSize: "13px" }} />
-              </div>
-            </div>
-            {error && <p role="alert" style={{ color: "#9B2C2C" }}>{error}</p>}
-            <button type="submit" disabled={busy} className="primary-btn" style={{ marginTop: "20px", width: "100%" }}>
-              {busy ? "SENDING…" : "SEND MESSAGE ↗"}
-            </button>
-          </form>
-        )}
+              <div><label htmlFor="ct-subject">Subject / order reference</label><input id="ct-subject" type="text" maxLength={160} value={subject} onChange={(e) => setSubject(e.target.value)} placeholder="Order enquiry / product question" /></div>
+              <div><label htmlFor="ct-message">Your message *</label><textarea id="ct-message" required maxLength={5000} rows={6} value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Tell us how we can help." /></div>
+              {error && <p className="ks-v2-contact-error" role="alert">{error}</p>}
+              <button type="submit" disabled={busy}>{busy ? "SENDING MESSAGE…" : <>Send your message <ArrowUpRight size={16} /></>}</button>
+              <small>We’ll use these details only to respond to your enquiry.</small>
+            </form>
+          )}
+        </div>
       </section>
-      <footer className="commerce-footer">
-        <KashurmewLogo variant="dark" size="sm" />
-        <Link href="/shop">Shop Walnuts</Link>
-        <Link href="/policies/shipping">Shipping Policy</Link>
-      </footer>
+      <footer className="ks-v2-footer"><div className="ks-v2-footer-main"><div className="ks-v2-footer-brand"><KashurmewLogo variant="light" size="lg" /><p>A premium regional pantry brand inspired by the tastes, textures and traditions that make a place memorable.</p><Link href="/contact">Questions? Get in touch <ArrowUpRight size={14} /></Link></div><div><small>SHOP</small><Link href="/shop">Shop the collection</Link><Link href="/cart">Your bag</Link><Link href="/account">My account</Link></div><div><small>THE BRAND</small><Link href="/about">Our story</Link><Link href="/">Home</Link><Link href="/contact">Contact us</Link></div><div><small>HELP & POLICIES</small><Link href="/policies/shipping">Shipping</Link><Link href="/policies/refund">Returns & refunds</Link><Link href="/policies/privacy">Privacy</Link><Link href="/policies/terms">Terms</Link></div></div><div className="ks-v2-footer-bottom"><span>© Kashurmewa</span><span>THE TASTE OF KASHMIR.</span><Link href="/policies/food-safety">Food safety information</Link></div></footer>
     </main>
   );
 }
