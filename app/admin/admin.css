@@ -48,3 +48,41 @@ body:has(.admin-shell){background:#f7f3ed;color:#282522;font-family:Inter,ui-san
  .product-admin{display:flex;flex-wrap:wrap!important}
 }
 @media(max-width:390px){.admin-side{grid-template-columns:repeat(2,minmax(0,1fr))}.metrics{grid-template-columns:1fr 1fr}.admin-user{display:none}}
+
+
+/* Catalogue-wide admin controls */
+.admin-product-group{padding:18px 0 8px;border-bottom:1px solid #e6d9c8}
+.admin-product-heading{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:0 0 12px;margin-bottom:4px}
+.admin-product-heading b{display:block;color:#282522;font:500 19px Georgia,"Times New Roman",serif}
+.admin-product-heading span{display:block;margin-top:5px;color:#766e65;font-size:10px}
+.admin-product-heading em{font-style:normal;font-size:8px;letter-spacing:1.1px;padding:6px 8px;border-radius:3px;white-space:nowrap}
+.admin-status-active{background:#f2e4e1;color:#4a2028}
+.admin-status-inactive{background:#eee7dd;color:#766e65}
+.admin-product-group .product-admin{grid-template-columns:minmax(100px,1fr) minmax(125px,.8fr) minmax(125px,.8fr);gap:18px;align-items:end;padding:14px 0;border-color:#eee4d9}
+.admin-pack-label b{display:block;font-size:12px;color:#282522}
+.admin-pack-label span{display:block;margin-top:5px;color:#766e65;font-size:9px}
+.admin-edit-field{display:flex;flex-direction:column;gap:6px;color:#766e65;font-size:9px}
+.admin-edit-field .admin-input{width:100%;min-width:0;max-width:180px}
+.admin-stock-row{display:flex;align-items:center;gap:18px;padding:16px 0;border-bottom:1px solid #eee4d9}
+.admin-stock-row>div:first-child{min-width:0;flex:1}
+.admin-stock-row strong{display:block;color:#282522;font-size:12px}
+.admin-stock-row span{display:block;margin-top:5px;color:#766e65;font-size:9px}
+.admin-stock-row>div:last-child{text-align:right;min-width:95px}
+.admin-stock-row b{display:block;font-size:17px}
+.admin-stock-row small{display:block;margin-top:4px;font-size:8px;letter-spacing:1px}
+.admin-stock-low{color:#9b3d3d}
+.admin-stock-ok{color:#754d36}
+.admin-stock-low+small{color:#9b3d3d}
+.admin-stock-ok+small{color:#754d36}
+@media(max-width:800px){
+ .admin-product-group .product-admin{display:grid!important;grid-template-columns:1fr 1fr!important;gap:12px;padding:12px 0}
+ .admin-pack-label{grid-column:1/-1}
+ .admin-edit-field .admin-input{max-width:none}
+ .admin-stock-row{align-items:flex-start}
+}
+@media(max-width:430px){
+ .admin-product-heading b{font-size:17px}
+ .admin-product-group .product-admin{grid-template-columns:1fr!important}
+ .admin-pack-label{grid-column:auto}
+ .admin-edit-field .admin-input{width:100%}
+}
