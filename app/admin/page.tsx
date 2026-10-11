@@ -97,6 +97,7 @@ export default function AdminDashboard() {
         void loadData();
       } else {
         setProduct(null);
+        setProducts([]);
         setOrders([]);
       }
     });
