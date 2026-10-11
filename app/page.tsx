@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { ArrowDownRight, ArrowRight, ArrowUpRight, Check, Leaf, PackageCheck, ShoppingBag, Sparkles, Truck } from "lucide-react";
 import { fetchAllProducts, Product, ProductVariant } from "@/lib/catalog";
 import { NavigationHeader } from "@/components/navigation/Header";
-import "./kashurmewa-storefront.css";
+import "./kashurmewa-editorial-v2.css";
 
 const money = (value: number) => new Intl.NumberFormat("en-IN", {
   style: "currency",
