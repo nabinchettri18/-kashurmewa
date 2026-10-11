@@ -47,9 +47,9 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
           <Link href="/shop" className="hover:text-[#754D36] transition-colors">
             Shop Walnuts
           </Link>
-          <a href="/#story" className="hover:text-[#754D36] transition-colors">
+          <Link href="/about" className="hover:text-[#754D36] transition-colors">
             Our Story
-          </a>
+          </Link>
           <Link href="/about" className="hover:text-[#754D36] transition-colors">
             Our Approach
           </Link>
@@ -86,15 +86,15 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
                 <span>Shop Catalogue</span>
                 <ArrowRight size={16} className="text-[#C8A66A]" />
               </Link>
-              <a href="/#story" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pb-3 border-b border-[#345043]">
+              <Link href="/about" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pb-3 border-b border-[#E6D9C8]">
                 <span>Our Story</span>
-                <ArrowRight size={16} className="text-[#B69A66]" />
-              </a>
-              <Link href="/about" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pb-3 border-b border-[#345043]">
-                <span>Our Approach</span>
-                <ArrowRight size={16} className="text-[#B69A66]" />
+                <ArrowRight size={16} className="text-[#C8A66A]" />
               </Link>
-              <Link href="/cart" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pt-2 text-[#B69A66] font-semibold">
+              <Link href="/about" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pb-3 border-b border-[#E6D9C8]">
+                <span>Our Approach</span>
+                <ArrowRight size={16} className="text-[#C8A66A]" />
+              </Link>
+              <Link href="/cart" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pt-2 text-[#C8A66A] font-semibold">
                 <span>Your Bag ({cartCount})</span>
                 <ArrowRight size={16} />
               </Link>
