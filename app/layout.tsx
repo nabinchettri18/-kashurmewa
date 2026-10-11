@@ -3,11 +3,11 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "Kashurmewa — Premium Kashmiri Walnuts & Dry Fruits",
+    default: "Kashurmewa — The Taste of Kashmir",
     template: "%s | Kashurmewa",
   },
   description:
-    "Handpicked premium Kashmiri walnuts in natural shell. Sourced directly from high-altitude mountain orchards of Kashmir and packed for natural crunch and freshness.",
+    "The Taste of Kashmir. Discover thoughtfully presented products rooted in place, crafted for everyday rituals and shared tables.r natural crunch and freshness.",
   keywords: [
     "Kashmiri walnuts",
     "Walnuts in shell",
