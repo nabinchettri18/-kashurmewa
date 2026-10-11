@@ -1,12 +1,14 @@
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\\/$/, "");
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/admin", "/api/"],
+      disallow: ["/admin", "/account", "/cart", "/checkout", "/api/"],
     },
-    sitemap: "https://kashurmewa.com/sitemap.xml",
+    ...(siteUrl ? { sitemap: `${siteUrl}/sitemap.xml` } : {}),
   };
 }
