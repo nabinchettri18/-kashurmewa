@@ -8,6 +8,7 @@ import { fetchProductBySlug, Product, ProductVariant } from "@/lib/catalog";
 import { NavigationHeader } from "@/components/navigation/Header";
 import { KashurmewLogo } from "@/components/brand/Logo";
 import "../../kashurmewa-storefront.css";
+import "../../kashurmewa-brand.css";
 
 export default function ProductDetailPage() {
   const params = useParams<{ slug: string }>();
