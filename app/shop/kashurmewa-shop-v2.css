@@ -166,3 +166,27 @@
  .km-shop-v2 .kshop-footer>div{gap:14px 19px}
 }
 @media(prefers-reduced-motion:reduce){.km-shop-v2 *, .km-shop-v2 *::before,.km-shop-v2 *::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+
+
+/* Editorial restraint pass: hard edges, real catalogue imagery, no decorative effects. */
+.km-shop-v2{--kshop-forest:#183b2d;--kshop-forest-deep:#102b21;--kshop-cream:#f3ead9;--kshop-ink:#24251f;--kshop-walnut:#6f4935;background:#f3ead9;color:#24251f}
+.km-shop-v2 :where(.kshop-hero,.kshop-copy,.kshop-art,.kshop-card,.kshop-card-image,.kshop-toolbar>label,.kshop-toolbar>div,.kshop-empty,.kshop-story,.kshop-footer,.kshop-placeholder){
+  border-radius:0!important;box-shadow:none!important;filter:none!important;
+}
+.km-shop-v2 :where(.kshop-hero,.kshop-copy,.kshop-art,.kshop-card,.kshop-empty,.kshop-story,.kshop-footer,.kshop-placeholder){background-image:none!important}
+.km-shop-v2 :where(.kshop-card,.kshop-story,.kshop-empty){border-left:0!important}
+.km-shop-v2 :where(a,button,select,input,.kshop-card,.kshop-art img){transition:none!important;animation:none!important}
+.km-shop-v2 :where(a,button,.kshop-card,.kshop-art img):hover{transform:none!important;box-shadow:none!important;filter:none!important}
+.km-shop-v2 img{border-radius:0!important;filter:none!important}
+.km-shop-v2 .kshop-card{border:0!important;border-top:1px solid rgba(36,37,31,.28)!important;background:transparent!important}
+.km-shop-v2 .kshop-card-image{background:#e5dac5!important}
+.km-shop-v2 .kshop-card-info{border-bottom:1px solid rgba(36,37,31,.18)!important}
+.km-shop-v2 .kshop-card-image i{display:none!important}
+.km-shop-v2 .kshop-placeholder{background:#e5dac5!important;color:#183b2d!important}
+.km-shop-v2 .kshop-story{border-top:1px solid rgba(36,37,31,.28)!important;border-bottom:1px solid rgba(36,37,31,.28)!important}
+.km-shop-v2 .kshop-ticker{background:#183b2d!important;color:#f3ead9!important}
+.km-shop-v2 .kshop-ribbon{background:#102b21!important;color:#f3ead9!important}
+.km-shop-v2 .kshop-spinner{display:none!important}
+.km-shop-v2 .kshop-state{border-top:1px solid rgba(36,37,31,.25)!important;border-bottom:1px solid rgba(36,37,31,.25)!important;background:transparent!important}
+@media(max-width:700px){.km-shop-v2 .kshop-grid{grid-template-columns:1fr!important}.km-shop-v2 .kshop-card-image{aspect-ratio:1.18!important}.km-shop-v2 .kshop-copy h1{letter-spacing:-.035em!important}}
