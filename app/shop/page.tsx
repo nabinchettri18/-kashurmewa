@@ -71,7 +71,7 @@ export default function ShopPage() {
         </div>
         {loading ? <div className="kshop-state"><span className="kshop-spinner" /> Gathering the current collection…</div>
           : loadError ? <div className="kshop-state" role="alert">We couldn’t load the catalogue. Please refresh or try again shortly.</div>
-          : !filtered.length ? <div className="kshop-empty"><span>THE KASHURMEWA COLLECTION</span><h3>{query ? "Nothing found just yet." : "The next good thing is on its way."}</h3><p>{query ? "Try another search or clear the search field to see all available products." : "Products will appear here when they are published in the live catalogue."}</p>{query && <button type="button" onClick={() => setQuery("")}>CLEAR SEARCH <ArrowRight size={14} /></button>}</div>
+          : !filtered.length ? <div className="kshop-empty"><span>THE KASHURMEWA COLLECTION</span><h3>{query ? "Nothing found just yet." : "The next good thing is on its way."}</h3><p>{query ? "Try another search or clear the search field to see all available products." : "Products will appear here when they are published in the live catalogue."}</p>{query && <button type="button" onClick={() => setQuery("")}>CLEAR SEARCH →</button>}</div>
           : <div className="kshop-grid">{filtered.map((product, index) => {
             const variants = [...product.variants].sort((a, b) => a.price_inr - b.price_inr);
             const minPrice = variants.length ? variants[0].price_inr : null;
