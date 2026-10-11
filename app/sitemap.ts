@@ -1,50 +1,34 @@
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
+import { fetchAllProducts } from "@/lib/catalog";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://kashurmewa.com";
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
+  // A custom domain has not been configured yet. Avoid publishing localhost or a guessed domain.
+  if (!siteUrl) return [];
 
-  return [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: "daily",
-      priority: 1.0,
-    },
-    {
-      url: `${baseUrl}/shop`,
-      lastModified: new Date(),
-      changeFrequency: "daily",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/products/kashmiri-walnuts`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/contact`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/policies/shipping`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.5,
-    },
-    {
-      url: `${baseUrl}/policies/refund`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.5,
-    },
+  const now = new Date();
+  const staticRoutes: MetadataRoute.Sitemap = [
+    { url: siteUrl, lastModified: now, changeFrequency: "weekly", priority: 1 },
+    { url: `${siteUrl}/shop`, lastModified: now, changeFrequency: "daily", priority: 0.9 },
+    { url: `${siteUrl}/about`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${siteUrl}/contact`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${siteUrl}/policies/shipping`, lastModified: now, changeFrequency: "monthly", priority: 0.4 },
+    { url: `${siteUrl}/policies/refund`, lastModified: now, changeFrequency: "monthly", priority: 0.4 },
   ];
+
+  try {
+    const products = await fetchAllProducts();
+    return [
+      ...staticRoutes,
+      ...products.map((product) => ({
+        url: `${siteUrl}/products/${product.slug}`,
+        lastModified: now,
+        changeFrequency: "weekly" as const,
+        priority: 0.8,
+      })),
+    ];
+  } catch (error) {
+    console.error("Unable to include catalogue products in sitemap:", error);
+    return staticRoutes;
+  }
 }
