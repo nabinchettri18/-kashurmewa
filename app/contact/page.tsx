@@ -6,6 +6,7 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { KashurmewLogo } from "@/components/brand/Logo";
 import { NavigationHeader } from "@/components/navigation/Header";
 import "../kashurmewa-storefront.css";
+import "../kashurmewa-brand.css";
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
@@ -47,7 +48,7 @@ export default function ContactPage() {
           <p>Questions about an order, product details or a future collaboration? Send us a message and our team will get back to you.</p>
           <div className="ks-v2-contact-note"><span>01</span><div><strong>Order support</strong><small>Include your order reference if you already placed an order.</small></div></div>
           <div className="ks-v2-contact-note"><span>02</span><div><strong>Product questions</strong><small>Ask us about pack sizes, ingredients or product information before ordering.</small></div></div>
-          <img src="https://images.pexels.com/photos/37309469/pexels-photo-37309469.jpeg?auto=compress&cs=tinysrgb&w=1000" alt="Natural walnut texture" loading="lazy" />
+          <img src="/kashurmewa-heritage-landscape.svg" alt="Original Kashurmewa heritage landscape artwork" loading="lazy" />
         </div>
         <div className="ks-v2-contact-form-wrap">
           <span className="ks-v2-eyebrow ks-v2-eyebrow-dark">WRITE TO US</span>
