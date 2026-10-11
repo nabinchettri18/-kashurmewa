@@ -206,7 +206,7 @@ export default function CartPage() {
                     <span>KASHURMEWA</span>
                     <h2>{line.productName}</h2>
                     <p>{line.size}</p>
-                    {line.stock <= 0 ? <small className="cart-stock-warning">Currently out of stock</small> : line.qty > line.stock ? <small className="cart-stock-warning">Only {line.stock} available — update quantity</small> : null}
+                    {line.stock <= 0 ? <small className="cart-stock-warning">Currently out of stock</small> : line.qty > line.stock ? <small className="cart-stock-warning">Only {line.stock} available ,  update quantity</small> : null}
                   </div>
                   <div className="qty">
                     <button type="button" onClick={() => update(line.variantId, -1)} aria-label="Decrease quantity">
@@ -398,7 +398,7 @@ export default function CartPage() {
 
               <div className="modal-actions">
                 <button type="submit" className="btn-primary" disabled={submitting}>
-                  {submitting ? "PLACING ORDER..." : `PLACE ORDER — ₹${totalAmount.toLocaleString("en-IN")}`}
+                  {submitting ? "PLACING ORDER..." : `PLACE ORDER ,  ₹${totalAmount.toLocaleString("en-IN")}`}
                 </button>
                 <button
                   type="button"
