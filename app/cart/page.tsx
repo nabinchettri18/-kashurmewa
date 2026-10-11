@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabase";
 import { KashurmewLogo } from "@/components/brand/Logo";
 import "../kashurmewa-storefront.css";
+import "../kashurmewa-brand.css";
 
 type CartItem = { productId: string; variantId: string; qty: number };
 type Line = CartItem & { productName: string; size: string; price: number; stock: number };
@@ -195,7 +196,7 @@ export default function CartPage() {
           <div className="empty">
             <p>Your bag is empty.</p>
             <Link className="button dark" href="/shop">
-              SHOP WALNUTS ↗
+              EXPLORE THE COLLECTION ↗
             </Link>
           </div>
         ) : (
@@ -231,11 +232,11 @@ export default function CartPage() {
               </div>
               <div>
                 <p>Delivery Fee</p>
-                <b>{shippingFee === 0 ? "FREE" : `₹${shippingFee}`}</b>
+                <b>₹{shippingFee.toLocaleString("en-IN")}</b>
               </div>
               {subtotal < 999 && (
                 <small style={{ color: "#B69A66", fontSize: "10px", marginTop: "4px" }}>
-                  Add ₹{(999 - subtotal).toLocaleString("en-IN")} more for FREE pan-India delivery!
+                  Delivery charges are shown in your order summary. Review the final total before placing your order.
                 </small>
               )}
               <hr />
@@ -251,7 +252,7 @@ export default function CartPage() {
               >
                 PROCEED TO CHECKOUT ↗
               </button>
-              <small>Secure checkout · Freshly packed · Pan-India delivery</small>
+              <small>Cash on Delivery · Review delivery charges before placing your order</small>
             </aside>
           </div>
         )}
