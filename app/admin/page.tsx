@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
-import { ArrowLeft, ArrowUp, ArrowDown, ImagePlus, Plus, Save, Trash2, LogOut, Eye, EyeOff, Package, RefreshCw } from "lucide-react";
+import { ArrowLeft, ArrowUp, ArrowDown, ImagePlus, Plus, Save, Trash2, LogOut, Package, RefreshCw } from "lucide-react";
 
 type Variant = { id: string; size: string; price_inr: number; stock: number; sku: string | null; active: boolean };
 type ProductImage = { id: string; url: string; alt_text: string | null; sort_order: number; storage_path: string | null };
@@ -109,7 +109,6 @@ export default function AdminDashboard() {
         const { data, error: insertError } = await supabase.from("km_products").insert(productPayload).select("id").single();
         if (insertError) throw insertError;
         productId = data.id;
-        setSelectedId(productId); setIsNew(false);
       } else {
         const { error: updateError } = await supabase.from("km_products").update(productPayload).eq("id", productId);
         if (updateError) throw updateError;
@@ -129,10 +128,13 @@ export default function AdminDashboard() {
           : await supabase.from("km_product_variants").insert(payload);
         if (result.error) throw result.error;
       }
-      setMessage("Product details saved. Upload or arrange product photos below.");
+      setSelectedId(productId);
+      setIsNew(false);
       await loadProducts(productId);
+      setMessage("Product details saved. Upload or arrange product photos below.");
     } catch (e) {
       setError(e instanceof Error ? e.message : "Save failed. Your changes were not confirmed.");
+      if (isNew) await loadProducts();
     } finally { setSaving(false); }
   }
 
@@ -192,10 +194,6 @@ export default function AdminDashboard() {
       setMessage("Photo order saved."); await loadProducts(selectedId);
     } catch (e) { setError(e instanceof Error ? e.message : "Could not reorder photos."); }
     finally { setSaving(false); }
-  }
-
-  async function toggleProductActive() {
-    setDraft((current) => ({ ...current, active: !current.active }));
   }
 
   async function deleteProduct() {
