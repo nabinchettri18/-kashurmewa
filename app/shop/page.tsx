@@ -2,8 +2,12 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { ArrowRight, ArrowUpRight, Search, SlidersHorizontal } from "lucide-react";
 import { fetchAllProducts, Product } from "@/lib/catalog";
 import { NavigationHeader } from "@/components/navigation/Header";
+import { KashurmewLogo } from "@/components/brand/Logo";
+
+const money = (value: number) => new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 }).format(value);
 
 export default function ShopPage() {
   const [items, setItems] = useState<Product[]>([]);
@@ -43,77 +47,36 @@ export default function ShopPage() {
     });
 
   return (
-    <main className="commerce-page">
+    <main className="km-store ks-v2-shop-page">
+      <div className="ks-announcement"><span>THE TASTE OF KASHMIR</span><span>Thoughtfully chosen. Beautifully brought home. <ArrowRight size={12} /></span></div>
       <NavigationHeader cartCount={cartCount} />
 
-      <section className="shop-banner">
-        <div>
-          <span className="commerce-eyebrow">THE KASHURMEWA CATALOGUE</span>
-          <h1>Good things<br /><i>start here.</i></h1>
-          <p>Explore available packs of Kashmiri walnuts in shell. Compare current pack sizes and prices before adding to your bag.</p>
-        </div>
-        <div className="shop-banner-image">
-          <img src="https://images.pexels.com/photos/8303558/pexels-photo-8303558.jpeg" alt="Walnuts arranged on a natural surface" />
-        </div>
+      <section className="ks-v2-shop-hero">
+        <img src="https://images.pexels.com/photos/8303558/pexels-photo-8303558.jpeg?auto=compress&cs=tinysrgb&w=1800" alt="Walnuts arranged on a natural surface" fetchPriority="high" />
+        <div className="ks-v2-shop-hero-shade" />
+        <div className="ks-v2-shop-hero-copy"><span className="ks-v2-eyebrow">THE KASHURMEWA COLLECTION</span><h1>Good things<br /><em>start here.</em></h1><p>Explore our current collection, compare pack sizes and find a considered addition to your pantry.</p><div className="ks-v2-shop-breadcrumb"><Link href="/">Home</Link><span>/</span><span>Shop</span></div></div>
+        <span className="ks-v2-shop-hero-label">THE SIGNATURE EDIT · 01</span>
       </section>
 
-      <section className="catalogue">
-        <div className="catalogue-top">
-          <div>
-            <span className="commerce-eyebrow">SIGNATURE HARVEST</span>
-            <h2>Shop All Products</h2>
-          </div>
-          <div className="catalogue-controls">
-            <input placeholder="Search products..." aria-label="Search products" value={query} onChange={(e) => setQuery(e.target.value)} />
-            <select aria-label="Sort products" value={sort} onChange={(e) => setSort(e.target.value)}>
-              <option value="featured">Featured</option>
-              <option value="low">Price: Low to High</option>
-              <option value="high">Price: High to Low</option>
-            </select>
-          </div>
-        </div>
-
-        {loading ? (
-          <p className="commerce-muted">Loading collection from Supabase…</p>
-        ) : loadError ? (
-          <p className="commerce-muted" role="alert">We couldn’t load the catalogue. Check the Supabase connection and product-table permissions, then refresh.</p>
-        ) : !filtered.length ? (
-          <p className="commerce-muted">No active products match your search. Add or activate products in Supabase to display them here.</p>
-        ) : (
-          <div className="commerce-grid">
-            {filtered.map((p) => {
-              const vs = [...p.variants].sort((a, b) => a.price_inr - b.price_inr);
-              const minPrice = vs.length ? vs[0].price_inr : null;
-              const image = p.images[0]?.url;
-
-              return (
-                <Link className="commerce-product" href={`/products/${p.slug}`} key={p.id}>
-                  <div className="commerce-product-image">
-                    {image ? <img src={image} alt={p.name} /> : <div className="commerce-muted">Image coming soon</div>}
-                    <span>EXPLORE ↗</span>
-                  </div>
-                  <div className="commerce-product-info">
-                    <div>
-                      <small>KASHMIRI IN-SHELL WALNUTS</small>
-                      <h3>{p.name}</h3>
-                      <p>{vs.map((v) => v.size).join(" · ")}</p>
-                    </div>
-                    <strong>{minPrice === null ? "Price unavailable" : `From ₹${minPrice.toLocaleString("en-IN")}`}</strong>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        )}
+      <section className="ks-v2-catalogue">
+        <div className="ks-v2-catalogue-head"><div><span className="ks-v2-eyebrow ks-v2-eyebrow-dark">SHOP THE SIGNATURE</span><h2>Our current <em>collection.</em></h2><p>Live products, current prices and available pack sizes.</p></div><span className="ks-v2-result-count">{items.length} {items.length === 1 ? "product" : "products"}</span></div>
+        <div className="ks-v2-catalogue-toolbar"><label className="ks-v2-search"><Search size={17} /><input placeholder="Search the collection" aria-label="Search products" value={query} onChange={(e) => setQuery(e.target.value)} /></label><label className="ks-v2-sort"><SlidersHorizontal size={15} /><span>Sort</span><select aria-label="Sort products" value={sort} onChange={(e) => setSort(e.target.value)}><option value="featured">Featured</option><option value="low">Price: Low to High</option><option value="high">Price: High to Low</option></select></label></div>
+        {loading ? <div className="ks-v2-shop-state">Loading the current collection…</div> :
+          loadError ? <div className="ks-v2-shop-state" role="alert">We couldn’t load the catalogue right now. Please refresh or return shortly.</div> :
+          !filtered.length ? <div className="ks-v2-shop-state"><h3>No matching products</h3><p>Try another search or clear the search field to explore the available collection.</p><button type="button" onClick={() => setQuery("")}>Clear search</button></div> :
+          <div className="ks-v2-shop-grid">{filtered.map((p, index) => {
+            const vs = [...p.variants].sort((a, b) => a.price_inr - b.price_inr);
+            const minPrice = vs.length ? vs[0].price_inr : null;
+            const image = p.images[0]?.url;
+            return <Link className="ks-v2-shop-card" href={`/products/${p.slug}`} key={p.id}>
+              <div className="ks-v2-shop-card-image">{image ? <img src={image} alt={p.images[0]?.alt_text || p.name} loading={index > 2 ? "lazy" : "eager"} /> : <div className="ks-v2-shop-no-image">Image coming soon</div>}<span className="ks-v2-shop-card-tag">{index === 0 ? "THE SIGNATURE" : "FROM OUR COLLECTION"}</span><span className="ks-v2-shop-card-arrow"><ArrowUpRight size={18} /></span></div>
+              <div className="ks-v2-shop-card-copy"><div className="ks-v2-shop-card-kicker"><span>THE PANTRY EDIT</span><span>{vs.length} {vs.length === 1 ? "pack option" : "pack options"}</span></div><div className="ks-v2-shop-card-title"><h3>{p.name}</h3><strong>{minPrice === null ? "Price unavailable" : `From ${money(minPrice)}`}</strong></div><p>{vs.map((v) => v.size).join(" · ") || "See product details"}</p><span className="ks-v2-shop-card-link">Explore product <ArrowRight size={14} /></span></div>
+            </Link>;
+          })}</div>}
+        <div className="ks-v2-shop-note"><span>GOOD TO KNOW</span><p>Product availability and pricing are loaded from our live catalogue. Your final total, including applicable delivery charges, is shown before order confirmation.</p></div>
       </section>
 
-      <footer className="commerce-footer">
-        <Link className="premium-footer-brand" href="/">Kashurmewa</Link>
-        <span>Walnuts in shell, thoughtfully presented.</span>
-        <Link href="/about">About Us</Link>
-        <Link href="/policies/shipping">Shipping Policy</Link>
-        <Link href="/cart">Your Bag</Link>
-      </footer>
+      <footer className="ks-v2-footer"><div className="ks-v2-footer-main"><div className="ks-v2-footer-brand"><KashurmewLogo variant="light" size="lg" /><p>A premium regional pantry brand inspired by the tastes, textures and traditions that make a place memorable.</p><Link href="/contact">Questions? Get in touch <ArrowUpRight size={14} /></Link></div><div><small>SHOP</small><Link href="/shop">Shop the collection</Link><Link href="/cart">Your bag</Link><Link href="/account">My account</Link></div><div><small>THE BRAND</small><Link href="/about">Our story</Link><Link href="/">Home</Link><Link href="/contact">Contact us</Link></div><div><small>HELP & POLICIES</small><Link href="/policies/shipping">Shipping</Link><Link href="/policies/refund">Returns & refunds</Link><Link href="/policies/privacy">Privacy</Link><Link href="/policies/terms">Terms</Link></div></div><div className="ks-v2-footer-bottom"><span>© Kashurmewa</span><span>THE TASTE OF KASHMIR.</span><Link href="/policies/food-safety">Food safety information</Link></div></footer>
     </main>
   );
 }
