@@ -7,6 +7,7 @@ import { fetchAllProducts, Product } from "@/lib/catalog";
 import { NavigationHeader } from "@/components/navigation/Header";
 import { KashurmewLogo } from "@/components/brand/Logo";
 import "../kashurmewa-storefront.css";
+import "../kashurmewa-brand.css";
 
 const money = (value: number) => new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 }).format(value);
 
@@ -53,10 +54,10 @@ export default function ShopPage() {
       <NavigationHeader cartCount={cartCount} />
 
       <section className="ks-v2-shop-hero">
-        <img src={items[0]?.images?.[0]?.url || "https://images.pexels.com/photos/8303558/pexels-photo-8303558.jpeg?auto=compress&cs=tinysrgb&w=1800"} alt={items[0]?.images?.[0]?.alt_text || "Walnuts arranged on a natural surface"} fetchPriority="high" />
+        <img src="/kashurmewa-heritage-landscape.svg" alt="Original Kashurmewa heritage landscape artwork" fetchPriority="high" />
         <div className="ks-v2-shop-hero-shade" />
-        <div className="ks-v2-shop-hero-copy"><span className="ks-v2-eyebrow">THE KASHURMEWA COLLECTION</span><h1>Good things<br /><em>start here.</em></h1><p>Explore our current collection, compare pack sizes and find a considered addition to your pantry.</p><div className="ks-v2-shop-breadcrumb"><Link href="/">Home</Link><span>/</span><span>Shop</span></div></div>
-        <span className="ks-v2-shop-hero-label">THE SIGNATURE EDIT · 01</span>
+        <div className="ks-v2-shop-hero-copy"><span className="ks-v2-eyebrow">THE KASHURMEWA COLLECTION</span><h1>Good things<br /><em>start here.</em></h1><p>Explore the products available today, with live prices and clear product details.</p><div className="ks-v2-shop-breadcrumb"><Link href="/">Home</Link><span>/</span><span>Shop</span></div></div>
+        <span className="ks-v2-shop-hero-label">THE KASHURMEWA COLLECTION</span>
       </section>
 
       <section className="ks-v2-catalogue">
