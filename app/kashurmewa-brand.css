@@ -1,6 +1,7 @@
 /* KASHURMEWA brand system — original artwork, brand-led layout, no unverified stock-image dependency */
 :root{--km-oxblood:#4A2028;--km-walnut:#754D36;--km-ivory:#F6F0E6;--km-champagne:#C8A66A;--km-ink:#282522;--km-muted:#746a60;--km-line:#e3d7c8;--km-paper:#fffdf8}
 body:has(.km-store){background:var(--km-ivory);color:var(--km-ink)}
+.km-brand-home .topbar{display:none}
 .km-store{--km-luxe-forest:var(--km-oxblood);--km-luxe-forest-deep:#35171d;--km-luxe-gold:var(--km-champagne);--km-luxe-paper:var(--km-ivory);--km-luxe-ink:var(--km-ink);--km-luxe-muted:var(--km-muted);--km-luxe-line:var(--km-line);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--km-ink)}
 .km-store h1,.km-store h2,.km-store h3{color:inherit}
 .km-store a:focus-visible,.km-store button:focus-visible,.km-store input:focus-visible,.km-store select:focus-visible,.km-store textarea:focus-visible{outline:2px solid var(--km-champagne);outline-offset:3px}
