@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabase";
 import { KashurmewLogo } from "@/components/brand/Logo";
+import "../kashurmewa-storefront.css";
 
 type CartItem = { productId: string; variantId: string; qty: number };
 type Line = CartItem & { productName: string; size: string; price: number; stock: number };
@@ -148,7 +149,7 @@ export default function CartPage() {
   };
 
   return (
-    <main className="cart-page">
+    <main className="cart-page km-store ks-v2-cart-page">
       <header className="simple-header">
         <KashurmewLogo variant="dark" size="sm" />
         <Link href="/shop">Continue shopping ↗</Link>
