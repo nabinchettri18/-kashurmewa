@@ -537,3 +537,97 @@
  .ks-v2-shop-card-link{font-size:9px}
  .ks-v2-shop-note{grid-template-columns:1fr;gap:8px;margin-top:30px}
 }
+
+
+/* Product detail layout, matched to the new visual storefront */
+.ks-v2-product-page{min-height:100vh;background:#fbf8f1}
+.ks-v2-product-page .premium-breadcrumb{display:flex;align-items:center;gap:10px;padding:22px 5.2vw;color:#8b8275;font-size:10px;background:#fbf8f1}
+.ks-v2-product-page .premium-breadcrumb a{color:#3f5342}
+.ks-v2-product-page .premium-product-layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(360px,.9fr);gap:clamp(35px,6vw,90px);padding:18px 8vw 85px;align-items:start}
+.ks-v2-product-page .premium-gallery{min-width:0}
+.ks-v2-product-page .premium-main-image{position:relative;height:clamp(460px,55vw,690px);overflow:hidden;background:#e7ddcd}
+.ks-v2-product-page .premium-main-image img{display:block;width:100%;height:100%;object-fit:cover}
+.ks-v2-product-page .premium-image-label{position:absolute;left:18px;bottom:18px;background:#fbf8f1ed;color:#46513f;padding:9px 11px;font-size:7px;font-weight:700;letter-spacing:1.2px}
+.ks-v2-product-page .premium-thumbnails{display:flex;gap:10px;margin-top:12px;overflow-x:auto}
+.ks-v2-product-page .premium-thumbnails button{width:76px;height:84px;flex:0 0 auto;border:1px solid #ded5c6;padding:0;background:#f0e8dc;cursor:pointer}
+.ks-v2-product-page .premium-thumbnails button.active{border:2px solid #334536}
+.ks-v2-product-page .premium-thumbnails img{width:100%;height:100%;object-fit:cover}
+.ks-v2-product-page .premium-origin-note{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-top:22px;padding:16px 0;border-top:1px solid #ded5c6;border-bottom:1px solid #ded5c6}
+.ks-v2-product-page .premium-origin-note>span:not(.premium-origin-divider){font-size:7px;letter-spacing:1.1px;color:#8d7049;font-weight:700}
+.ks-v2-product-page .premium-origin-note strong{font-size:10px;font-weight:600}
+.ks-v2-product-page .premium-origin-divider{height:22px;width:1px;background:#ded5c6;margin:0 6px}
+.ks-v2-product-page .premium-buy-panel{position:sticky;top:25px;min-width:0;padding-top:8px}
+.ks-v2-product-page .commerce-eyebrow{font-size:8px;letter-spacing:1.7px;color:#8d7049;font-weight:700}
+.ks-v2-product-page .premium-buy-panel h1{font:400 clamp(40px,4vw,58px)/1.03 "Playfair Display",Georgia,serif;letter-spacing:-2px;color:#27251f;margin:18px 0 16px}
+.ks-v2-product-page .premium-description{font-size:12px;line-height:1.95;color:#777165;margin:0;max-width:520px}
+.ks-v2-product-page .premium-quality-line{display:flex;align-items:center;gap:9px;margin:21px 0;padding:13px 0;border-top:1px solid #e4dccf;border-bottom:1px solid #e4dccf;color:#465c46;font-size:10px}
+.ks-v2-product-page .premium-price-block{display:flex;align-items:flex-end;justify-content:space-between;gap:15px;margin:25px 0}
+.ks-v2-product-page .premium-price-block>div{display:flex;flex-direction:column;gap:7px}
+.ks-v2-product-page .premium-price-caption{font-size:8px;letter-spacing:1.3px;color:#8d7049;font-weight:700}
+.ks-v2-product-page .premium-price-block strong{font:400 31px "Playfair Display",Georgia,serif}
+.ks-v2-product-page .premium-tax-note{font-size:8px;color:#8b8275;text-align:right}
+.ks-v2-product-page .premium-option-heading{display:flex;justify-content:space-between;gap:12px;margin-bottom:11px;font-size:10px;font-weight:700}
+.ks-v2-product-page .premium-option-heading span:last-child{color:#8d7049}
+.ks-v2-product-page .premium-pack-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.ks-v2-product-page .premium-pack-options button{min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:7px;padding:13px 11px;background:#fffdf8;border:1px solid #ded5c6;color:#27251f;text-align:left;cursor:pointer}
+.ks-v2-product-page .premium-pack-options button.selected{border:1.5px solid #334536;background:#f1eadf}
+.ks-v2-product-page .premium-pack-options button:disabled{opacity:.45;cursor:not-allowed}
+.ks-v2-product-page .premium-pack-options button span{font-size:10px;font-weight:700}
+.ks-v2-product-page .premium-pack-options button strong{font-size:12px}
+.ks-v2-product-page .premium-pack-options button small{font-size:7px;letter-spacing:.6px;color:#74806e}
+.ks-v2-product-page .premium-quantity-row{display:flex;align-items:flex-end;justify-content:space-between;gap:15px;margin:23px 0}
+.ks-v2-product-page .premium-quantity-row>div>span{display:block;margin-bottom:9px;font-size:10px;font-weight:700}
+.ks-v2-product-page .premium-quantity-control{display:flex;align-items:center;gap:0;border:1px solid #ded5c6;background:#fffdf8}
+.ks-v2-product-page .premium-quantity-control button{display:grid;place-items:center;width:37px;height:37px;border:0;background:transparent;color:#334536;cursor:pointer}
+.ks-v2-product-page .premium-quantity-control button:disabled{opacity:.35;cursor:not-allowed}
+.ks-v2-product-page .premium-quantity-control strong{min-width:28px;text-align:center;font-size:11px}
+.ks-v2-product-page .premium-quantity-row>small{font-size:9px;color:#61735d;padding-bottom:10px}
+.ks-v2-product-page .premium-quantity-row>small.out-of-stock{color:#a05c50}
+.ks-v2-product-page .premium-add-button{width:100%;min-height:54px;display:flex;align-items:center;justify-content:space-between;gap:15px;padding:0 19px;background:#293e30;border:1px solid #293e30;color:#fff8e9;font-size:10px;font-weight:700;letter-spacing:.3px;cursor:pointer;transition:background .2s}
+.ks-v2-product-page .premium-add-button:hover:not(:disabled){background:#425a45}
+.ks-v2-product-page .premium-add-button:disabled{opacity:.45;cursor:not-allowed}
+.ks-v2-product-page .premium-cart-notice{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px;padding:12px;background:#edf0e7;color:#3e6444;font-size:10px}
+.ks-v2-product-page .premium-cart-notice a{margin-left:auto;text-decoration:underline;font-weight:700}
+.ks-v2-product-page .premium-delivery-note{display:flex;gap:12px;margin-top:23px;padding:16px;background:#f1eadf;color:#455642}
+.ks-v2-product-page .premium-delivery-note svg{flex-shrink:0}
+.ks-v2-product-page .premium-delivery-note strong,.ks-v2-product-page .premium-delivery-note span{display:block}
+.ks-v2-product-page .premium-delivery-note strong{font-size:10px;margin-bottom:5px}
+.ks-v2-product-page .premium-delivery-note span{color:#777165;font-size:9px;line-height:1.7}
+.ks-v2-product-page .premium-assurances{display:flex;gap:22px;flex-wrap:wrap;margin:16px 0 24px}
+.ks-v2-product-page .premium-assurances>div{display:flex;align-items:center;gap:7px;color:#687363;font-size:9px}
+.ks-v2-product-page .premium-assurances svg{width:15px;height:15px;color:#8d7049}
+.ks-v2-product-page .premium-details{border-top:1px solid #ded5c6}
+.ks-v2-product-page .premium-details details{border-bottom:1px solid #ded5c6}
+.ks-v2-product-page .premium-details summary{padding:16px 0;cursor:pointer;list-style:none;font-size:10px;font-weight:700}
+.ks-v2-product-page .premium-details summary::-webkit-details-marker{display:none}
+.ks-v2-product-page .premium-details summary:after{content:"+";float:right;color:#8d7049;font-size:16px;font-weight:400}
+.ks-v2-product-page .premium-details details[open] summary:after{content:"−"}
+.ks-v2-product-page .premium-details p{margin:0;padding:0 0 16px;color:#777165;font-size:10px;line-height:1.8}
+.ks-v2-product-page .premium-product-story{padding:65px 20px;background:#eee7d9;text-align:center}
+.ks-v2-product-page .premium-product-story h2{font:400 clamp(35px,4.5vw,56px)/1.05 "Playfair Display",Georgia,serif;letter-spacing:-1.8px;margin:20px 0}
+.ks-v2-product-page .premium-product-story h2 i{color:#9a7449;font-weight:400}
+.ks-v2-product-page .premium-product-story p{max-width:480px;margin:0 auto 22px;color:#777165;font-size:11px;line-height:1.9}
+.ks-v2-product-page .premium-product-story>a{display:inline-flex;align-items:center;gap:8px;border-bottom:1px solid #b9a78c;padding-bottom:7px;font-size:10px;font-weight:700}
+.ks-v2-product-page .product-state{max-width:800px;margin:70px auto;padding:50px 6vw;background:#f1eadf}
+.ks-v2-product-page .product-state h1{font:400 clamp(36px,5vw,54px) "Playfair Display",Georgia,serif;margin:18px 0}
+.ks-v2-product-page .product-state p{font-size:12px;line-height:1.8;color:#777165}
+.ks-v2-product-page .product-back-link{display:inline-flex;align-items:center;gap:8px;margin-top:15px;font-size:11px;font-weight:700}
+@media(max-width:850px){
+ .ks-v2-product-page .premium-product-layout{grid-template-columns:1fr;gap:32px;padding:8px 5vw 55px}
+ .ks-v2-product-page .premium-main-image{height:min(105vw,620px)}
+ .ks-v2-product-page .premium-buy-panel{position:static}
+ .ks-v2-product-page .premium-buy-panel h1{font-size:44px}
+}
+@media(max-width:760px){
+ .ks-v2-product-page .premium-breadcrumb{padding:16px 5vw;font-size:9px}
+ .ks-v2-product-page .premium-main-image{height:105vw;max-height:520px}
+ .ks-v2-product-page .premium-thumbnails button{width:64px;height:70px}
+ .ks-v2-product-page .premium-origin-note{gap:8px}
+ .ks-v2-product-page .premium-origin-note strong{font-size:9px}
+ .ks-v2-product-page .premium-price-block{align-items:flex-start;flex-direction:column;gap:8px}
+ .ks-v2-product-page .premium-tax-note{text-align:left}
+ .ks-v2-product-page .premium-pack-options button{padding:12px 8px}
+ .ks-v2-product-page .premium-pack-options button span{font-size:9px}
+ .ks-v2-product-page .premium-pack-options button strong{font-size:11px}
+ .ks-v2-product-page .premium-product-story{padding:48px 6vw}
+}
