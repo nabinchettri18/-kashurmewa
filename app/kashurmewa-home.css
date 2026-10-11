@@ -295,8 +295,8 @@
 .km-home :where(a,button,.kv2-card,.kv2-feature-card,.kv2-hero-photo img){transition:none!important;animation:none!important}
 .km-home :where(a,button,.kv2-card,.kv2-feature-card,.kv2-hero-photo img):hover{transform:none!important;box-shadow:none!important;filter:none!important}
 .km-home .kv2-values,.km-home .kv2-features{display:block!important}
-.km-home .kv2-values article,.km-home .kv2-features article{display:grid!important;grid-template-columns:56px minmax(0,1fr) auto!important;gap:20px!important;padding:24px 0!important;border-top:1px solid rgba(36,37,31,.22)!important;border-radius:0!important;box-shadow:none!important;background:transparent!important}
-.km-home .kv2-values article:last-child,.km-home .kv2-features article:last-child{border-bottom:1px solid rgba(36,37,31,.22)!important}
+.km-home .kv2-value-list article{display:grid!important;grid-template-columns:56px minmax(0,1fr) auto!important;gap:20px!important;padding:24px 0!important;border-top:1px solid rgba(36,37,31,.22)!important;border-radius:0!important;box-shadow:none!important;background:transparent!important}
+.km-home .kv2-value-list article:last-child{border-bottom:1px solid rgba(36,37,31,.22)!important}
 .km-home .kv2-values article svg,.km-home .kv2-features article svg{display:none!important}
 .km-home .kv2-hero-photo:before,.km-home .kv2-hero-photo:after{display:none!important;background:none!important}
-@media(max-width:640px){.km-home .kv2-values article,.km-home .kv2-features article{grid-template-columns:34px minmax(0,1fr)!important;gap:12px!important}}
+@media(max-width:640px){.km-home .kv2-value-list article{grid-template-columns:34px minmax(0,1fr)!important;gap:12px!important}}
