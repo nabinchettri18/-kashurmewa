@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, Check, Minus, Plus, ShieldCheck, Truck, Leaf } from "lucide-react";
 import { fetchProductBySlug, Product, ProductVariant } from "@/lib/catalog";
 import { NavigationHeader } from "@/components/navigation/Header";
+import { KashurmewLogo } from "@/components/brand/Logo";
 import "../../kashurmewa-storefront.css";
 
 export default function ProductDetailPage() {
@@ -80,7 +81,8 @@ export default function ProductDetailPage() {
   if (loading || loadError || !product) {
     return (
       <main className="km-store ks-v2-product-page">
-        <div className="ks-announcement"><span>THE TASTE OF KASHMIR</span><span>Thoughtfully chosen. Beautifully brought home. <ArrowUpRight size={12} /></span></div>\n        <NavigationHeader />
+        <div className="ks-announcement"><span>THE TASTE OF KASHMIR</span><span>Thoughtfully chosen. Beautifully brought home. <ArrowUpRight size={12} /></span></div>
+        <NavigationHeader />
         <div className="product-state">
           <span className="commerce-eyebrow">KASHURMEWA SIGNATURE</span>
           <h1>{loading ? "A moment, please." : loadError ? "We couldn’t load this harvest." : "This product is unavailable."}</h1>
@@ -220,7 +222,7 @@ export default function ProductDetailPage() {
 
       <footer className="ks-v2-footer">
         <div className="ks-v2-footer-main">
-          <div className="ks-v2-footer-brand"><Link href="/"><span className="premium-footer-brand">KASHURMEWA</span></Link><p>The taste of Kashmir.</p><Link href="/contact">Questions? Get in touch <ArrowUpRight size={14} /></Link></div>
+          <div className="ks-v2-footer-brand"><Link href="/"><KashurmewLogo variant="light" size="lg" /></Link><p>The taste of Kashmir.</p><Link href="/contact">Questions? Get in touch <ArrowUpRight size={14} /></Link></div>
           <div><small>SHOP</small><Link href="/shop">Shop the collection</Link><Link href="/cart">Your bag</Link><Link href="/account">My account</Link></div>
           <div><small>THE BRAND</small><Link href="/about">Our story</Link><Link href="/">Home</Link><Link href="/contact">Contact us</Link></div>
           <div><small>HELP & POLICIES</small><Link href="/policies/shipping">Shipping</Link><Link href="/policies/refund">Returns & refunds</Link><Link href="/policies/privacy">Privacy</Link><Link href="/policies/terms">Terms</Link></div>
