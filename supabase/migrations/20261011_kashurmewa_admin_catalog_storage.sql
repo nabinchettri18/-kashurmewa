@@ -87,3 +87,14 @@ create policy "Admins can delete Kashurmewa product images" on storage.objects
   for delete to authenticated using (
     bucket_id = 'kashurmewa-products' and (select public.km_is_admin())
   );
+
+-- Admins need to see drafts and inactive variants in the management screen.
+drop policy if exists "Admins can read all products" on public.km_products;
+create policy "Admins can read all products" on public.km_products
+  for select to authenticated using ((select public.km_is_admin()));
+drop policy if exists "Admins can read all product variants" on public.km_product_variants;
+create policy "Admins can read all product variants" on public.km_product_variants
+  for select to authenticated using ((select public.km_is_admin()));
+drop policy if exists "Admins can read all product images" on public.km_product_images;
+create policy "Admins can read all product images" on public.km_product_images
+  for select to authenticated using ((select public.km_is_admin()));
