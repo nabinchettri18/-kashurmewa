@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabase";
 import Link from "next/link";
+import Image from "next/image";
 
 type Variant = { id: string; size: string; price_inr: number; stock: number; sku?: string };
 type Product = { id: string; name: string; slug: string; active: boolean; description?: string; variants: Variant[] };
@@ -177,7 +178,7 @@ export default function AdminDashboard() {
     <div className="admin-shell">
       <aside className="admin-side">
         <div className="admin-logo">
-          KASHUR<span>MEWA</span>
+          <Link href="/"><Image src="/logo-light.png" alt="KASHURMEWA" width={150} height={50} priority style={{ width: "150px", height: "auto", objectFit: "contain" }} /></Link>
           <small>STORE ADMIN</small>
         </div>
         {["Overview", "Products", "Inventory", "Orders", "Customers", "Settings"].map((t) => (
@@ -425,8 +426,7 @@ export default function AdminDashboard() {
               <p>
                 <strong>Brand Name:</strong> Kashurmewa Dry Fruits<br />
                 <strong>Primary Product:</strong> Kashmiri In-Shell Walnuts<br />
-                <strong>Free Shipping Threshold:</strong> ₹999.00 INR<br />
-                <strong>Standard Delivery Fee:</strong> ₹99.00 INR<br />
+                <strong>Shipping:</strong> Existing checkout calculation retained pending policy confirmation<br />
                 <strong>Payment Gateways Configured:</strong> Cash on Delivery (COD), Online Payments structure
               </p>
             </div>
