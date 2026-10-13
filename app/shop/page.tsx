@@ -6,7 +6,7 @@ import { ArrowRight, ArrowUpRight, Search, SlidersHorizontal } from "lucide-reac
 import { fetchAllProducts, Product } from "@/lib/catalog";
 import { NavigationHeader } from "@/components/navigation/Header";
 import { KashurmewLogo } from "@/components/brand/Logo";
-import { getProductImages, WALNUT_PRODUCT_FALLBACK } from "@/lib/product-images";
+import { getProductImages, WALNUT_PRODUCT_FALLBACK, WALNUT_HERO_FALLBACK } from "@/lib/product-images";
 import "../kashurmewa-storefront.css";
 import "../kashurmewa-brand.css";
 
@@ -55,7 +55,7 @@ export default function ShopPage() {
       <NavigationHeader cartCount={cartCount} />
 
       <section className="ks-v2-shop-hero">
-        <img src="/kashurmewa-heritage-landscape.svg" alt="Original Kashurmewa heritage landscape artwork" fetchPriority="high" />
+        <img src={WALNUT_HERO_FALLBACK} alt="Premium walnut still life for the KASHURMEWA collection" fetchPriority="high" />
         <div className="ks-v2-shop-hero-shade" />
         <div className="ks-v2-shop-hero-copy"><span className="ks-v2-eyebrow">THE KASHURMEWA COLLECTION</span><h1>Good things<br /><em>start here.</em></h1><p>Explore the products available today, with live prices and clear product details.</p><div className="ks-v2-shop-breadcrumb"><Link href="/">Home</Link><span>/</span><span>Shop</span></div></div>
         <span className="ks-v2-shop-hero-label">THE KASHURMEWA COLLECTION</span>
