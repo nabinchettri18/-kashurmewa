@@ -10,6 +10,10 @@ import "./kashurmewa-storefront.css";
 import "./kashurmewa-brand.css";
 import "./kashurmewa-campaign-home.css";
 
+const WALNUT_HERO = "https://images.pexels.com/photos/36040913/pexels-photo-36040913.jpeg?auto=compress&cs=tinysrgb&w=1800";
+const WALNUT_DETAIL = "https://images.pexels.com/photos/37309469/pexels-photo-37309469.jpeg?auto=compress&cs=tinysrgb&w=1000";
+const ORCHARD_IMAGE = "https://images.pexels.com/photos/17131011/pexels-photo-17131011.jpeg?auto=compress&cs=tinysrgb&w=1400";
+
 const money = (value: number) =>
   new Intl.NumberFormat("en-IN", {
     style: "currency",
@@ -168,14 +172,11 @@ export default function Home() {
                 fetchPriority="high"
               />
             ) : (
-              <div className="km-campaign-photo-empty">
-                <strong>{loading ? "Preparing the collection" : "A place for something special"}</strong>
-                <span>
-                  {loading
-                    ? "LOADING LIVE CATALOGUE"
-                    : "PRODUCT PHOTOGRAPHY WILL APPEAR HERE WHEN AVAILABLE"}
-                </span>
-              </div>
+              <img
+                src={WALNUT_HERO}
+                alt="Whole walnuts in their natural shells, styled for the KASHURMEWA collection"
+                fetchPriority="high"
+              />
             )}
           </div>
           {heroProduct && (
@@ -269,10 +270,11 @@ export default function Home() {
                         loading="lazy"
                       />
                     ) : (
-                      <div className="km-campaign-photo-empty">
-                        <strong>{product.name}</strong>
-                        <span>PRODUCT IMAGE NOT YET AVAILABLE</span>
-                      </div>
+                      <img
+                        src={WALNUT_DETAIL}
+                        alt="Whole walnuts in shell, illustrative product photography"
+                        loading="lazy"
+                      />
                     )}
                   </Link>
                   <div className="km-campaign-product-body">
@@ -322,8 +324,8 @@ export default function Home() {
       <section className="km-campaign-story">
         <div className="km-campaign-story-visual">
           <img
-            src="/kashurmewa-heritage-landscape.svg"
-            alt=""
+            src={ORCHARD_IMAGE}
+            alt="Walnuts growing in an orchard"
             loading="lazy"
           />
           <span>THE TASTE OF KASHMIR · A SENSE OF PLACE</span>
