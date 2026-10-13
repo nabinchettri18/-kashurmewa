@@ -4,7 +4,7 @@
 .kv-hero{position:relative;isolation:isolate;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(300px,.72fr);align-items:center;gap:clamp(26px,5vw,78px);min-height:660px;padding:clamp(52px,7vw,96px) clamp(22px,7vw,108px);background:#3b2025;color:#f6f0e6}
 .kv-hero-image,.kv-hero-shade{position:absolute;inset:0;width:100%;height:100%;z-index:-3}
 .kv-hero-image{object-fit:cover;opacity:.62}
-.kv-hero-shade{z-index:-2;background:linear-gradient(90deg,#2b151bf2 0%,#3e2027dc 43%,#4a2028a6 74%,#251418bb 100%)}
+.kv-hero-shade{z-index:-2;background:rgba(43,21,27,.64)}
 .kv-hero-copy{position:relative;z-index:2;max-width:700px;animation:kv-enter .5s ease both}
 .kv-eyebrow{display:flex;align-items:center;gap:10px;color:#d9bc86;font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:700}
 .kv-eyebrow i{display:inline-block;width:26px;height:1px;background:currentColor}
@@ -15,11 +15,9 @@
 .kv-button:hover{transform:translateY(-2px);background:#dfc28c}
 .kv-hero-note{display:flex;gap:23px;flex-wrap:wrap;margin-top:52px;color:#e4d5c5;font-size:8px;letter-spacing:1.5px}
 .kv-hero-product{position:relative;width:100%;max-width:455px;justify-self:end;padding:0 0 54px 26px}
-.kv-hero-product-image{aspect-ratio:4/4.25;overflow:hidden;border:1px solid #c8a66a99;background:#e9dfd0;box-shadow:0 24px 70px #17090c55}
-.kv-hero-product-image img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .7s}
+.kv-hero-product-image{aspect-ratio:4/4.25;overflow:hidden;border:1px solid #c8a66a99;background:#e9dfd0;box-shadow:none;height:100%;display:block;object-fit:cover;transition:transform .7s}
 .kv-hero-product:hover .kv-hero-product-image img{transform:scale(1.035)}
-.kv-hero-product-caption{position:absolute;bottom:0;left:0;right:4px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:5px 16px;padding:17px 19px;background:#fffdf8;color:#282522;box-shadow:0 12px 30px #17090c25}
-.kv-hero-product-caption span{grid-column:1/-1;font-size:7px;letter-spacing:1.6px;color:#754d36}
+.kv-hero-product-caption{position:absolute;bottom:0;left:0;right:4px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:5px 16px;padding:17px 19px;background:#fffdf8;color:#282522;box-shadow:none;font-size:7px;letter-spacing:1.6px;color:#754d36}
 .kv-hero-product-caption strong{font:400 19px Georgia,serif}
 .kv-hero-product-caption a{display:grid;place-items:center;width:33px;height:33px;background:#4a2028;color:#f6f0e6}
 .kv-slider-controls{position:absolute;right:clamp(22px,7vw,108px);bottom:24px;display:flex;align-items:center;gap:12px;z-index:3}
@@ -33,7 +31,7 @@
 .kv-assurances{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding:20px clamp(20px,6vw,90px);background:#fffdf8;border-bottom:1px solid #e8dfd4}
 .kv-assurances>div{display:flex;align-items:center;gap:12px;padding:9px 18px;border-right:1px solid #e8dfd4}
 .kv-assurances>div:first-child{padding-left:0}.kv-assurances>div:last-child{border:0;padding-right:0}
-.kv-assurances svg{width:21px;height:21px;color:#4a2028;stroke-width:1.5;flex:0 0 auto}
+.kv-assurances svg,.kv-assurances .kv-assurance-mark{width:21px;height:21px;color:#4a2028;stroke-width:1.5;flex:0 0 auto}
 .kv-assurances strong,.kv-assurances small{display:block}
 .kv-assurances strong{font:500 11px Georgia,serif}
 .kv-assurances small{margin-top:4px;color:#83766b;font-size:8px;line-height:1.5}
@@ -41,7 +39,7 @@
 .kv-promo{position:relative;display:block;min-height:310px;overflow:hidden;color:#f6f0e6;background:#4a2028}
 .kv-promo>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s}
 .kv-promo:hover>img{transform:scale(1.04)}
-.kv-promo-shade{position:absolute;inset:0;background:linear-gradient(90deg,#281519df,#3b202785 68%,#3b20272b)}
+.kv-promo-shade{position:absolute;inset:0;background:rgba(43,21,27,.64)}
 .kv-promo-copy{position:absolute;inset:auto 28px 28px;display:flex;flex-direction:column;align-items:flex-start}
 .kv-promo-copy small{font-size:8px;letter-spacing:1.5px;color:#e4c68e}
 .kv-promo-copy strong{margin:14px 0 17px;font:400 clamp(30px,3.2vw,45px)/1.03 "Playfair Display",Georgia,serif;letter-spacing:-.035em}
@@ -54,8 +52,7 @@
 .kv-section-heading>p{margin:0 auto;color:#83766b;font-size:12px;line-height:1.8}
 .kv-pack-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;max-width:1100px;margin:auto}
 .kv-pack-card{display:flex;flex-direction:column;align-items:center;text-align:center;padding:22px 18px 20px;border:1px solid #e8dfd4;background:#fffdf8;color:#282522;transition:transform .25s,box-shadow .25s,border-color .25s}
-.kv-pack-card:hover,.kv-pack-card.selected{transform:translateY(-3px);border-color:#c8a66a;box-shadow:0 14px 32px #2825220c}
-.kv-pack-orbit{display:grid;place-items:center;width:120px;height:120px;overflow:hidden;border-radius:50%;background:#f2eadf;margin-bottom:17px}
+.kv-pack-card:hover,.kv-pack-card.selected{transform:translateY(-3px);border-color:#c8a66a;box-shadow:none;place-items:center;width:120px;height:120px;overflow:hidden;border-radius:50%;background:#f2eadf;margin-bottom:17px}
 .kv-pack-orbit img{width:100%;height:100%;object-fit:cover;mix-blend-mode:multiply}
 .kv-pack-card>small{color:#754d36;font-size:7px;letter-spacing:1.4px}
 .kv-pack-card>strong{margin-top:9px;font:400 22px Georgia,serif}
@@ -86,7 +83,7 @@
 .kv-add-button:disabled{opacity:.55;cursor:not-allowed}
 .kv-trending-story{position:relative;min-height:370px;overflow:hidden;background:#3b2025;color:#f6f0e6}
 .kv-trending-story>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.kv-trending-story:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#2b151bea,#3a1c24a8 60%,#3a1c2430)}
+.kv-trending-story:after{content:"";position:absolute;inset:0;background:rgba(43,21,27,.64)}
 .kv-trending-story>div{position:absolute;z-index:1;inset:auto 32px 31px;max-width:400px}
 .kv-trending-story>div>span,.kv-special-copy>span{font-size:8px;letter-spacing:1.7px;color:#dfc18c}
 .kv-trending-story h3{margin:14px 0;font:400 clamp(34px,3.5vw,48px)/1.03 "Playfair Display",Georgia,serif}
@@ -100,7 +97,7 @@
 .kv-deal-banner{position:relative;isolation:isolate;display:flex;align-items:center;min-height:420px;padding:clamp(40px,7vw,92px) clamp(22px,9vw,136px);background:#3b2025;color:#f6f0e6;overflow:hidden}
 .kv-deal-banner>img,.kv-deal-overlay{position:absolute;inset:0;width:100%;height:100%;z-index:-2}
 .kv-deal-banner>img{object-fit:cover;opacity:.65}
-.kv-deal-overlay{z-index:-1;background:linear-gradient(90deg,#2b151bf2,#3c2028cf 55%,#3c20285c)}
+.kv-deal-overlay{z-index:-1;background:rgba(43,21,27,.64)}
 .kv-deal-copy{max-width:580px}
 .kv-deal-copy>span{font-size:8px;letter-spacing:1.7px;color:#dfc18c}
 .kv-deal-copy h2{margin:17px 0;font:400 clamp(43px,5.5vw,72px)/.98 "Playfair Display",Georgia,serif;letter-spacing:-.045em}
@@ -154,7 +151,7 @@
 .kv-footer{background:#282522}
 @keyframes kv-enter{from{opacity:.5;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:1050px){.kv-hero{grid-template-columns:minmax(0,1fr) minmax(250px,.7fr);padding-left:5vw;padding-right:5vw}.kv-hero-copy h1{font-size:clamp(55px,7vw,82px)}.kv-assurances{padding-left:3vw;padding-right:3vw}.kv-assurances>div{padding:8px 10px}.kv-assurances strong{font-size:10px}.kv-product-card{grid-template-columns:1fr}.kv-product-photo{min-height:260px;aspect-ratio:4/3}.kv-product-details{min-height:280px}.kv-trending-grid{grid-template-columns:minmax(260px,.75fr) minmax(0,1.25fr)}}
-@media(max-width:760px){.kv-hero{display:flex;flex-direction:column;align-items:stretch;gap:28px;min-height:auto;padding:60px 20px 82px}.kv-hero-image{opacity:.42}.kv-hero-shade{background:linear-gradient(90deg,#2b151bf2,#3e2027cf 70%,#251418b0)}.kv-hero-copy h1{font-size:clamp(54px,12vw,78px);margin:23px 0 18px}.kv-hero-copy>p{font-size:12px}.kv-hero-note{margin-top:30px;font-size:7px;gap:12px}.kv-hero-product{width:min(100%,390px);align-self:center;padding-left:14px;padding-bottom:47px}.kv-hero-product-image{aspect-ratio:4/3.4}.kv-hero-product-caption{padding:13px 14px}.kv-hero-product-caption strong{font-size:16px}.kv-hero-counter{left:20px;bottom:31px}.kv-slider-controls{right:20px;bottom:19px}.kv-assurances{grid-template-columns:1fr 1fr;padding:10px 14px}.kv-assurances>div{padding:13px 8px;border-right:0;border-bottom:1px solid #e8dfd4}.kv-assurances>div:nth-child(odd){border-right:1px solid #e8dfd4}.kv-assurances>div:nth-last-child(-n+2){border-bottom:0}.kv-assurances>div:first-child{padding-left:8px}.kv-assurances>div:last-child{padding-right:8px}.kv-assurances svg{width:18px;height:18px}.kv-assurances strong{font-size:9px}.kv-assurances small{font-size:7px}.kv-promo-grid{grid-template-columns:1fr;gap:12px;padding:28px 14px 0}.kv-promo{min-height:270px}.kv-promo-copy{inset:auto 20px 22px}.kv-promo-copy strong{font-size:34px}.kv-pack-discovery,.kv-trending,.kv-special,.kv-journal{padding:65px 14px}.kv-section-heading{margin-bottom:25px}.kv-section-heading h2,.kv-values-intro h2{font-size:clamp(37px,9vw,53px)}.kv-pack-row{grid-template-columns:1fr;gap:10px}.kv-pack-card{display:grid;grid-template-columns:82px 1fr auto;grid-template-rows:auto auto auto;align-items:center;column-gap:14px;text-align:left;padding:14px}.kv-pack-orbit{grid-column:1;grid-row:1/5;width:78px;height:78px;margin:0}.kv-pack-card>small{grid-column:2;grid-row:1}.kv-pack-card>strong{grid-column:2;grid-row:2;margin-top:4px;font-size:18px}.kv-pack-card>span:not(.kv-pack-orbit){grid-column:2;grid-row:3;margin-top:3px}.kv-pack-card>b{grid-column:3;grid-row:1/3;margin:0;font-size:13px}.kv-pack-card>i{grid-column:3;grid-row:3;margin-top:5px;font-size:8px}.kv-heading-row{align-items:flex-start;flex-direction:column;gap:15px}.kv-heading-row h2{font-size:clamp(36px,8.5vw,51px)}.kv-trending-grid{grid-template-columns:1fr;gap:12px}.kv-product-card{grid-template-columns:1fr 1fr}.kv-product-photo{min-height:290px;aspect-ratio:auto}.kv-product-details{min-height:290px;padding:16px 13px}.kv-product-details h3{font-size:20px}.kv-product-details>p{font-size:9px}.kv-product-kicker{font-size:6px}.kv-trending-story{min-height:340px}.kv-trending-story>div{inset:auto 22px 22px}.kv-deal-banner{min-height:390px;padding:54px 22px}.kv-deal-copy h2{font-size:clamp(42px,9vw,59px)}.kv-deal-seal{right:17px;top:20px;transform:rotate(7deg);width:83px;height:83px;gap:4px}.kv-deal-seal svg{width:13px;height:13px}.kv-deal-seal strong{font-size:8px}.kv-deal-seal span{font-size:5px}.kv-special-panel{grid-template-columns:1fr}.kv-special-image{min-height:280px;height:300px}.kv-special-image img{padding:18px}.kv-special-copy{padding:25px 19px}.kv-special-options{grid-template-columns:repeat(3,minmax(0,1fr))}.kv-values{grid-template-columns:1fr;gap:25px;padding:65px 18px}.kv-values-grid{gap:9px}.kv-values-grid>div{padding:17px 14px}.kv-values-grid strong{font-size:16px}.kv-values-grid p{font-size:9px}.kv-journal-grid{grid-template-columns:1fr;gap:12px}.kv-journal-card{display:grid;grid-template-columns:120px 1fr}.kv-journal-image{height:100%;min-height:170px;aspect-ratio:auto}.kv-journal-copy{padding:15px}.kv-journal-copy h3{font-size:19px}.kv-final-cta{padding:65px 18px}.kv-final-cta h2{font-size:clamp(40px,9vw,58px)}}
+@media(max-width:760px){.kv-hero{display:flex;flex-direction:column;align-items:stretch;gap:28px;min-height:auto;padding:60px 20px 82px}.kv-hero-image{opacity:.42}.kv-hero-shade{background:rgba(43,21,27,.64);margin:23px 0 18px}.kv-hero-copy>p{font-size:12px}.kv-hero-note{margin-top:30px;font-size:7px;gap:12px}.kv-hero-product{width:min(100%,390px);align-self:center;padding-left:14px;padding-bottom:47px}.kv-hero-product-image{aspect-ratio:4/3.4}.kv-hero-product-caption{padding:13px 14px}.kv-hero-product-caption strong{font-size:16px}.kv-hero-counter{left:20px;bottom:31px}.kv-slider-controls{right:20px;bottom:19px}.kv-assurances{grid-template-columns:1fr 1fr;padding:10px 14px}.kv-assurances>div{padding:13px 8px;border-right:0;border-bottom:1px solid #e8dfd4}.kv-assurances>div:nth-child(odd){border-right:1px solid #e8dfd4}.kv-assurances>div:nth-last-child(-n+2){border-bottom:0}.kv-assurances>div:first-child{padding-left:8px}.kv-assurances>div:last-child{padding-right:8px}.kv-assurances svg,.kv-assurances .kv-assurance-mark{width:18px;height:18px}.kv-assurances strong{font-size:9px}.kv-assurances small{font-size:7px}.kv-promo-grid{grid-template-columns:1fr;gap:12px;padding:28px 14px 0}.kv-promo{min-height:270px}.kv-promo-copy{inset:auto 20px 22px}.kv-promo-copy strong{font-size:34px}.kv-pack-discovery,.kv-trending,.kv-special,.kv-journal{padding:65px 14px}.kv-section-heading{margin-bottom:25px}.kv-section-heading h2,.kv-values-intro h2{font-size:clamp(37px,9vw,53px)}.kv-pack-row{grid-template-columns:1fr;gap:10px}.kv-pack-card{display:grid;grid-template-columns:82px 1fr auto;grid-template-rows:auto auto auto;align-items:center;column-gap:14px;text-align:left;padding:14px}.kv-pack-orbit{grid-column:1;grid-row:1/5;width:78px;height:78px;margin:0}.kv-pack-card>small{grid-column:2;grid-row:1}.kv-pack-card>strong{grid-column:2;grid-row:2;margin-top:4px;font-size:18px}.kv-pack-card>span:not(.kv-pack-orbit){grid-column:2;grid-row:3;margin-top:3px}.kv-pack-card>b{grid-column:3;grid-row:1/3;margin:0;font-size:13px}.kv-pack-card>i{grid-column:3;grid-row:3;margin-top:5px;font-size:8px}.kv-heading-row{align-items:flex-start;flex-direction:column;gap:15px}.kv-heading-row h2{font-size:clamp(36px,8.5vw,51px)}.kv-trending-grid{grid-template-columns:1fr;gap:12px}.kv-product-card{grid-template-columns:1fr 1fr}.kv-product-photo{min-height:290px;aspect-ratio:auto}.kv-product-details{min-height:290px;padding:16px 13px}.kv-product-details h3{font-size:20px}.kv-product-details>p{font-size:9px}.kv-product-kicker{font-size:6px}.kv-trending-story{min-height:340px}.kv-trending-story>div{inset:auto 22px 22px}.kv-deal-banner{min-height:390px;padding:54px 22px}.kv-deal-copy h2{font-size:clamp(42px,9vw,59px)}.kv-deal-seal{right:17px;top:20px;transform:rotate(7deg);width:83px;height:83px;gap:4px}.kv-deal-seal svg{width:13px;height:13px}.kv-deal-seal strong{font-size:8px}.kv-deal-seal span{font-size:5px}.kv-special-panel{grid-template-columns:1fr}.kv-special-image{min-height:280px;height:300px}.kv-special-image img{padding:18px}.kv-special-copy{padding:25px 19px}.kv-special-options{grid-template-columns:repeat(3,minmax(0,1fr))}.kv-values{grid-template-columns:1fr;gap:25px;padding:65px 18px}.kv-values-grid{gap:9px}.kv-values-grid>div{padding:17px 14px}.kv-values-grid strong{font-size:16px}.kv-values-grid p{font-size:9px}.kv-journal-grid{grid-template-columns:1fr;gap:12px}.kv-journal-card{display:grid;grid-template-columns:120px 1fr}.kv-journal-image{height:100%;min-height:170px;aspect-ratio:auto}.kv-journal-copy{padding:15px}.kv-journal-copy h3{font-size:19px}.kv-final-cta{padding:65px 18px}.kv-final-cta h2{font-size:clamp(40px,9vw,58px)}}
 @media(max-width:420px){.kv-product-card{grid-template-columns:1fr}.kv-product-photo{min-height:260px;aspect-ratio:4/3}.kv-product-details{min-height:0}.kv-product-details .kv-add-button{margin-top:12px}.kv-journal-card{grid-template-columns:105px 1fr}.kv-journal-image{min-height:180px}.kv-journal-copy h3{font-size:17px}.kv-deal-seal{display:none}.kv-hero-copy h1{font-size:52px}}
 @media(prefers-reduced-motion:reduce){.kv-hero-copy,.kv-hero-product-image img,.kv-promo>img,.kv-product-photo>img,.kv-journal-image img{animation:none;transition:none}}
 
@@ -164,7 +161,7 @@
 .km-vegina-home .km-brand-announcement{min-height:28px;padding:5px 4vw;display:flex;align-items:center;justify-content:space-between;gap:16px;background:#4a2028;color:#f6f0e6;font-size:9px;letter-spacing:.35px}
 .kv-hero{display:block;position:relative;min-height:390px;height:clamp(340px,34vw,490px);padding:0;background:#3c2922;color:#fffdf8;overflow:hidden}
 .kv-hero-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 55%;opacity:1;z-index:-3}
-.kv-hero-shade{z-index:-2;background:linear-gradient(90deg,rgba(29,19,13,.83) 0%,rgba(29,19,13,.55) 36%,rgba(29,19,13,.06) 72%,rgba(29,19,13,.05) 100%)}
+.kv-hero-shade{z-index:-2;background:rgba(43,21,27,.64)}
 .kv-hero-copy{position:absolute;left:clamp(24px,9vw,135px);top:50%;transform:translateY(-50%);max-width:520px;animation:none}
 .kv-eyebrow{color:#e6c781;font-size:9px;letter-spacing:2px}
 .kv-hero-copy h1{max-width:480px;margin:16px 0 12px;font:400 clamp(44px,5vw,70px)/.94 Georgia,"Times New Roman",serif;letter-spacing:-1.7px;color:#fffdf8}
@@ -180,12 +177,12 @@
 .kv-hero-counter{display:none}
 .kv-assurances{grid-template-columns:repeat(4,minmax(0,1fr));padding:12px clamp(18px,6vw,88px);background:#fffaf2;border-bottom:0}
 .kv-assurances>div{justify-content:flex-start;padding:8px clamp(8px,1.8vw,25px);gap:10px;border-right:0}
-.kv-assurances svg{width:30px;height:30px;padding:5px;border:1px solid #c8a66a;border-radius:50%;color:#7a151b}
+.kv-assurances svg,.kv-assurances .kv-assurance-mark{width:30px;height:30px;padding:5px;border:1px solid #c8a66a;border-radius:50%;color:#7a151b}
 .kv-assurances strong{font:600 10px Arial,sans-serif;color:#4a2028}
 .kv-assurances small{font-size:8px;margin-top:3px}
 .kv-promo-grid{gap:16px;padding:12px clamp(16px,3vw,42px) 0}
 .kv-promo{min-height:190px;border-radius:5px}
-.kv-promo-shade{background:linear-gradient(90deg,rgba(28,20,13,.77),rgba(28,20,13,.28) 74%,rgba(28,20,13,.08))}
+.kv-promo-shade{background:rgba(43,21,27,.64)}
 .kv-promo-copy{inset:auto 24px 21px}
 .kv-promo-copy small{font-size:7px}
 .kv-promo-copy strong{margin:8px 0 10px;font:400 clamp(24px,2.5vw,34px)/1.03 Georgia,serif;letter-spacing:-.4px}
@@ -197,9 +194,7 @@
 .kv-section-heading h2 em,.kv-values-intro h2 em{color:#4a2028}
 .kv-section-heading>p{font-size:11px}
 .kv-pack-row{max-width:1100px;gap:14px}
-.kv-pack-card{position:relative;display:flex;align-items:center;text-align:center;padding:10px 12px 13px;border:1px solid #eee3d4;border-radius:7px;background:#fffaf3;box-shadow:0 5px 18px rgba(65,39,20,.04)}
-.kv-pack-card:hover,.kv-pack-card.selected{transform:translateY(-2px);border-color:#d7bd8e;box-shadow:0 10px 24px rgba(65,39,20,.09)}
-.kv-pack-orbit{width:100%;height:142px;border-radius:4px;background:#f2e7d6;margin-bottom:8px;overflow:hidden}
+.kv-pack-card{position:relative;display:flex;align-items:center;text-align:center;padding:10px 12px 13px;border:1px solid #eee3d4;border-radius:7px;background:#fffaf3;box-shadow:none;border-color:#d7bd8e;box-shadow:none;height:142px;border-radius:4px;background:#f2e7d6;margin-bottom:8px;overflow:hidden}
 .kv-pack-orbit img{width:100%;height:100%;object-fit:cover;mix-blend-mode:normal}
 .kv-pack-card>small{font-size:7px;letter-spacing:1px}
 .kv-pack-card>strong{margin-top:5px;font:600 13px Arial,sans-serif;color:#4a2028}
@@ -225,8 +220,7 @@
 .kv-values-intro h2{font-size:clamp(28px,3vw,38px)}
 .kv-values-intro p{display:none}
 .kv-values-grid{grid-template-columns:repeat(3,minmax(0,1fr));max-width:1040px;margin:auto;gap:13px;text-align:left}
-.kv-values-grid>div{padding:18px 17px;border:1px solid #efe6dc;border-radius:6px;background:#fffaf4;box-shadow:0 5px 18px rgba(65,39,20,.035)}
-.kv-values-grid svg{width:20px;height:20px;color:#9b5a27}
+.kv-values-grid>div{padding:18px 17px;border:1px solid #efe6dc;border-radius:6px;background:#fffaf4;box-shadow:none;height:20px;color:#9b5a27}
 .kv-values-grid strong{margin:8px 0 5px;font:400 16px Georgia,serif;color:#4a2028}
 .kv-values-grid p{font-size:9px;line-height:1.6}
 
@@ -290,7 +284,7 @@
 .kv-hero-copy>p{max-width:310px;font-size:11px}
 .kv-assurances{grid-template-columns:1fr 1fr;padding:8px 10px}
 .kv-assurances>div{padding:8px 5px;gap:7px}
-.kv-assurances svg{width:27px;height:27px}
+.kv-assurances svg,.kv-assurances .kv-assurance-mark{width:27px;height:27px}
 .kv-assurances strong{font-size:8px}
 .kv-assurances small{font-size:7px}
 .kv-promo-grid{grid-template-columns:1fr;padding:10px 12px 0;gap:10px}
@@ -345,3 +339,8 @@
 .kv-testimonial-grid article{min-height:0;padding:14px}
 .kv-testimonial-grid article p{font-size:14px;margin-bottom:8px}
 }
+
+/* Restrained editorial controls: typography and borders, no icon artwork or drop shadows. */
+.kv-assurances .kv-assurance-mark{display:grid;place-items:center;flex:0 0 auto;width:30px;height:30px;border:1px solid #c8a66a;border-radius:50%;color:#7a151b;font:600 9px Arial,sans-serif;letter-spacing:.2px}
+.kv-text-arrow{display:inline-block;font:inherit;line-height:1}
+.kv-pack-card,.kv-pack-card:hover,.kv-pack-card.selected{box-shadow:none;}
