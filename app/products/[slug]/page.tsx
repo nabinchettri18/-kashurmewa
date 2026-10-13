@@ -110,7 +110,7 @@ export default function ProductDetailPage() {
       <section className="premium-product-layout">
         <div className="premium-gallery">
           <div className="premium-main-image">
-            {mainImage ? <img src={mainImage} alt={images[selectedImage]?.alt_text || product.name} onError={(event) => { if (!event.currentTarget.src.includes("8303558")) event.currentTarget.src = WALNUT_PRODUCT_FALLBACK; }} /> : <div className="premium-image-placeholder">Product photography coming soon</div>}
+            {mainImage ? <img src={mainImage} alt={images[selectedImage]?.alt_text || product.name} onError={(event) => { if (!event.currentTarget.src.includes("8604867")) event.currentTarget.src = WALNUT_PRODUCT_FALLBACK; }} /> : <div className="premium-image-placeholder">Product photography coming soon</div>}
             <span className="premium-image-label">KASHURMEWA · SIGNATURE HARVEST</span>
           </div>
           {images.length > 1 && (
@@ -124,7 +124,7 @@ export default function ProductDetailPage() {
                   aria-label={`View product image ${index + 1}`}
                   aria-pressed={selectedImage === index}
                 >
-                  <img src={image.url} alt={image.alt_text || `${product.name} view ${index + 1}`} onError={(event) => { if (!event.currentTarget.src.includes("8303558")) event.currentTarget.src = WALNUT_PRODUCT_FALLBACK; }} />
+                  <img src={image.url} alt={image.alt_text || `${product.name} view ${index + 1}`} onError={(event) => { if (!event.currentTarget.src.includes("8604867")) event.currentTarget.src = WALNUT_PRODUCT_FALLBACK; }} />
                 </button>
               ))}
             </div>
