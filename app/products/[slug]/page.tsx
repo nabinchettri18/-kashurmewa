@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, Check, Minus, Plus, ShieldCheck, Truck, Leaf } from "lucide-react";
 import { fetchProductBySlug, Product, ProductVariant } from "@/lib/catalog";
@@ -21,6 +21,7 @@ export default function ProductDetailPage() {
   const [cartCount, setCartCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
+  const addToBagLock = useRef(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -54,7 +55,9 @@ export default function ProductDetailPage() {
   const mainImage = images[selectedImage]?.url || images[0]?.url;
 
   const addToBag = () => {
-    if (!product || !selectedVariant || selectedVariant.stock <= 0) return;
+    if (!product || !selectedVariant || selectedVariant.stock <= 0 || addToBagLock.current) return;
+    addToBagLock.current = true;
+    window.setTimeout(() => { addToBagLock.current = false; }, 700);
 
     try {
       const cart = JSON.parse(localStorage.getItem("kashurmewa-cart") || "[]");
