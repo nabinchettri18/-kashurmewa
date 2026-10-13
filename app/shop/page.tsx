@@ -6,6 +6,7 @@ import { ArrowRight, ArrowUpRight, Search, SlidersHorizontal } from "lucide-reac
 import { fetchAllProducts, Product } from "@/lib/catalog";
 import { NavigationHeader } from "@/components/navigation/Header";
 import { KashurmewLogo } from "@/components/brand/Logo";
+import { getProductImages, WALNUT_PRODUCT_FALLBACK } from "@/lib/product-images";
 import "../kashurmewa-storefront.css";
 import "../kashurmewa-brand.css";
 
@@ -69,9 +70,9 @@ export default function ShopPage() {
           <div className="ks-v2-shop-grid">{filtered.map((p, index) => {
             const vs = [...p.variants].sort((a, b) => a.price_inr - b.price_inr);
             const minPrice = vs.length ? vs[0].price_inr : null;
-            const image = p.images[0]?.url;
+            const image = getProductImages(p.images, p.name)[0];
             return <Link className="ks-v2-shop-card" href={`/products/${p.slug}`} key={p.id}>
-              <div className="ks-v2-shop-card-image">{image ? <img src={image} alt={p.images[0]?.alt_text || p.name} loading={index > 2 ? "lazy" : "eager"} /> : <div className="ks-v2-shop-no-image">Image coming soon</div>}<span className="ks-v2-shop-card-tag">{index === 0 ? "THE SIGNATURE" : "FROM OUR COLLECTION"}</span><span className="ks-v2-shop-card-arrow"><ArrowUpRight size={18} /></span></div>
+              <div className="ks-v2-shop-card-image"><img src={image.url} alt={image.alt_text || p.name} loading={index > 2 ? "lazy" : "eager"} onError={(event) => { if (!event.currentTarget.src.includes("8303558")) event.currentTarget.src = WALNUT_PRODUCT_FALLBACK; }} /><span className="ks-v2-shop-card-tag">{index === 0 ? "THE SIGNATURE" : "FROM OUR COLLECTION"}</span><span className="ks-v2-shop-card-arrow"><ArrowUpRight size={18} /></span></div>
               <div className="ks-v2-shop-card-copy"><div className="ks-v2-shop-card-kicker"><span>THE PANTRY EDIT</span><span>{vs.length} {vs.length === 1 ? "pack option" : "pack options"}</span></div><div className="ks-v2-shop-card-title"><h3>{p.name}</h3><strong>{minPrice === null ? "Price unavailable" : `From ${money(minPrice)}`}</strong></div><p>{vs.map((v) => v.size).join(" · ") || "See product details"}</p><span className="ks-v2-shop-card-link">Explore product <ArrowRight size={14} /></span></div>
             </Link>;
           })}</div>}
