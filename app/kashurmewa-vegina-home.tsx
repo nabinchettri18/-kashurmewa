@@ -228,7 +228,7 @@ export default function KashurmewaVeginaHome() {
         </div>
       </section>
 
-      <section className="kv-nutrition" aria-label="Walnut goodness"><div className="kv-nutrition-photo"><img src="https://images.pexels.com/photos/34415576/pexels-photo-34415576.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Kashmiri walnuts arranged for serving" loading="lazy" /></div><div className="kv-nutrition-copy"><span>NATURAL NUTRITION</span><h2>The goodness <em>inside.</em></h2><p>Walnuts are a versatile pantry ingredient, ready to enjoy on their own or add a satisfying crunch to everyday meals.</p><div className="kv-nutrition-points"><div><i>♡</i><span><strong>Everyday versatility</strong><small>Enjoy as a snack or add to meals</small></span></div><div><i>✳</i><span><strong>Simple ingredient</strong><small>Whole in-shell walnuts</small></span></div><div><i>◇</i><span><strong>For your pantry</strong><small>Store sealed in a cool, dry place</small></span></div><div><i>❋</i><span><strong>Made for sharing</strong><small>A thoughtful pantry staple</small></span></div></div></div></section>\n\n      <section className="kv-trending" id="trending">
+<section className="kv-trending" id="trending">
         <div className="kv-section-heading kv-heading-row">
           <div><span>THE CURRENT COLLECTION</span><h2>Worth a place <em>on your table.</em></h2></div>
           <Link href="/shop" className="kv-text-link">Shop the collection <ArrowRight size={15} /></Link>
@@ -248,14 +248,14 @@ export default function KashurmewaVeginaHome() {
         <p className="kv-live-note"><Check size={14} /> Live pack options and prices come from the KASHURMEWA catalogue.</p>
       </section>
 
-      <section className="kv-deal-banner">
+<section className="kv-deal-banner">
         <img src="https://images.pexels.com/photos/35581352/pexels-photo-35581352.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Walnuts in a warm, natural still life" loading="lazy" />
         <div className="kv-deal-overlay" />
         <div className="kv-deal-copy"><span>GOOD THINGS, IN THEIR OWN TIME</span><h2>A pantry favourite<br /><em>for every season.</em></h2><p>No rush, no fuss — simply choose your pack and make it part of your everyday.</p><Link href="/shop">Explore the collection <ArrowRight size={16} /></Link></div>
         <div className="kv-deal-seal"><Sparkles size={18} /><span>THE</span><strong>KASHURMEWA</strong><span>SELECTION</span></div>
       </section>
 
-      <section className="kv-special">
+<section className="kv-special">
         <div className="kv-section-heading"><span>THE RIGHT PACK FOR YOUR HOME</span><h2>Simple choices. <em>Thoughtfully made.</em></h2><p>Browse the sizes and select the one that fits your table.</p></div>
         <div className="kv-special-tabs" role="group" aria-label="Filter by pack size">
           {[{ id: "all", label: "All packs" }, { id: "250g", label: "250 g" }, { id: "500g", label: "500 g" }, { id: "1kg", label: "1 kg" }].map((tab) => <button type="button" key={tab.id} className={activePack === tab.id ? "active" : ""} onClick={() => { setActivePack(tab.id); const found = variants.find((item) => item.size.toLowerCase().replace(/\s/g, "") === tab.id.toLowerCase().replace(/\s/g, "")); if (found) setSelectedVariantId(found.id); }}>{tab.label}</button>)}
@@ -266,17 +266,29 @@ export default function KashurmewaVeginaHome() {
         </div>
       </section>
 
-      <section className="kv-values">
+<section className="kv-nutrition" aria-label="Walnut goodness"><div className="kv-nutrition-photo"><img src="https://images.pexels.com/photos/34415576/pexels-photo-34415576.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Kashmiri walnuts arranged for serving" loading="lazy" /></div><div className="kv-nutrition-copy"><span>NATURAL NUTRITION</span><h2>The goodness <em>inside.</em></h2><p>Walnuts are a versatile pantry ingredient, ready to enjoy on their own or add a satisfying crunch to everyday meals.</p><div className="kv-nutrition-points"><div><i>♡</i><span><strong>Everyday versatility</strong><small>Enjoy as a snack or add to meals</small></span></div><div><i>✳</i><span><strong>Simple ingredient</strong><small>Whole in-shell walnuts</small></span></div><div><i>◇</i><span><strong>For your pantry</strong><small>Store sealed in a cool, dry place</small></span></div><div><i>❋</i><span><strong>Made for sharing</strong><small>A thoughtful pantry staple</small></span></div></div></div></section>
+
+
+      <section className="kv-testimonials" aria-label="Our promise to customers">
+        <div className="kv-testimonial-heading"><span>A THOUGHTFUL PANTRY, ALWAYS</span><h2>Good things are <em>worth sharing.</em></h2><p>Our promise is simple: honest product details, a considered experience, and a pantry favourite you can make your own.</p></div>
+        <div className="kv-testimonial-grid">
+          <article><span className="kv-quote-mark">“</span><p>Good food begins with ingredients you feel good about bringing home.</p><small>THE KASHURMEWA PHILOSOPHY</small></article>
+          <article><span className="kv-quote-mark">“</span><p>Clear pack sizes, transparent pricing, and the details you need before you order.</p><small>OUR PROMISE TO YOU</small></article>
+          <article><span className="kv-quote-mark">“</span><p>A little everyday goodness, selected to share around your own table.</p><small>MADE FOR YOUR TABLE</small></article>
+        </div>
+      </section>
+
+<section className="kv-values">
         <div className="kv-values-intro"><span>THE KASHURMEWA PROMISE</span><h2>Good food deserves <em>good care.</em></h2><p>We’re building a brand that keeps product information clear, the experience considered, and the details honest.</p></div>
         <div className="kv-values-grid"><div><Leaf /><strong>Inspired by place</strong><p>A brand shaped by regional character and a love of good pantry ingredients.</p></div><div><ShieldCheck /><strong>Honest information</strong><p>Clear pack sizes and catalogue prices, without invented claims or ratings.</p></div><div><ShoppingBag /><strong>Made to shop simply</strong><p>Choose your pack, review your bag, and see order details before checkout.</p></div></div>
       </section>
 
-      <section className="kv-journal">
+<section className="kv-journal">
         <div className="kv-section-heading kv-heading-row"><div><span>FROM OUR BLOG</span><h2>Walnut <em>Wisdom.</em></h2></div><Link href="/about" className="kv-text-link">Our point of view <ArrowRight size={15} /></Link></div>
         <div className="kv-journal-grid">{editorialCards.map((card) => <article className="kv-journal-card" key={card.title}><div className="kv-journal-image"><img src={card.image} alt={card.alt} loading="lazy" /></div><div className="kv-journal-copy"><span>{card.eyebrow}</span><h3>{card.title}</h3><p>{card.copy}</p></div></article>)}</div>
       </section>
 
-      <section className="kv-newsletter"><div><span>THE TASTE OF KASHMIR</span><h2>Join the KASHURMEWA family</h2><p>Discover thoughtful pantry moments and updates from our collection.</p></div><Link href="/shop">Explore the collection <ArrowRight size={16} /></Link></section>
+<section className="kv-newsletter"><div><span>THE TASTE OF KASHMIR</span><h2>Join the KASHURMEWA family</h2><p>Discover thoughtful pantry moments and updates from our collection.</p></div><Link href="/shop">Explore the collection <ArrowRight size={16} /></Link></section>
 
       <footer className="km-brand-footer kv-footer">
         <div className="km-brand-footer-main">
