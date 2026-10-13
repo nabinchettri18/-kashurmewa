@@ -101,3 +101,21 @@
 .km-campaign-product-grid:has(>.km-campaign-product:only-child){grid-template-columns:minmax(0,520px);justify-content:center}
 .km-campaign-product-grid:has(>.km-campaign-product:only-child) .km-campaign-product-image{aspect-ratio:5/4}
 .km-campaign-product-grid:has(>.km-campaign-product:only-child) .km-campaign-product-body{padding:clamp(20px,3vw,32px)}
+
+
+/* VEGIST-inspired visual polish: clean product photography, airy cards, restrained details. */
+.km-campaign-products{background:#fff!important}
+.km-campaign-product{border:1px solid #eee6dc;border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 4px 18px #28252208}
+.km-campaign-product:hover{box-shadow:0 14px 32px #28252212;transform:translateY(-3px)}
+.km-campaign-product-image{aspect-ratio:1.12;background:#fff!important;padding:16px}
+.km-campaign-product-image img{object-fit:contain!important}
+.km-campaign-product-image:after{display:none}
+.km-campaign-product-body{padding:20px}
+.km-campaign-product-body h3{font-family:"DM Sans",Arial,sans-serif;font-size:18px;font-weight:600;letter-spacing:-.25px}
+.km-campaign-product-body button,.km-campaign-product-body .km-campaign-product-link{border-radius:7px;min-height:46px}
+.km-campaign-photo-frame{border:0;border-radius:14px;background:#f8f5ef;box-shadow:0 25px 60px #14090d3d}
+.km-campaign-photo-frame:before{inset:10px;border-color:#ffffff70;border-radius:8px}
+.km-campaign-product-note{border-radius:10px}
+.km-campaign-hero-stamp{background:#4a2028e8}
+.km-campaign-product-grid:has(.km-campaign-product:only-child){grid-template-columns:minmax(0,440px);justify-content:center}
+@media(max-width:760px){.km-campaign-product-grid:has(.km-campaign-product:only-child){grid-template-columns:minmax(0,1fr)}.km-campaign-product-image{aspect-ratio:1.15}}
