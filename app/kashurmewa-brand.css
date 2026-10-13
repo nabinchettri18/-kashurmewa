@@ -1,3 +1,9 @@
+
+/* Pages with their own announcement strip should not render a second shared topbar. */
+main.km-store.ks-v2-shop-page .topbar,
+main.km-store.ks-v2-product-page .topbar,
+main.km-store.ks-v2-about-page .topbar,
+main.km-store.ks-v2-contact-page .topbar{display:none}
 /* KASHURMEWA brand system — original artwork, brand-led layout, no unverified stock-image dependency */
 :root{--km-oxblood:#4A2028;--km-walnut:#754D36;--km-ivory:#F6F0E6;--km-champagne:#C8A66A;--km-ink:#282522;--km-muted:#746a60;--km-line:#e3d7c8;--km-paper:#fffdf8}
 body:has(.km-store){background:var(--km-ivory);color:var(--km-ink)}
