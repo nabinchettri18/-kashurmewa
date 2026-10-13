@@ -319,7 +319,7 @@ export default function Home() {
         <div className="km-campaign-story-visual">
           <img
             src={ORCHARD_IMAGE}
-            alt="Walnuts growing in an orchard"
+            alt="Sunlit orchard rows"
             loading="lazy"
           />
           <span>THE TASTE OF KASHMIR · A SENSE OF PLACE</span>
