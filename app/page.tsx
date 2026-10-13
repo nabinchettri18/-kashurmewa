@@ -11,6 +11,7 @@ import "./kashurmewa-storefront.css";
 import "./kashurmewa-brand.css";
 import "./kashurmewa-campaign-home.css";
 
+const HERO_BACKDROP_IMAGE = "https://images.pexels.com/photos/17765489/pexels-photo-nc-farm-bureau-mark-17765489.jpeg?cs=srgb&dl=pexels-nc-farm-bureau-mark-17765489.jpg&fm=jpg";
 const ORCHARD_IMAGE = "https://images.pexels.com/photos/26707402/pexels-photo-26707402.jpeg?auto=compress&cs=tinysrgb&w=1600";
 
 const money = (value: number) =>
@@ -138,7 +139,7 @@ export default function Home() {
       <section className="km-campaign-hero" aria-labelledby="campaign-title">
         <img
           className="km-campaign-backdrop"
-          src="/kashurmewa-heritage-landscape.svg"
+          src={HERO_BACKDROP_IMAGE}
           alt=""
           fetchPriority="high"
         />
@@ -267,7 +268,7 @@ export default function Home() {
                       alt={image.alt_text || product.name}
                       loading="lazy"
                       onError={(event) => {
-                        if (!event.currentTarget.src.includes("8303558")) event.currentTarget.src = WALNUT_PRODUCT_FALLBACK;
+                        if (!event.currentTarget.src.includes("8604867")) event.currentTarget.src = WALNUT_PRODUCT_FALLBACK;
                       }}
                     />
                   </Link>
