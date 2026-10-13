@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { ArrowRight, ArrowUpRight, Check, Leaf, ShoppingBag } from "lucide-react";
 import { fetchAllProducts, Product, ProductVariant } from "@/lib/catalog";
 import { NavigationHeader } from "@/components/navigation/Header";
-import { KashurmewaLogo } from "@/components/brand/Logo";
+import { KashurmewLogo } from "@/components/brand/Logo";
 import "./kashurmewa-storefront.css";
 import "./kashurmewa-brand.css";
 import "./kashurmewa-campaign-home.css";
@@ -361,7 +361,7 @@ export default function Home() {
       <footer className="km-brand-footer">
         <div className="km-brand-footer-main">
           <div className="km-brand-footer-about">
-            <KashurmewaLogo variant="light" size="lg" />
+            <KashurmewLogo variant="light" size="lg" />
             <p>
               A premium regional pantry brand inspired by the tastes, textures
               and traditions that make a place memorable.
