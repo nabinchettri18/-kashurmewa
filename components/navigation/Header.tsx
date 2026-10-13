@@ -9,6 +9,30 @@ import { KashurmewLogo } from "@/components/brand/Logo";
 export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [liveCartCount, setLiveCartCount] = useState(cartCount);
+
+  useEffect(() => {
+    const syncCartCount = () => {
+      try {
+        const saved = JSON.parse(window.localStorage.getItem("kashurmewa-cart") || "[]");
+        setLiveCartCount(saved.reduce((total: number, item: { qty?: number }) => total + Math.max(0, Number(item.qty || 0)), 0));
+      } catch {
+        setLiveCartCount(0);
+      }
+    };
+
+    syncCartCount();
+    window.addEventListener("storage", syncCartCount);
+    window.addEventListener("kashurmewa-cart-updated", syncCartCount);
+    return () => {
+      window.removeEventListener("storage", syncCartCount);
+      window.removeEventListener("kashurmewa-cart-updated", syncCartCount);
+    };
+  }, []);
+
+  useEffect(() => {
+    setLiveCartCount(cartCount);
+  }, [cartCount]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -65,7 +89,7 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
             <ShoppingBag size={15} />
             
             <span className="bg-[#4A2028] text-[#F6F0E6] font-bold rounded-full w-5 h-5 flex items-center justify-center text-[10px] ml-1">
-              {cartCount}
+              {liveCartCount}
             </span>
           </Link>
         </div>
@@ -95,7 +119,7 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
                 <ArrowRight size={16} className="text-[#C8A66A]" />
               </Link>
               <Link href="/cart" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pt-2 text-[#C8A66A] font-semibold">
-                <span>Your Bag ({cartCount})</span>
+                <span>Your Bag ({liveCartCount})</span>
                 <ArrowRight size={16} />
               </Link>
             </div>
