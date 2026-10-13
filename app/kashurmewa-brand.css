@@ -182,3 +182,18 @@ body:has(.km-store){background:var(--km-ivory);color:var(--km-ink)}
 
 /* A one-product launch catalogue gets a centered, deliberate product card. */
 .ks-v2-shop-page .ks-v2-shop-grid:has(>.ks-v2-shop-card:only-child){grid-template-columns:minmax(0,560px);justify-content:center}
+
+
+/* VEGIST-inspired storefront polish, translated into KASHURMEWA's original palette. */
+.ks-v2-shop-page .ks-v2-catalogue{background:#fff!important}
+.ks-v2-shop-page .ks-v2-shop-card{border:1px solid #eee6dc;border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 4px 18px #28252208}
+.ks-v2-shop-page .ks-v2-shop-card:hover{box-shadow:0 14px 32px #28252212;transform:translateY(-3px)}
+.ks-v2-shop-page .ks-v2-shop-card-image{height:clamp(260px,29vw,370px);background:#fff!important;padding:16px}
+.ks-v2-shop-page .ks-v2-shop-card-image img{object-fit:contain!important}
+.ks-v2-shop-page .ks-v2-shop-card-image:after{display:none}
+.ks-v2-shop-page .ks-v2-shop-card-tag{border-radius:4px;background:#f6f0e6;color:#4a2028}
+.ks-v2-shop-page .ks-v2-shop-card-arrow{background:#4a2028;color:#f6f0e6}
+.ks-v2-shop-page .ks-v2-shop-card-copy{padding:20px}
+.ks-v2-shop-page .ks-v2-shop-card-title h3{font-family:"DM Sans",Arial,sans-serif;font-weight:600;letter-spacing:-.3px}
+.ks-v2-shop-page .ks-v2-shop-card-link{color:#4a2028}
+.ks-v2-product-page .premium-product-layout{border-radius:12px;overflow:hidden;border:1px solid #eee6dc;box-shadow:0 8px 30px #28252208}
