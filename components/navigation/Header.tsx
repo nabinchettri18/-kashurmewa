@@ -63,7 +63,7 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
 
           <Link href="/cart" className="bag">
             <ShoppingBag size={15} />
-            <span className="bag-label">Bag</span>
+            
             <span className="bg-[#4A2028] text-[#F6F0E6] font-bold rounded-full w-5 h-5 flex items-center justify-center text-[10px] ml-1">
               {cartCount}
             </span>
