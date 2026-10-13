@@ -12,7 +12,7 @@ export const WALNUT_HERO_FALLBACK =
 function usableImages(images: CatalogImage[] | null | undefined): CatalogImage[] {
   return (images || []).filter((image) => {
     const description = `${image.url} ${image.alt_text || ""}`.toLowerCase();
-    const isKnownBadAsset = /\\/(17131011|14627184|16089996)\\//.test(description);
+    const isKnownBadAsset = ["17131011", "14627184", "16089996"].some((assetId) => description.includes(assetId));
     const isLandscapeOrIllustration = /mountain|landscape|scenic panorama|valley panorama|cartoon|emoji overlay|illustration/.test(description);
     const isClearlyWalnutRelated = /walnut|walnuts|akhrot|in-shell/.test(description);
     return !isKnownBadAsset && !isLandscapeOrIllustration && isClearlyWalnutRelated;
