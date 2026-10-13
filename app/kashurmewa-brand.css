@@ -179,3 +179,6 @@ body:has(.km-store){background:var(--km-ivory);color:var(--km-ink)}
 .premium-quantity-row>small{color:var(--km-walnut)!important}
 .premium-quantity-row>small.out-of-stock{color:#9a4f43!important}
 .premium-details summary:hover{color:var(--km-walnut)}
+
+/* A one-product launch catalogue gets a centered, deliberate product card. */
+.ks-v2-shop-page .ks-v2-shop-grid:has(>.ks-v2-shop-card:only-child){grid-template-columns:minmax(0,560px);justify-content:center}
