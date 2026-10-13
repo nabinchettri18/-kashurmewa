@@ -229,7 +229,42 @@
 .kv-values-grid svg{width:20px;height:20px;color:#9b5a27}
 .kv-values-grid strong{margin:8px 0 5px;font:400 16px Georgia,serif;color:#4a2028}
 .kv-values-grid p{font-size:9px;line-height:1.6}
-.kv-trending,.kv-deal-banner,.kv-special{display:none!important}
+
+/* Keep the reference's featured product, campaign banner and signature product sections visible. */
+.kv-trending{display:block!important;padding:36px clamp(16px,5vw,70px);background:#fffaf2}
+.kv-trending-grid{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:14px}
+.kv-product-card{border:1px solid #eee3d4;border-radius:6px;overflow:hidden;background:#fff}
+.kv-product-photo{min-height:300px;background:#f2e7d6}
+.kv-product-details{padding:20px 17px}
+.kv-product-details h3{font-size:21px;color:#4a2028}
+.kv-product-details>p{font-size:10px}
+.kv-add-button{border-radius:5px;background:#7a151b;border-color:#7a151b}
+.kv-trending-story{min-height:340px;border-radius:6px}
+.kv-deal-banner{display:flex!important;min-height:290px;margin:0 clamp(16px,3vw,42px);padding:36px clamp(24px,6vw,80px);border-radius:6px}
+.kv-deal-banner>img{opacity:.78}
+.kv-deal-copy h2{font-size:clamp(34px,4vw,52px)}
+.kv-deal-copy p{font-size:11px}
+.kv-deal-copy a{border-radius:5px;background:#7a151b;color:#fffaf3}
+.kv-deal-seal{width:112px;height:112px}
+.kv-special{display:block!important;padding:36px clamp(16px,5vw,70px);background:#fbf6ee}
+.kv-special .kv-section-heading{margin-bottom:17px}
+.kv-special-panel{max-width:960px;border-radius:6px;overflow:hidden}
+.kv-special-image{min-height:320px}
+.kv-special-copy{padding:26px}
+.kv-special-copy h3{font-size:30px;color:#4a2028}
+.kv-special-options button{border-radius:4px}
+.kv-testimonials{padding:36px clamp(16px,5vw,70px) 40px;background:#eee3d4}
+.kv-testimonial-heading{max-width:670px;margin:0 auto 20px;text-align:center}
+.kv-testimonial-heading>span{font-size:8px;letter-spacing:1.8px;color:#9a4c22}
+.kv-testimonial-heading h2{margin:8px 0;font:400 clamp(30px,3vw,42px)/1.05 Georgia,serif;color:#4a2028}
+.kv-testimonial-heading h2 em{font-weight:400}
+.kv-testimonial-heading>p{margin:0 auto;color:#6d5a4b;font-size:10px;line-height:1.7;max-width:500px}
+.kv-testimonial-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;max-width:1080px;margin:auto}
+.kv-testimonial-grid article{min-height:150px;padding:17px 19px;background:#fffaf3;border:1px solid #e5d7c5;border-radius:5px}
+.kv-quote-mark{display:block;font:400 35px/1 Georgia,serif;color:#9a4c22}
+.kv-testimonial-grid article p{margin:3px 0 13px;font:400 15px/1.4 Georgia,serif;color:#4a2028}
+.kv-testimonial-grid article small{font-size:7px;letter-spacing:1.2px;color:#876e5b}
+
 .kv-journal{padding:24px clamp(16px,5vw,70px) 30px;background:#fbf6ee}
 .kv-journal .kv-section-heading{margin-bottom:15px}
 .kv-journal-grid{gap:13px}
@@ -285,4 +320,28 @@
 .kv-journal-copy h3{font-size:14px}
 .kv-journal-copy p{font-size:8px}
 .kv-newsletter{align-items:flex-start;flex-direction:column;padding:23px 18px;gap:13px}
+}
+
+@media(max-width:760px){
+.kv-trending{padding:27px 12px}
+.kv-trending-grid{grid-template-columns:1fr}
+.kv-product-card{grid-template-columns:1fr 1fr}
+.kv-product-photo{min-height:245px}
+.kv-product-details{padding:14px 11px}
+.kv-trending-story{min-height:270px}
+.kv-deal-banner{min-height:300px;margin:0 12px;padding:35px 20px}
+.kv-deal-copy{max-width:78%}
+.kv-deal-copy h2{font-size:clamp(31px,8vw,43px)}
+.kv-deal-seal{width:75px;height:75px;right:10px;top:15px;transform:none}
+.kv-deal-seal strong{font-size:7px}
+.kv-deal-seal span{font-size:5px}
+.kv-special{padding:27px 12px}
+.kv-special-panel{grid-template-columns:1fr}
+.kv-special-image{min-height:210px;height:220px}
+.kv-special-copy{padding:20px 15px}
+.kv-special-copy h3{font-size:25px}
+.kv-testimonials{padding:28px 12px}
+.kv-testimonial-grid{grid-template-columns:1fr;gap:8px}
+.kv-testimonial-grid article{min-height:0;padding:14px}
+.kv-testimonial-grid article p{font-size:14px;margin-bottom:8px}
 }
