@@ -7,6 +7,7 @@ import { ArrowLeft, ArrowUpRight, Check, Minus, Plus, ShieldCheck, Truck, Leaf }
 import { fetchProductBySlug, Product, ProductVariant } from "@/lib/catalog";
 import { NavigationHeader } from "@/components/navigation/Header";
 import { KashurmewLogo } from "@/components/brand/Logo";
+import { getProductImages, WALNUT_PRODUCT_FALLBACK } from "@/lib/product-images";
 import "../../kashurmewa-storefront.css";
 import "../../kashurmewa-brand.css";
 
@@ -49,7 +50,7 @@ export default function ProductDetailPage() {
 
   const selectedVariant: ProductVariant | undefined =
     product?.variants.find((variant) => variant.size === size) || product?.variants[0];
-  const images = product?.images || [];
+  const images = getProductImages(product?.images, product?.name);
   const mainImage = images[selectedImage]?.url || images[0]?.url;
 
   const addToBag = () => {
@@ -106,7 +107,7 @@ export default function ProductDetailPage() {
       <section className="premium-product-layout">
         <div className="premium-gallery">
           <div className="premium-main-image">
-            {mainImage ? <img src={mainImage} alt={images[selectedImage]?.alt_text || product.name} /> : <div className="premium-image-placeholder">Product photography coming soon</div>}
+            {mainImage ? <img src={mainImage} alt={images[selectedImage]?.alt_text || product.name} onError={(event) => { if (!event.currentTarget.src.includes("8303558")) event.currentTarget.src = WALNUT_PRODUCT_FALLBACK; }} /> : <div className="premium-image-placeholder">Product photography coming soon</div>}
             <span className="premium-image-label">KASHURMEWA · SIGNATURE HARVEST</span>
           </div>
           {images.length > 1 && (
@@ -120,7 +121,7 @@ export default function ProductDetailPage() {
                   aria-label={`View product image ${index + 1}`}
                   aria-pressed={selectedImage === index}
                 >
-                  <img src={image.url} alt={image.alt_text || `${product.name} view ${index + 1}`} />
+                  <img src={image.url} alt={image.alt_text || `${product.name} view ${index + 1}`} onError={(event) => { if (!event.currentTarget.src.includes("8303558")) event.currentTarget.src = WALNUT_PRODUCT_FALLBACK; }} />
                 </button>
               ))}
             </div>
