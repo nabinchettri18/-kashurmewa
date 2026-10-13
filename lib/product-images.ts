@@ -8,7 +8,7 @@ export function getProductImages(images: CatalogImage[] | null | undefined, prod
   const usable = (images || []).filter((image) => {
     const description = `${image.url} ${image.alt_text || ""}`.toLowerCase();
     // This known catalogue asset is a mountain landscape, not a product photo.
-    return !description.includes("/17131011/") && !/mountain landscape|scenic panorama|landscape artwork/.test(description);
+    return !/\/(17131011|14627184|16089996)\//.test(description) && !/mountain landscape|scenic panorama|landscape artwork|cartoon|emoji overlay/.test(description);
   });
 
   return usable.length
