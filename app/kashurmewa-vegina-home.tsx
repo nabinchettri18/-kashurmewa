@@ -24,8 +24,8 @@ const heroSlides = [
     eyebrow: "From nature to your table",
     title: <>A little nature. <em>A lot of goodness.</em></>,
     copy: "A simple, versatile pantry favourite for snacking, sharing, baking and the recipes you make your own.",
-    image: "https://images.pexels.com/photos/26707402/pexels-photo-26707402.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    alt: "Green walnuts growing on a tree branch",
+    image: "https://images.pexels.com/photos/17765489/pexels-photo-17765489.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    alt: "A green orchard setting for the KASHURMEWA story",
     button: "Shop now",
   },
   {
@@ -57,8 +57,8 @@ const editorialCards = [
     eyebrow: "KEEP IT FRESH",
     title: "Good pantry habits matter",
     copy: "Keep your walnuts sealed and store them in a cool, dry place away from direct sunlight.",
-    image: "https://images.pexels.com/photos/26707402/pexels-photo-26707402.jpeg?auto=compress&cs=tinysrgb&w=900",
-    alt: "Walnuts growing on a branch",
+    image: "https://images.pexels.com/photos/17765489/pexels-photo-17765489.jpeg?auto=compress&cs=tinysrgb&w=900",
+    alt: "Orchard greenery in a natural setting",
   },
 ];
 
@@ -199,7 +199,7 @@ export default function KashurmewaVeginaHome() {
           <span className="kv-promo-copy"><small>THE SIGNATURE SELECTION</small><strong>Premium<br />Kashmiri Walnuts</strong><i>Shop walnuts <ArrowUpRight size={15} /></i></span>
         </Link>
         <Link href="/about" className="kv-promo kv-promo-two">
-          <img src="https://images.pexels.com/photos/26707402/pexels-photo-26707402.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Walnuts growing on a tree branch" loading="lazy" />
+          <img src="https://images.pexels.com/photos/17765489/pexels-photo-17765489.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Orchard greenery in a natural setting" loading="lazy" />
           <span className="kv-promo-shade" />
           <span className="kv-promo-copy"><small>FROM OUR VALLEYS TO YOUR HOME</small><strong>From Our Valleys<br />to Your Home</strong><i>Our story <ArrowUpRight size={15} /></i></span>
         </Link>
@@ -266,7 +266,7 @@ export default function KashurmewaVeginaHome() {
         </div>
       </section>
 
-<section className="kv-nutrition" aria-label="Walnut goodness"><div className="kv-nutrition-photo"><img src="https://images.pexels.com/photos/34415576/pexels-photo-34415576.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Kashmiri walnuts arranged for serving" loading="lazy" /></div><div className="kv-nutrition-copy"><span>NATURAL NUTRITION</span><h2>The goodness <em>inside.</em></h2><p>Walnuts are a versatile pantry ingredient, ready to enjoy on their own or add a satisfying crunch to everyday meals.</p><div className="kv-nutrition-points"><div><i>♡</i><span><strong>Everyday versatility</strong><small>Enjoy as a snack or add to meals</small></span></div><div><i>✳</i><span><strong>Simple ingredient</strong><small>Whole in-shell walnuts</small></span></div><div><i>◇</i><span><strong>For your pantry</strong><small>Store sealed in a cool, dry place</small></span></div><div><i>❋</i><span><strong>Made for sharing</strong><small>A thoughtful pantry staple</small></span></div></div></div></section>
+<section className="kv-nutrition" aria-label="Walnut goodness"><div className="kv-nutrition-photo"><img src="https://images.pexels.com/photos/34415576/pexels-photo-34415576.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Walnuts arranged for serving" loading="lazy" /></div><div className="kv-nutrition-copy"><span>NATURAL NUTRITION</span><h2>The goodness <em>inside.</em></h2><p>Walnuts are a versatile pantry ingredient, ready to enjoy on their own or add a satisfying crunch to everyday meals.</p><div className="kv-nutrition-points"><div><i>♡</i><span><strong>Everyday versatility</strong><small>Enjoy as a snack or add to meals</small></span></div><div><i>✳</i><span><strong>Simple ingredient</strong><small>Whole in-shell walnuts</small></span></div><div><i>◇</i><span><strong>For your pantry</strong><small>Store sealed in a cool, dry place</small></span></div><div><i>❋</i><span><strong>Made for sharing</strong><small>A thoughtful pantry staple</small></span></div></div></div></section>
 
 
       <section className="kv-testimonials" aria-label="Our promise to customers">
