@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShoppingBag, User, Menu, X, ArrowRight } from "lucide-react";
 import { KashurmewLogo } from "@/components/brand/Logo";
 
 export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
@@ -52,7 +51,7 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
       <header
         className={`site-header transition-all duration-500 ${
           scrolled
-            ? "shadow-md bg-[#FFFCF7]/95 backdrop-blur-md border-b border-[#E6D9C8] py-3"
+            ? "bg-[#FFFCF7] border-b border-[#E6D9C8] py-3"
             : "bg-[#FFFCF7] border-b border-[#E6D9C8] py-5"
         }`}
       >
@@ -62,7 +61,7 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((v) => !v)}
         >
-          {menuOpen ? <X size={20} /> : <Menu size={20} />}
+          {menuOpen ? "Close" : "Menu"}
         </button>
 
         <KashurmewLogo variant="dark" size="sm" />
@@ -81,13 +80,10 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
 
         <div className="header-actions">
           <Link href="/account" aria-label="Account" className="flex items-center gap-1.5 hover:text-[#754D36]">
-            <User size={16} />
-            <span className="hidden sm:inline text-xs">Account</span>
+            <span className="text-xs">Account</span>
           </Link>
 
           <Link href="/cart" className="bag">
-            <ShoppingBag size={15} />
-            
             <span className="bg-[#4A2028] text-[#F6F0E6] font-bold rounded-full w-5 h-5 flex items-center justify-center text-[10px] ml-1">
               {liveCartCount}
             </span>
@@ -103,12 +99,12 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="km-mobile-menu fixed inset-x-0 top-[100px] bg-[#4A2028] border-b border-[#63313B] p-6 shadow-2xl z-50 md:hidden"
+            className="km-mobile-menu fixed inset-x-0 top-[100px] bg-[#4A2028] border-b border-[#63313B] p-6 z-50 md:hidden"
           >
             <div className="flex flex-col gap-5 text-sm uppercase tracking-widest text-[#F6F0E6]">
               <Link href="/shop" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pb-3 border-b border-[#E6D9C8]">
                 <span>Shop Catalogue</span>
-                <ArrowRight size={16} className="text-[#C8A66A]" />
+                <span aria-hidden="true">→</span>
               </Link>
               <Link href="/about" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pb-3 border-b border-[#E6D9C8]">
                 <span>Our Story</span>
@@ -120,7 +116,7 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
               </Link>
               <Link href="/cart" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pt-2 text-[#C8A66A] font-semibold">
                 <span>Your Bag ({liveCartCount})</span>
-                <ArrowRight size={16} />
+                <span aria-hidden="true">→</span>
               </Link>
             </div>
           </motion.div>
