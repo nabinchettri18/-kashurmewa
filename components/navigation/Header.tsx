@@ -108,11 +108,11 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
               </Link>
               <Link href="/about" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pb-3 border-b border-[#E6D9C8]">
                 <span>Our Story</span>
-                <ArrowRight size={16} className="text-[#C8A66A]" />
+                <span aria-hidden="true">→</span>
               </Link>
               <Link href="/contact" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pb-3 border-b border-[#E6D9C8]">
                 <span>Contact us</span>
-                <ArrowRight size={16} className="text-[#C8A66A]" />
+                <span aria-hidden="true">→</span>
               </Link>
               <Link href="/cart" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pt-2 text-[#C8A66A] font-semibold">
                 <span>Your Bag ({liveCartCount})</span>
