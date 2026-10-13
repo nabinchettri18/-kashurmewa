@@ -62,7 +62,7 @@ export default function ShopPage() {
       </section>
 
       <section className="ks-v2-catalogue">
-        <div className="ks-v2-catalogue-head"><div><span className="ks-v2-eyebrow ks-v2-eyebrow-dark">SHOP THE SIGNATURE</span><h2>Our current <em>collection.</em></h2><p>Live products, current prices and available pack sizes.</p></div><span className="ks-v2-result-count">{items.length} {items.length === 1 ? "product" : "products"}</span></div>
+        <div className="ks-v2-catalogue-head"><div><span className="ks-v2-eyebrow ks-v2-eyebrow-dark">SHOP THE SIGNATURE</span><h2>Our current <em>collection.</em></h2><p>Live products, current prices and available pack sizes.</p></div><span className="ks-v2-result-count">{loading ? "Loading catalogue" : loadError ? "Catalogue unavailable" : <>{items.length} {items.length === 1 ? "product" : "products"}</>}</span></div>
         <div className="ks-v2-catalogue-toolbar"><label className="ks-v2-search"><Search size={17} /><input placeholder="Search the collection" aria-label="Search products" value={query} onChange={(e) => setQuery(e.target.value)} /></label><label className="ks-v2-sort"><SlidersHorizontal size={15} /><span>Sort</span><select aria-label="Sort products" value={sort} onChange={(e) => setSort(e.target.value)}><option value="featured">Featured</option><option value="low">Price: Low to High</option><option value="high">Price: High to Low</option></select></label></div>
         {loading ? <div className="ks-v2-shop-state">Loading the current collection…</div> :
           loadError ? <div className="ks-v2-shop-state" role="alert">We couldn’t load the catalogue right now. Please refresh or return shortly.</div> :
