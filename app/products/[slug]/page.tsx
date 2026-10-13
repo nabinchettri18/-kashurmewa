@@ -71,6 +71,7 @@ export default function ProductDetailPage() {
       }
 
       localStorage.setItem("kashurmewa-cart", JSON.stringify(cart));
+      window.dispatchEvent(new Event("kashurmewa-cart-updated"));
       const count = cart.reduce((total: number, item: { qty?: number }) => total + Number(item.qty || 0), 0);
       setCartCount(count);
       setNotice(`Added ${Math.min(qty, selectedVariant.stock - alreadyInCart)} × ${selectedVariant.size} pack to your bag.`);
