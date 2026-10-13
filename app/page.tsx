@@ -5,13 +5,12 @@ import { useEffect, useMemo, useState } from "react";
 import { ArrowRight, ArrowUpRight, Check, Leaf, ShoppingBag } from "lucide-react";
 import { fetchAllProducts, Product, ProductVariant } from "@/lib/catalog";
 import { NavigationHeader } from "@/components/navigation/Header";
+import { getProductImages, WALNUT_PRODUCT_FALLBACK } from "@/lib/product-images";
 import { KashurmewLogo } from "@/components/brand/Logo";
 import "./kashurmewa-storefront.css";
 import "./kashurmewa-brand.css";
 import "./kashurmewa-campaign-home.css";
 
-const WALNUT_HERO = "https://images.pexels.com/photos/36040913/pexels-photo-36040913.jpeg?auto=compress&cs=tinysrgb&w=1800";
-const WALNUT_DETAIL = "https://images.pexels.com/photos/37309469/pexels-photo-37309469.jpeg?auto=compress&cs=tinysrgb&w=1000";
 const ORCHARD_IMAGE = "https://images.pexels.com/photos/17131011/pexels-photo-17131011.jpeg?auto=compress&cs=tinysrgb&w=1400";
 
 const money = (value: number) =>
@@ -72,7 +71,7 @@ export default function Home() {
     ? sortedVariants(heroProduct).find((variant) => variant.stock > 0) ||
       sortedVariants(heroProduct)[0]
     : undefined;
-  const heroImage = heroProduct?.images?.[0];
+  const heroImage = heroProduct ? getProductImages(heroProduct.images, heroProduct.name)[0] : { url: WALNUT_PRODUCT_FALLBACK, alt_text: "Whole walnuts in their natural shells", sort_order: 0 };
 
   function addToBag(product: Product, variant: ProductVariant) {
     if (variant.stock <= 0) {
@@ -166,19 +165,14 @@ export default function Home() {
 
         <div className="km-campaign-visual">
           <div className="km-campaign-photo-frame">
-            {heroImage ? (
-              <img
-                src={heroImage.url}
-                alt={heroImage.alt_text || heroProduct?.name || "Featured KASHURMEWA product"}
-                fetchPriority="high"
-              />
-            ) : (
-              <img
-                src={WALNUT_HERO}
-                alt="Whole walnuts in their natural shells, styled for the KASHURMEWA collection"
-                fetchPriority="high"
-              />
-            )}
+            <img
+              src={heroImage.url}
+              alt={heroImage.alt_text || heroProduct?.name || "Featured KASHURMEWA walnut product"}
+              fetchPriority="high"
+              onError={(event) => {
+                if (!event.currentTarget.src.includes("8303558")) event.currentTarget.src = WALNUT_PRODUCT_FALLBACK;
+              }}
+            />
           </div>
           {heroProduct && (
             <div className="km-campaign-product-note">
@@ -255,7 +249,7 @@ export default function Home() {
               const available = variants.filter((variant) => variant.stock > 0);
               const firstVariant = available[0] || variants[0];
               const minPrice = variants.length ? variants[0].price_inr : null;
-              const image = product.images[0];
+              const image = getProductImages(product.images, product.name)[0];
 
               return (
                 <article className="km-campaign-product" key={product.id}>
@@ -264,19 +258,14 @@ export default function Home() {
                     href={"/products/" + product.slug}
                     aria-label={"View " + product.name}
                   >
-                    {image ? (
-                      <img
-                        src={image.url}
-                        alt={image.alt_text || product.name}
-                        loading="lazy"
-                      />
-                    ) : (
-                      <img
-                        src={WALNUT_DETAIL}
-                        alt="Whole walnuts in shell, illustrative product photography"
-                        loading="lazy"
-                      />
-                    )}
+                    <img
+                      src={image.url}
+                      alt={image.alt_text || product.name}
+                      loading="lazy"
+                      onError={(event) => {
+                        if (!event.currentTarget.src.includes("8303558")) event.currentTarget.src = WALNUT_PRODUCT_FALLBACK;
+                      }}
+                    />
                   </Link>
                   <div className="km-campaign-product-body">
                     <div className="km-campaign-product-meta">
