@@ -20,3 +20,13 @@ This ledger records the source and launch status of visual assets used by the st
 - Do not use images copied from Google Images, Pinterest, competitor stores, or pages without a verified commercial licence.
 - AI-generated images are not automatically guaranteed to be free of every possible rights claim; avoid imitating a living artist or another brand's protected trade dress.
 - Never publish invented packaging, ingredients, certification marks, reviews, or product claims as factual.
+
+
+## VEGIST-inspired photography and visual polish (2026-10-13)
+| Pexels asset | Use | Source / note |
+|---|---|---|
+| Photo 34415576 | Temporary clean-background walnut image for shop cards and product pages | [Circle of walnuts on white background](https://www.pexels.com/photo/circle-of-walnuts-on-white-background-34415576/). Free Pexels stock image; illustrative only, not actual KASHURMEWA packaging. |
+| Photo 35581352 | Temporary rich walnut still-life for homepage hero fallback | [Still Life of Walnuts and Grapes on Plate](https://www.pexels.com/photo/still-life-of-walnuts-and-grapes-on-plate-35581352/). Free Pexels stock image; illustrative only, not actual KASHURMEWA product packaging. |
+| Photo 26707402 | Homepage story section walnut-tree imagery | [Unripe Eastern Black Walnut On the Branch](https://www.pexels.com/photo/26707402/). Generic walnut-tree imagery; not a verified KASHURMEWA orchard or source. |
+
+Replace all stock fallback imagery with owner-supplied product/packaging photos before launch. Do not present stock imagery as the exact product or sourcing location.
