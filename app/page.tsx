@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowRight, ArrowUpRight, Check, Leaf, ShoppingBag } from "lucide-react";
 import { fetchAllProducts, Product, ProductVariant } from "@/lib/catalog";
 import { NavigationHeader } from "@/components/navigation/Header";
@@ -11,7 +11,7 @@ import "./kashurmewa-storefront.css";
 import "./kashurmewa-brand.css";
 import "./kashurmewa-campaign-home.css";
 
-const ORCHARD_IMAGE = "https://images.pexels.com/photos/17131011/pexels-photo-17131011.jpeg?auto=compress&cs=tinysrgb&w=1400";
+const ORCHARD_IMAGE = "https://images.pexels.com/photos/17765489/pexels-photo-nc-farm-bureau-mark-17765489.jpeg?cs=srgb&dl=pexels-nc-farm-bureau-mark-17765489.jpg&fm=jpg";
 
 const money = (value: number) =>
   new Intl.NumberFormat("en-IN", {
@@ -30,6 +30,7 @@ export default function Home() {
   const [loadError, setLoadError] = useState(false);
   const [cartCount, setCartCount] = useState(0);
   const [notice, setNotice] = useState("");
+  const addToBagLock = useRef(false);
 
   useEffect(() => {
     let alive = true;
@@ -78,6 +79,9 @@ export default function Home() {
       setNotice("This option is currently unavailable.");
       return;
     }
+    if (addToBagLock.current) return;
+    addToBagLock.current = true;
+    window.setTimeout(() => { addToBagLock.current = false; }, 700);
 
     try {
       const saved = JSON.parse(localStorage.getItem("kashurmewa-cart") || "[]");
