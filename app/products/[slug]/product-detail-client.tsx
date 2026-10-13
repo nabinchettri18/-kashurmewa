@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { ArrowLeft, ArrowUpRight, Check, Minus, Plus, ShieldCheck, Truck, Leaf } from "lucide-react";
 import { Product, ProductVariant } from "@/lib/catalog";
 import { NavigationHeader } from "@/components/navigation/Header";
 import { KashurmewLogo } from "@/components/brand/Logo";
@@ -72,13 +71,13 @@ export default function ProductDetailPage({ initialProduct, initialLoadError = f
   if (loading || loadError || !product) {
     return (
       <main className="km-store ks-v2-product-page">
-        <div className="ks-announcement"><span>THE TASTE OF KASHMIR</span><span>Thoughtfully chosen. Beautifully brought home. <ArrowUpRight size={12} /></span></div>
+        <div className="ks-announcement"><span>THE TASTE OF KASHMIR</span><span>Thoughtfully chosen. Beautifully brought home. <span aria-hidden="true">↗</span></span></div>
         <NavigationHeader />
         <div className="product-state">
           <span className="commerce-eyebrow">KASHURMEWA SIGNATURE</span>
           <h1>{loading ? "A moment, please." : loadError ? "We couldn’t load this harvest." : "This product is unavailable."}</h1>
           <p>{loading ? "Loading the latest product details and prices…" : loadError ? "Please check your connection and refresh the page." : "This item may be temporarily unavailable. Explore the shop for current selections."}</p>
-          <Link className="product-back-link" href="/shop"><ArrowLeft size={15} /> Back to shop</Link>
+          <Link className="product-back-link" href="/shop"><span aria-hidden="true">←</span> Back to shop</Link>
         </div>
       </main>
     );
@@ -86,7 +85,7 @@ export default function ProductDetailPage({ initialProduct, initialLoadError = f
 
   return (
     <main className="km-store ks-v2-product-page">
-      <div className="ks-announcement"><span>THE TASTE OF KASHMIR</span><span>Thoughtfully chosen. Beautifully brought home. <ArrowUpRight size={12} /></span></div>
+      <div className="ks-announcement"><span>THE TASTE OF KASHMIR</span><span>Thoughtfully chosen. Beautifully brought home. <span aria-hidden="true">↗</span></span></div>
       <NavigationHeader cartCount={cartCount} />
 
       <div className="premium-breadcrumb">
@@ -127,7 +126,7 @@ export default function ProductDetailPage({ initialProduct, initialLoadError = f
           <h1>{product.name}</h1>
           <p className="premium-description">{product.description}</p>
 
-          <div className="premium-quality-line"><Leaf size={15} /><span>Whole walnuts · Natural shells · Thoughtfully packed</span></div>
+          <div className="premium-quality-line"><span className="premium-text-mark" aria-hidden="true">•</span><span>Whole walnuts · Natural shells · Thoughtfully packed</span></div>
 
           <div className="premium-price-block">
             <div>
@@ -162,9 +161,9 @@ export default function ProductDetailPage({ initialProduct, initialLoadError = f
             <div>
               <span>Quantity</span>
               <div className="premium-quantity-control">
-                <button type="button" aria-label="Decrease quantity" disabled={qty <= 1} onClick={() => setQty((value) => Math.max(1, value - 1))}><Minus size={14} /></button>
+                <button type="button" aria-label="Decrease quantity" disabled={qty <= 1} onClick={() => setQty((value) => Math.max(1, value - 1))}><span aria-hidden="true">−</span></button>
                 <strong>{qty}</strong>
-                <button type="button" aria-label="Increase quantity" disabled={!selectedVariant || qty >= selectedVariant.stock} onClick={() => setQty((value) => Math.min(selectedVariant?.stock || 1, value + 1))}><Plus size={14} /></button>
+                <button type="button" aria-label="Increase quantity" disabled={!selectedVariant || qty >= selectedVariant.stock} onClick={() => setQty((value) => Math.min(selectedVariant?.stock || 1, value + 1))}><span aria-hidden="true">+</span></button>
               </div>
             </div>
             <small className={selectedVariant?.stock ? "in-stock" : "out-of-stock"}>
@@ -174,18 +173,18 @@ export default function ProductDetailPage({ initialProduct, initialLoadError = f
 
           <button type="button" className="premium-add-button" disabled={!selectedVariant || selectedVariant.stock <= 0 || qty > selectedVariant.stock} onClick={addToBag}>
             <span>{selectedVariant && selectedVariant.stock > 0 ? `ADD TO BAG · ₹${(selectedVariant.price_inr * qty).toLocaleString("en-IN")}` : "SOLD OUT"}</span>
-            <ArrowUpRight size={17} />
+            <span aria-hidden="true">↗</span>
           </button>
-          {notice && <div className="premium-cart-notice" role="status"><Check size={15} /><span>{notice}</span><Link href="/cart">View bag →</Link></div>}
+          {notice && <div className="premium-cart-notice" role="status"><span aria-hidden="true">✓</span><span>{notice}</span><Link href="/cart">View bag →</Link></div>}
 
           <div className="premium-delivery-note">
-            <Truck size={17} />
+            <span className="premium-text-mark" aria-hidden="true">•</span>
             <div><strong>Delivery across India</strong><span>Delivery charges and timelines are shown at checkout before you place your order.</span></div>
           </div>
 
           <div className="premium-assurances">
-            <div><ShieldCheck size={17} /><span>Secure checkout</span></div>
-            <div><Leaf size={17} /><span>Simple ingredients</span></div>
+            <div><span className="premium-text-mark" aria-hidden="true">•</span><span>Secure checkout</span></div>
+            <div><span className="premium-text-mark" aria-hidden="true">•</span><span>Simple ingredients</span></div>
           </div>
 
           <div className="premium-details">
@@ -209,12 +208,12 @@ export default function ProductDetailPage({ initialProduct, initialLoadError = f
         <span className="commerce-eyebrow">THE KASHURMEWA APPROACH</span>
         <h2>Simple by nature.<br /><i>Considered by design.</i></h2>
         <p>We keep the focus on the walnut itself: a familiar ingredient, a natural shell, and thoughtful presentation for everyday use or gifting.</p>
-        <Link href="/shop">Explore the collection <ArrowUpRight size={15} /></Link>
+        <Link href="/shop">Explore the collection <span aria-hidden="true">↗</span></Link>
       </section>
 
       <footer className="ks-v2-footer">
         <div className="ks-v2-footer-main">
-          <div className="ks-v2-footer-brand"><Link href="/"><KashurmewLogo variant="light" size="lg" /></Link><p>The taste of Kashmir.</p><Link href="/contact">Questions? Get in touch <ArrowUpRight size={14} /></Link></div>
+          <div className="ks-v2-footer-brand"><Link href="/"><KashurmewLogo variant="light" size="lg" /></Link><p>The taste of Kashmir.</p><Link href="/contact">Questions? Get in touch <span aria-hidden="true">↗</span></Link></div>
           <div><small>SHOP</small><Link href="/shop">Shop the collection</Link><Link href="/cart">Your bag</Link><Link href="/account">My account</Link></div>
           <div><small>THE BRAND</small><Link href="/about">Our story</Link><Link href="/">Home</Link><Link href="/contact">Contact us</Link></div>
           <div><small>HELP & POLICIES</small><Link href="/policies/shipping">Shipping</Link><Link href="/policies/refund">Returns & refunds</Link><Link href="/policies/privacy">Privacy</Link><Link href="/policies/terms">Terms</Link></div>
