@@ -27,8 +27,8 @@ body:has(.km-store){background:var(--km-ivory);color:var(--km-ink)}
 .km-brand-home{background:var(--km-ivory);overflow:hidden}
 .km-brand-hero{position:relative;isolation:isolate;min-height:min(760px,calc(100svh - 112px));display:grid;grid-template-columns:minmax(0,1.12fr) minmax(250px,.88fr);align-items:center;padding:clamp(52px,8vw,118px) clamp(22px,8vw,132px) 86px;background:var(--km-oxblood);color:var(--km-ivory);overflow:hidden}
 .km-brand-hero-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-3;opacity:.92}
-.km-brand-hero:after{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(90deg,rgba(38,17,21,.96) 0%,rgba(54,25,30,.88) 38%,rgba(57,31,31,.3) 75%,rgba(35,22,20,.26) 100%),linear-gradient(0deg,rgba(26,17,15,.45),transparent 35%)}
-.km-brand-hero-grain{position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.35;background:repeating-linear-gradient(0deg,transparent 0 4px,#f6f0e6 5px,transparent 6px);mask-image:linear-gradient(90deg,#000,transparent 85%)}
+.km-brand-hero:after{content:"";position:absolute;inset:0;z-index:-2;background:rgba(38,17,21,.72)}
+.km-brand-hero-grain{position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.35;background:none;mask-image:none}
 .km-brand-hero-copy{max-width:760px;position:relative;z-index:1}
 .km-brand-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:9px;font-weight:600;letter-spacing:2.1px;line-height:1.6;text-transform:uppercase;color:var(--km-champagne)}
 .km-brand-eyebrow i{width:24px;height:1px;background:currentColor;display:inline-block}
@@ -67,7 +67,7 @@ body:has(.km-store){background:var(--km-ivory);color:var(--km-ink)}
 .km-brand-discovery-card{min-height:460px;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:clamp(26px,4vw,55px)}
 .km-brand-discovery-story{background:var(--km-oxblood);color:var(--km-ivory)}
 .km-brand-discovery-story>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.72}
-.km-brand-discovery-story:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#261519 0%,#30191f80 48%,#321a200b 100%)}
+.km-brand-discovery-story:after{content:"";position:absolute;inset:0;background:rgba(38,21,25,.56)}
 .km-brand-discovery-card>div:not(.km-brand-discovery-mark){position:relative;z-index:1}
 .km-brand-discovery h2{font:400 clamp(37px,4.5vw,61px)/.98 "Playfair Display",Georgia,serif;letter-spacing:-.045em;margin:18px 0 24px}
 .km-brand-discovery-story h2{color:var(--km-ivory)}
@@ -88,12 +88,12 @@ body:has(.km-store){background:var(--km-ivory);color:var(--km-ink)}
 .km-brand-section-heading>.km-brand-underlink{margin-bottom:8px;white-space:nowrap}
 .km-brand-product-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
 .km-brand-product-card{min-width:0;border:1px solid var(--km-line);background:#fffdf8;transition:transform .25s,box-shadow .25s}
-.km-brand-product-card:hover{transform:translateY(-4px);box-shadow:0 18px 35px #2825220b}
+.km-brand-product-card:hover{transform:translateY(-4px);box-shadow:none;}
 .km-brand-product-image{position:relative;display:block;overflow:hidden;aspect-ratio:4/4.5;background:#e7ddce}
 .km-brand-product-image>img{width:100%;height:100%;object-fit:cover;transition:transform .55s}
 .km-brand-product-card:hover .km-brand-product-image>img{transform:scale(1.035)}
 .km-brand-product-open{position:absolute;right:12px;top:12px;width:34px;height:34px;display:grid;place-items:center;background:#fffdf0e8;color:var(--km-oxblood)}
-.km-brand-image-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:linear-gradient(145deg,#e8dfd1,#d4c1a7);color:var(--km-oxblood)}
+.km-brand-image-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:#e8dfd1;color:var(--km-oxblood)}
 .km-brand-image-placeholder span{font:400 24px Georgia,serif;letter-spacing:2px}
 .km-brand-image-placeholder small{font-size:7px;letter-spacing:2px}
 .km-brand-product-info{padding:17px 16px 18px}
@@ -128,17 +128,17 @@ body:has(.km-store){background:var(--km-ivory);color:var(--km-ink)}
 .km-brand-footer-main>div>a:hover{color:var(--km-champagne)}
 .km-brand-footer-bottom{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;border-top:1px solid #ffffff25;padding:18px 0;color:#b8aca0;font-size:8px;letter-spacing:.7px}
 .km-brand-footer-bottom span:nth-child(2){color:var(--km-champagne);letter-spacing:1.6px}
-.km-brand-toast{position:fixed;top:18px;right:18px;z-index:200;max-width:min(420px,calc(100vw - 36px));display:flex;align-items:center;gap:16px;padding:14px 17px;background:var(--km-oxblood);color:var(--km-ivory);box-shadow:0 12px 35px #28252235;font-size:12px}
+.km-brand-toast{position:fixed;top:18px;right:18px;z-index:200;max-width:min(420px,calc(100vw - 36px));display:flex;align-items:center;gap:16px;padding:14px 17px;background:var(--km-oxblood);color:var(--km-ivory);box-shadow:none;font-size:12px}
 .km-brand-toast button{color:var(--km-champagne);font-size:22px;line-height:1}
 .km-v2-shop-page .ks-v2-shop-hero img,.ks-v2-about-page .ks-v2-about-hero>img{object-position:center 48%}
 .km-v2-shop-page .ks-v2-shop-hero>img,.ks-v2-about-page .ks-v2-about-hero>img{content:url("/kashurmewa-heritage-landscape.svg")}
 .ks-v2-shop-page .ks-v2-shop-hero-copy h1,.ks-v2-about-page .ks-v2-about-hero h1{color:var(--km-ivory)}
 .ks-v2-contact-page .ks-v2-contact-intro>img{content:url("/kashurmewa-heritage-landscape.svg");object-fit:cover}
-.ks-v2-shop-page .ks-v2-shop-hero-shade,.ks-v2-about-page .ks-v2-about-hero-shade{background:linear-gradient(90deg,#281519e8,#3d202bb8 55%,#3d202b20)}
+.ks-v2-shop-page .ks-v2-shop-hero-shade,.ks-v2-about-page .ks-v2-about-hero-shade{background:rgba(40,21,25,.65)}
 .ks-v2-shop-page .ks-v2-catalogue,.ks-v2-product-page .premium-product-story{background:var(--km-ivory)}
 .ks-v2-shop-page .ks-v2-shop-card,.ks-v2-product-page .premium-product-layout{background:#fffdf8}
 .ks-v2-product-page .premium-buy-panel h1{color:var(--km-ink)}
-.ks-v2-product-page .premium-pack-options button.selected{border-color:var(--km-oxblood);background:#f3e8e4;box-shadow:inset 0 0 0 1px var(--km-oxblood)}
+.ks-v2-product-page .premium-pack-options button.selected{border-color:var(--km-oxblood);background:#f3e8e4;box-shadow:none;}
 .ks-v2-product-page .premium-add-button,.ks-v2-product-page .premium-quantity-control button:hover:not(:disabled){background:var(--km-oxblood);border-color:var(--km-oxblood)}
 .ks-v2-product-page .premium-add-button:hover:not(:disabled){background:#63313b}
 .ks-v2-product-page .premium-product-story{background:#e9dfd0}
@@ -169,7 +169,7 @@ body:has(.km-store){background:var(--km-ivory);color:var(--km-ink)}
 .commerce-footer{background:var(--km-ink)!important;color:var(--km-ivory)!important}
 .commerce-footer a:hover{color:var(--km-champagne)}
 .account-shell{background:radial-gradient(ellipse at 50% 0%,#e9dece 0%,#f6f0e6 55%)!important;color:var(--km-ink)}
-.account-card{background:#fffdf8!important;border-color:var(--km-line)!important;box-shadow:0 24px 70px #2825220d!important}
+.account-card{background:#fffdf8!important;border-color:var(--km-line)!important;box-shadow:none;}
 .account-card .commerce-eyebrow{color:var(--km-walnut)!important}
 .account-card .detail-add,.account-card button.detail-add{background:var(--km-oxblood)!important;border-color:var(--km-oxblood)!important;color:var(--km-ivory)!important}
 .account-card .detail-add:hover:not(:disabled){background:#63313b!important}
@@ -186,8 +186,8 @@ body:has(.km-store){background:var(--km-ivory);color:var(--km-ink)}
 
 /* VEGIST-inspired storefront polish, translated into KASHURMEWA's original palette. */
 .ks-v2-shop-page .ks-v2-catalogue{background:#fff!important}
-.ks-v2-shop-page .ks-v2-shop-card{border:1px solid #eee6dc;border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 4px 18px #28252208}
-.ks-v2-shop-page .ks-v2-shop-card:hover{box-shadow:0 14px 32px #28252212;transform:translateY(-3px)}
+.ks-v2-shop-page .ks-v2-shop-card{border:1px solid #eee6dc;border-radius:12px;overflow:hidden;background:#fff;box-shadow:none;}
+.ks-v2-shop-page .ks-v2-shop-card:hover{box-shadow:none;transform:translateY(-3px)}
 .ks-v2-shop-page .ks-v2-shop-card-image{height:clamp(260px,29vw,370px);background:#fff!important;padding:16px}
 .ks-v2-shop-page .ks-v2-shop-card-image img{object-fit:contain!important}
 .ks-v2-shop-page .ks-v2-shop-card-image:after{display:none}
@@ -196,4 +196,7 @@ body:has(.km-store){background:var(--km-ivory);color:var(--km-ink)}
 .ks-v2-shop-page .ks-v2-shop-card-copy{padding:20px}
 .ks-v2-shop-page .ks-v2-shop-card-title h3{font-family:"DM Sans",Arial,sans-serif;font-weight:600;letter-spacing:-.3px}
 .ks-v2-shop-page .ks-v2-shop-card-link{color:#4a2028}
-.ks-v2-product-page .premium-product-layout{border-radius:12px;overflow:hidden;border:1px solid #eee6dc;box-shadow:0 8px 30px #28252208}
+.ks-v2-product-page .premium-product-layout{border-radius:12px;overflow:hidden;border:1px solid #eee6dc;box-shadow:none;}
+
+/* Editorial text markers replacing icon artwork in product details. */
+.premium-text-mark{display:inline-grid;place-items:center;flex:0 0 17px;width:17px;height:17px;color:var(--km-walnut,#754d36);font-size:13px;line-height:1}
