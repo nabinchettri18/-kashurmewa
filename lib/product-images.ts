@@ -3,19 +3,21 @@ export type CatalogImage = { url: string; alt_text: string | null; sort_order?: 
 // Curated walnut still life for product cards. This is illustrative stock photography,
 // not a representation of the exact pack or its packaging.
 export const WALNUT_PRODUCT_FALLBACK =
-  "https://images.pexels.com/photos/34415576/pexels-photo-34415576.jpeg?auto=compress&cs=tinysrgb&w=1600";
+  "https://images.pexels.com/photos/8303558/pexels-photo-8303558.jpeg?auto=compress&cs=tinysrgb&w=1600";
 
 // Warm walnut still life for editorial/campaign surfaces; never use a landscape image as a product photo.
 export const WALNUT_HERO_FALLBACK =
   "https://images.pexels.com/photos/35581352/pexels-photo-35581352.jpeg?auto=compress&cs=tinysrgb&w=1600";
 
 function usableImages(images: CatalogImage[] | null | undefined): CatalogImage[] {
+  // Only allow vetted walnut still-life assets in product galleries. Catalogue entries
+  // can contain legacy landscape URLs even when their alt text names the product.
+  const approvedWalnutPhotoIds = ["8303558", "34415576", "35581352"];
   return (images || []).filter((image) => {
-    const description = `${image.url} ${image.alt_text || ""}`.toLowerCase();
-    const isKnownBadAsset = ["17131011", "14627184", "16089996"].some((assetId) => description.includes(assetId));
-    const isLandscapeOrIllustration = /mountain|landscape|scenic panorama|valley panorama|cartoon|emoji overlay|illustration/.test(description);
-    const isClearlyWalnutRelated = /walnut|walnuts|akhrot|in-shell/.test(description);
-    return !isKnownBadAsset && !isLandscapeOrIllustration && isClearlyWalnutRelated;
+    const url = image.url.toLowerCase();
+    const isApprovedWalnutPhoto = approvedWalnutPhotoIds.some((assetId) => url.includes(`/photos/${assetId}/`));
+    const isKnownBadAsset = ["17131011", "14627184", "16089996"].some((assetId) => url.includes(assetId));
+    return isApprovedWalnutPhoto && !isKnownBadAsset;
   });
 }
 
