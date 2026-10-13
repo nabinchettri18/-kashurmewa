@@ -97,6 +97,7 @@ export default function Home() {
       }
 
       localStorage.setItem("kashurmewa-cart", JSON.stringify(saved));
+      window.dispatchEvent(new Event("kashurmewa-cart-updated"));
       setCartCount(
         saved.reduce(
           (sum: number, item: { qty?: number }) => sum + Number(item.qty || 0),
