@@ -86,7 +86,8 @@ export default function ProductDetailPage({ initialProduct, initialLoadError = f
 
   return (
     <main className="km-store ks-v2-product-page">
-      <div className="ks-announcement"><span>THE TASTE OF KASHMIR</span><span>Thoughtfully chosen. Beautifully brought home. <ArrowUpRight size={12} /></span></div>\n      <NavigationHeader cartCount={cartCount} />
+      <div className="ks-announcement"><span>THE TASTE OF KASHMIR</span><span>Thoughtfully chosen. Beautifully brought home. <ArrowUpRight size={12} /></span></div>
+      <NavigationHeader cartCount={cartCount} />
 
       <div className="premium-breadcrumb">
         <Link href="/">Home</Link><span>/</span><Link href="/shop">Shop</Link><span>/</span><span>{product.name}</span>
