@@ -321,7 +321,7 @@ export default function AdminDashboard() {
 
             {lowStockVariants.length > 0 && (
               <div style={{ background: "#fef2f2", border: "1px solid #fca5a5", padding: "14px", color: "#991b1b", marginBottom: "20px" }}>
-                ⚠️ Low Stock Alert: {lowStockVariants.map((v) => `${v.productName} · ${v.size} (${v.stock} remaining)`).join(", ")}
+                Low stock alert: {lowStockVariants.map((v) => `${v.productName} · ${v.size} (${v.stock} remaining)`).join(", ")}
               </div>
             )}
 
