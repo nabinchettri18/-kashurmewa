@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ArrowRight, ArrowUpRight, Search, SlidersHorizontal } from "lucide-react";
 import { Product } from "@/lib/catalog";
 import { NavigationHeader } from "@/components/navigation/Header";
 import { KashurmewLogo } from "@/components/brand/Logo";
@@ -53,7 +52,7 @@ export default function ShopPage({ initialProducts, catalogueError = false }: Sh
 
       <section className="ks-v2-catalogue">
         <div className="ks-v2-catalogue-head"><div><span className="ks-v2-eyebrow ks-v2-eyebrow-dark">SHOP THE SIGNATURE</span><h2>Our current <em>collection.</em></h2><p>Live products, current prices and available pack sizes.</p></div><span className="ks-v2-result-count">{loading ? "Loading catalogue" : loadError ? "Catalogue unavailable" : <>{items.length} {items.length === 1 ? "product" : "products"}</>}</span></div>
-        <div className="ks-v2-catalogue-toolbar"><label className="ks-v2-search"><Search size={17} /><input placeholder="Search the collection" aria-label="Search products" value={query} onChange={(e) => setQuery(e.target.value)} /></label><label className="ks-v2-sort"><SlidersHorizontal size={15} /><span>Sort</span><select aria-label="Sort products" value={sort} onChange={(e) => setSort(e.target.value)}><option value="featured">Featured</option><option value="low">Price: Low to High</option><option value="high">Price: High to Low</option></select></label></div>
+        <div className="ks-v2-catalogue-toolbar"><label className="ks-v2-search"><span className="ks-search-label">Search</span><input placeholder="Search the collection" aria-label="Search products" value={query} onChange={(e) => setQuery(e.target.value)} /></label><label className="ks-v2-sort"><span>Sort</span><select aria-label="Sort products" value={sort} onChange={(e) => setSort(e.target.value)}><option value="featured">Featured</option><option value="low">Price: Low to High</option><option value="high">Price: High to Low</option></select></label></div>
         {loading ? <div className="ks-v2-shop-state">Loading the current collection…</div> :
           loadError ? <div className="ks-v2-shop-state" role="alert">We couldn’t load the catalogue right now. Please refresh or return shortly.</div> :
           !filtered.length ? <div className="ks-v2-shop-state"><h3>No matching products</h3><p>Try another search or clear the search field to explore the available collection.</p><button type="button" onClick={() => setQuery("")}>Clear search</button></div> :
@@ -62,8 +61,8 @@ export default function ShopPage({ initialProducts, catalogueError = false }: Sh
             const minPrice = vs.length ? vs[0].price_inr : null;
             const image = getProductImages(p.images, p.name)[0];
             return <Link className="ks-v2-shop-card" href={`/products/${p.slug}`} key={p.id}>
-              <div className="ks-v2-shop-card-image"><img src={image.url} alt={image.alt_text || p.name} loading={index > 2 ? "lazy" : "eager"} onError={(event) => { if (!event.currentTarget.src.includes("34415576")) event.currentTarget.src = WALNUT_PRODUCT_FALLBACK; }} /><span className="ks-v2-shop-card-tag">{index === 0 ? "THE SIGNATURE" : "FROM OUR COLLECTION"}</span><span className="ks-v2-shop-card-arrow"><ArrowUpRight size={18} /></span></div>
-              <div className="ks-v2-shop-card-copy"><div className="ks-v2-shop-card-kicker"><span>THE PANTRY EDIT</span><span>{vs.length} {vs.length === 1 ? "pack option" : "pack options"}</span></div><div className="ks-v2-shop-card-title"><h3>{p.name}</h3><strong>{minPrice === null ? "Price unavailable" : `From ${money(minPrice)}`}</strong></div><p>{vs.map((v) => v.size).join(" · ") || "See product details"}</p><span className="ks-v2-shop-card-link">Explore product <ArrowRight size={14} /></span></div>
+              <div className="ks-v2-shop-card-image"><img src={image.url} alt={image.alt_text || p.name} loading={index > 2 ? "lazy" : "eager"} onError={(event) => { if (!event.currentTarget.src.includes("34415576")) event.currentTarget.src = WALNUT_PRODUCT_FALLBACK; }} /><span className="ks-v2-shop-card-tag">{index === 0 ? "THE SIGNATURE" : "FROM OUR COLLECTION"}</span><span className="ks-v2-shop-card-arrow"><span aria-hidden="true">↗</span></span></div>
+              <div className="ks-v2-shop-card-copy"><div className="ks-v2-shop-card-kicker"><span>THE PANTRY EDIT</span><span>{vs.length} {vs.length === 1 ? "pack option" : "pack options"}</span></div><div className="ks-v2-shop-card-title"><h3>{p.name}</h3><strong>{minPrice === null ? "Price unavailable" : `From ${money(minPrice)}`}</strong></div><p>{vs.map((v) => v.size).join(" · ") || "See product details"}</p><span className="ks-v2-shop-card-link">Explore product <span aria-hidden="true">→</span></span></div>
             </Link>;
           })}</div>}
         <div className="ks-v2-shop-note"><span>GOOD TO KNOW</span><p>Product availability and pricing are loaded from our live catalogue. Your final total, including applicable delivery charges, is shown before order confirmation.</p></div>
