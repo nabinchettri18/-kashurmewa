@@ -14,7 +14,11 @@ type ProductDetailClientProps = { initialProduct: Product | null; initialLoadErr
 
 export default function ProductDetailPage({ initialProduct, initialLoadError = false }: ProductDetailClientProps) {
   const [product] = useState<Product | null>(initialProduct);
-  const [size, setSize] = useState("");
+  const [size, setSize] = useState(
+    initialProduct?.variants.find((variant) => variant.size.toLowerCase() === "500 g")?.size ||
+    initialProduct?.variants[0]?.size ||
+    ""
+  );
   const [qty, setQty] = useState(1);
   const [notice, setNotice] = useState("");
   const [selectedImage, setSelectedImage] = useState(0);
@@ -24,10 +28,6 @@ export default function ProductDetailPage({ initialProduct, initialLoadError = f
   const addToBagLock = useRef(false);
 
   useEffect(() => {
-    if (product) {
-      const preferred = product.variants.find((v) => v.size.toLowerCase() === "500 g") || product.variants[0];
-      if (preferred) setSize(preferred.size);
-    }
     try {
       const cart = JSON.parse(localStorage.getItem("kashurmewa-cart") || "[]");
       setCartCount(cart.reduce((total: number, item: { qty?: number }) => total + Number(item.qty || 0), 0));
