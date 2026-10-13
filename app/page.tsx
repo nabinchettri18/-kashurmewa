@@ -5,7 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowRight, ArrowUpRight, Check, Leaf, ShoppingBag } from "lucide-react";
 import { fetchAllProducts, Product, ProductVariant } from "@/lib/catalog";
 import { NavigationHeader } from "@/components/navigation/Header";
-import { getProductImages, WALNUT_PRODUCT_FALLBACK } from "@/lib/product-images";
+import { getHeroProductImage, getProductImages, WALNUT_HERO_FALLBACK, WALNUT_PRODUCT_FALLBACK } from "@/lib/product-images";
 import { KashurmewLogo } from "@/components/brand/Logo";
 import "./kashurmewa-storefront.css";
 import "./kashurmewa-brand.css";
@@ -73,7 +73,7 @@ export default function Home() {
     ? sortedVariants(heroProduct).find((variant) => variant.stock > 0) ||
       sortedVariants(heroProduct)[0]
     : undefined;
-  const heroImage = heroProduct ? getProductImages(heroProduct.images, heroProduct.name)[0] : { url: WALNUT_PRODUCT_FALLBACK, alt_text: "Whole walnuts in their natural shells", sort_order: 0 };
+  const heroImage = getHeroProductImage(heroProduct?.images, heroProduct?.name || "Kashmiri walnuts");
 
   function addToBag(product: Product, variant: ProductVariant) {
     if (variant.stock <= 0) {
@@ -175,7 +175,7 @@ export default function Home() {
               alt={heroImage.alt_text || heroProduct?.name || "Featured KASHURMEWA walnut product"}
               fetchPriority="high"
               onError={(event) => {
-                if (!event.currentTarget.src.includes("8604867")) event.currentTarget.src = WALNUT_PRODUCT_FALLBACK;
+                if (!event.currentTarget.src.includes("35581352")) event.currentTarget.src = WALNUT_HERO_FALLBACK;
               }}
             />
           </div>
@@ -268,7 +268,7 @@ export default function Home() {
                       alt={image.alt_text || product.name}
                       loading="lazy"
                       onError={(event) => {
-                        if (!event.currentTarget.src.includes("8604867")) event.currentTarget.src = WALNUT_PRODUCT_FALLBACK;
+                        if (!event.currentTarget.src.includes("34415576")) event.currentTarget.src = WALNUT_PRODUCT_FALLBACK;
                       }}
                     />
                   </Link>
