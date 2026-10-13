@@ -201,3 +201,5 @@ body:has(.km-store){background:var(--km-ivory);color:var(--km-ink)}
 /* Editorial text markers replacing icon artwork in product details. */
 .premium-text-mark{display:inline-grid;place-items:center;flex:0 0 17px;width:17px;height:17px;color:var(--km-walnut,#754d36);font-size:13px;line-height:1}
 
+
+.site-header .mobile-menu{width:42px;font-size:9px;letter-spacing:.35px;text-transform:uppercase}
