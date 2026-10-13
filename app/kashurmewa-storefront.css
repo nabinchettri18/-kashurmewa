@@ -1074,3 +1074,8 @@
   .km-store .ks-v2-footer-brand { grid-column: 1 / -1; }
   .km-store .ks-v2-footer-bottom { flex-wrap: wrap; font-size: 9px; }
 }
+
+
+/* Light, clean catalogue photography: let the ingredient be the focus. */
+.ks-v2-shop-card-image{background:#fff}
+.ks-v2-shop-card-image img{object-fit:contain}
