@@ -131,9 +131,9 @@ body:has(.km-store){background:var(--km-ivory);color:var(--km-ink)}
 .km-brand-toast{position:fixed;top:18px;right:18px;z-index:200;max-width:min(420px,calc(100vw - 36px));display:flex;align-items:center;gap:16px;padding:14px 17px;background:var(--km-oxblood);color:var(--km-ivory);box-shadow:none;font-size:12px}
 .km-brand-toast button{color:var(--km-champagne);font-size:22px;line-height:1}
 .km-v2-shop-page .ks-v2-shop-hero img,.ks-v2-about-page .ks-v2-about-hero>img{object-position:center 48%}
-.km-v2-shop-page .ks-v2-shop-hero>img,.ks-v2-about-page .ks-v2-about-hero>img{content:url("/kashurmewa-heritage-landscape.svg")}
+.km-v2-shop-page .ks-v2-shop-hero>img,.ks-v2-about-page .ks-v2-about-hero>img{content:url("/images/walnut-hero.webp")}
 .ks-v2-shop-page .ks-v2-shop-hero-copy h1,.ks-v2-about-page .ks-v2-about-hero h1{color:var(--km-ivory)}
-.ks-v2-contact-page .ks-v2-contact-intro>img{content:url("/kashurmewa-heritage-landscape.svg");object-fit:cover}
+.ks-v2-contact-page .ks-v2-contact-intro>img{content:url("/images/walnut-orchard.webp");object-fit:cover}
 .ks-v2-shop-page .ks-v2-shop-hero-shade,.ks-v2-about-page .ks-v2-about-hero-shade{background:rgba(40,21,25,.65)}
 .ks-v2-shop-page .ks-v2-catalogue,.ks-v2-product-page .premium-product-story{background:var(--km-ivory)}
 .ks-v2-shop-page .ks-v2-shop-card,.ks-v2-product-page .premium-product-layout{background:#fffdf8}
