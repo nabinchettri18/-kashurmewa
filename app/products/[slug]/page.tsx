@@ -46,12 +46,9 @@ export default function ProductDetailPage() {
 
   const selectedVariant: ProductVariant | undefined =
     product?.variants.find((variant) => variant.size === size) || product?.variants[0];
-  const images = product?.images || [];
-  const inShellImages = [
-    "https://images.pexels.com/photos/37522385/pexels-photo-37522385.jpeg?auto=compress&cs=tinysrgb&w=1800&q=90",
-    "https://images.unsplash.com/photo-1593514212039-84efbd9c21be?auto=format&fit=crop&w=1400&q=90",
-    "https://images.pexels.com/photos/7333062/pexels-photo-7333062.jpeg?auto=compress&cs=tinysrgb&w=1400&q=90",
-  ];
+  const inShellImages = product?.images?.length
+    ? product.images.map((image) => image.url)
+    : ["https://images.pexels.com/photos/37522385/pexels-photo-37522385.jpeg?auto=compress&cs=tinysrgb&w=1800&q=90"];
   const mainImage = inShellImages[selectedImage % inShellImages.length];
 
   const addToBag = () => {
@@ -106,7 +103,7 @@ export default function ProductDetailPage() {
       <section className="premium-product-layout">
         <div className="premium-gallery">
           <div className="premium-main-image">
-            {mainImage ? <img src={mainImage} alt={`${product.name} — whole walnuts in their natural hard shells`} /> : <div className="premium-image-placeholder">Product photography coming soon</div>}
+            {mainImage ? <img src={mainImage} alt={product.images[selectedImage]?.alt_text || `${product.name} — whole walnuts in their natural hard shells`} fetchPriority="high" decoding="async" /> : <div className="premium-image-placeholder">Product photography coming soon</div>}
             <span className="premium-image-label">WHOLE WALNUTS · IN SHELL</span>
           </div>
           {inShellImages.length > 1 && (
@@ -120,7 +117,7 @@ export default function ProductDetailPage() {
                   aria-label={`View product image ${index + 1}`}
                   aria-pressed={selectedImage === index}
                 >
-                  <img src={image} alt={`${product.name} whole in-shell walnuts, view ${index + 1}`} />
+                  <img src={image} alt={product.images[index]?.alt_text || `${product.name} whole in-shell walnuts, view ${index + 1}`} loading="lazy" decoding="async" />
                 </button>
               ))}
             </div>

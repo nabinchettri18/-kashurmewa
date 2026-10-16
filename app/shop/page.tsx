@@ -87,13 +87,12 @@ export default function ShopPage() {
             {filtered.map((p) => {
               const vs = [...p.variants].sort((a, b) => a.price_inr - b.price_inr);
               const minPrice = vs.length ? vs[0].price_inr : null;
-              const inShellImages = ["https://images.pexels.com/photos/37522385/pexels-photo-37522385.jpeg?auto=compress&cs=tinysrgb&w=1200&q=90", "https://images.unsplash.com/photo-1593514212039-84efbd9c21be?auto=format&fit=crop&w=1200&q=90", "https://images.pexels.com/photos/7333062/pexels-photo-7333062.jpeg?auto=compress&cs=tinysrgb&w=1200&q=90"];
-              const image = inShellImages[filtered.indexOf(p) % inShellImages.length] || p.images[0]?.url;
+              const image = p.images[0]?.url || "https://images.pexels.com/photos/37522385/pexels-photo-37522385.jpeg?auto=compress&cs=tinysrgb&w=1200&q=90";
 
               return (
                 <Link className="commerce-product" href={`/products/${p.slug}`} key={p.id}>
                   <div className="commerce-product-image">
-                    {image ? <img src={image} alt={`${p.name} — whole walnuts in their natural shells`} /> : <div className="commerce-muted">Image coming soon</div>}
+                    {image ? <img src={image} alt={p.images[0]?.alt_text || `${p.name} — whole walnuts in their natural hard shells`} loading="lazy" decoding="async" /> : <div className="commerce-muted">Image coming soon</div>}
                     <span>EXPLORE ↗</span>
                   </div>
                   <div className="commerce-product-info">

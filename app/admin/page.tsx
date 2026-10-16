@@ -50,18 +50,8 @@ export default function AdminDashboard() {
         p.variants = (p.km_product_variants || []).sort((a: Variant, b: Variant) => a.price_inr - b.price_inr);
         setProduct(p);
       } else {
-        // Fallback default product structure if DB not synced yet
-        setProduct({
-          id: "a1b2c3d4-e5f6-7890-abcd-111111111111",
-          name: "Kashmiri In-Shell Walnuts",
-          slug: "kashmiri-walnuts",
-          active: true,
-          variants: [
-            { id: "v1111111-1111-1111-1111-111111111111", size: "250 g", price_inr: 349, stock: 100 },
-            { id: "v2222222-2222-2222-2222-222222222222", size: "500 g", price_inr: 649, stock: 75 },
-            { id: "v3333333-3333-3333-3333-333333333333", size: "1 kg", price_inr: 1199, stock: 50 },
-          ],
-        });
+        setProduct(null);
+        setMessage("Live product data could not be loaded. No sample prices or stock values are being shown.");
       }
 
       // 2. Load Orders
@@ -99,9 +89,10 @@ export default function AdminDashboard() {
       .eq("id", id);
 
     if (error) {
-      setMessage("Stock updated locally. Database sync requires active admin connection.");
+      await loadData();
+      setMessage("Could not save the change to the database. Live data has been reloaded; please try again.");
     } else {
-      setMessage("Saved successfully!");
+      setMessage("Saved successfully to the database.");
     }
   };
 
@@ -118,8 +109,8 @@ export default function AdminDashboard() {
       setOrders(orders.map((o) => (o.id === orderId ? { ...o, ...updateObj } : o)));
       setMessage(`Order ${orderId.slice(0, 8)} updated to ${status}.`);
     } else {
-      setMessage(`Updated order status locally.`);
-      setOrders(orders.map((o) => (o.id === orderId ? { ...o, ...updateObj } : o)));
+      await loadData();
+      setMessage("Could not save the order update. The latest database data has been reloaded.");
     }
   };
 
