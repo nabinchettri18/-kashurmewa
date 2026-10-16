@@ -13,6 +13,7 @@ const CART_KEY = "kashurmewa-cart";
 export default function CartPage() {
   const [lines, setLines] = useState<Line[]>([]);
   const [loading, setLoading] = useState(true);
+  const [cartLoadError, setCartLoadError] = useState(false);
   const [showCheckout, setShowCheckout] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [checkoutError, setCheckoutError] = useState("");
@@ -45,19 +46,15 @@ export default function CartPage() {
         .in("id", variantIds)
         .eq("active", true);
 
-      if (error || !data || !data.length) {
-        // Fallback for demo/offline cart items
-        setLines(
-          saved.map((i) => ({
-            productId: i.productId,
-            variantId: i.variantId,
-            qty: i.qty,
-            productName: "Kashmiri In-Shell Walnuts",
-            size: i.variantId.includes("250") ? "250 g" : i.variantId.includes("500") ? "500 g" : "1 kg",
-            price: i.variantId.includes("250") ? 349 : i.variantId.includes("500") ? 649 : 1199,
-            stock: 50,
-          }))
-        );
+      if (error) {
+        setCartLoadError(true);
+        setLines([]);
+        return;
+      }
+
+      if (!data?.length) {
+        setLines([]);
+        localStorage.removeItem(CART_KEY);
         return;
       }
 
@@ -76,8 +73,11 @@ export default function CartPage() {
         };
       });
 
-      setLines(mapped);
+      const availableLines = mapped.filter((line: Line) => line.stock > 0);
+      setLines(availableLines);
+      localStorage.setItem(CART_KEY, JSON.stringify(availableLines.map(({ productId, variantId, qty }) => ({ productId, variantId, qty }))));
     } catch {
+      setCartLoadError(true);
       setLines([]);
     } finally {
       setLoading(false);
@@ -92,7 +92,7 @@ export default function CartPage() {
     const next = lines
       .map((line) =>
         line.variantId === variantId
-          ? { ...line, qty: Math.max(0, Math.min(line.qty + delta, Math.max(line.stock, 1))) }
+          ? { ...line, qty: Math.max(0, Math.min(line.qty + delta, line.stock)) }
           : line
       )
       .filter((line) => line.qty > 0);
@@ -174,7 +174,7 @@ export default function CartPage() {
           <div className="order-success-card">
             <span className="badge">ORDER CONFIRMED</span>
             <h2>Thank you, {orderResult.customerName}!</h2>
-            <p>Your order has been received and is being prepared with care in our Kashmir repository.</p>
+            <p>Your order has been received. Keep your order reference for any follow-up about delivery.</p>
             
             <div className="order-reference-box">
               ORDER REF: {orderResult.orderReference}
@@ -184,16 +184,22 @@ export default function CartPage() {
               Total Paid / Amount Due: <strong>₹{orderResult.totalAmountInr?.toLocaleString("en-IN")}</strong> via{" "}
               {orderResult.paymentMethod === "cod" ? "Cash on Delivery" : "Online Payment"}.
               <br />
-              Confirmation email sent to <strong>{orderResult.customerEmail}</strong>.
+              Order contact: <strong>{orderResult.customerEmail}</strong>.
             </p>
 
             <Link href="/shop" className="primary-btn" style={{ display: "inline-block", marginTop: "20px" }}>
               RETURN TO SHOP ↗
             </Link>
           </div>
+        ) : cartLoadError ? (
+          <div className="empty" role="alert">
+            <p>We couldn’t refresh prices and availability. Your saved bag has not been priced using estimates.</p>
+            <button type="button" className="button dark" onClick={() => { setCartLoadError(false); void load(); }}>RETRY ↻</button>
+            <Link className="button dark" href="/shop">RETURN TO SHOP ↗</Link>
+          </div>
         ) : !lines.length ? (
           <div className="empty">
-            <p>Your bag is empty.</p>
+            <p>Your bag is empty or its items are no longer available.</p>
             <Link className="button dark" href="/shop">
               SHOP WALNUTS ↗
             </Link>
@@ -213,7 +219,7 @@ export default function CartPage() {
                       −
                     </button>
                     <b>{line.qty}</b>
-                    <button type="button" onClick={() => update(line.variantId, 1)} aria-label="Increase quantity">
+                    <button type="button" disabled={line.qty >= line.stock} onClick={() => update(line.variantId, 1)} aria-label="Increase quantity">
                       +
                     </button>
                   </div>
