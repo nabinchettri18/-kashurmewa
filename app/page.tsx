@@ -7,8 +7,8 @@ import { fetchProductBySlug, Product, ProductVariant } from "@/lib/catalog";
 import { NavigationHeader } from "@/components/navigation/Header";
 import "./kashurmewa-storefront.css";
 
-const WALNUT_HERO = "https://images.pexels.com/photos/33814341/pexels-photo-33814341.jpeg?auto=compress&cs=tinysrgb&w=2400&q=92";
-const WALNUT_DETAIL = "https://images.pexels.com/photos/20346586/pexels-photo-20346586.jpeg?auto=compress&cs=tinysrgb&w=2000&q=92";
+const WALNUT_HERO = "https://images.pexels.com/photos/17832132/pexels-photo-17832132.jpeg?auto=compress&cs=tinysrgb&w=2400&q=92";
+const WALNUT_DETAIL = "https://images.pexels.com/photos/36358810/pexels-photo-36358810.jpeg?auto=compress&cs=tinysrgb&w=2000&q=92";
 const ORCHARD_IMAGE = "https://images.pexels.com/photos/28553972/pexels-photo-28553972.jpeg?auto=compress&cs=tinysrgb&w=2000&q=92";
 const money = (value: number) => new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 }).format(value);
 
@@ -57,7 +57,7 @@ export default function Home() {
         <div className="ks-hero-copy">
           <span className="ks-kicker"><i /> A LITTLE CLOSER TO NATURE</span>
           <h1>From the valley,<br /><em>with goodness.</em></h1>
-          <p>Whole Kashmiri walnuts for everyday rituals, shared tables and the simple pleasure of something naturally good.</p>
+          <p>Whole walnuts in their natural hard shells—carefully packed for your kitchen, family table and everyday use. No loose walnut kernels; every pack is in-shell walnuts.</p>
           <div className="ks-actions">
             <Link className="ks-button" href="#shop">Discover the collection <ArrowRight size={17} /></Link>
             <span className="ks-price-note">{loading ? "Explore our walnut collection" : product?.variants?.length ? `Packs from ${money(Math.min(...product.variants.map(v => v.price_inr)))}` : "Thoughtfully packed walnuts"}</span>
@@ -69,8 +69,8 @@ export default function Home() {
           </div>
         </div>
         <div className="ks-hero-media">
-          <img src={WALNUT_HERO} alt="A natural still life of whole walnuts" />
-          <div className="ks-image-label"><span>THE KASHURMEWA EDIT</span><b>Nature, made part of your day.</b></div>
+          <img src={WALNUT_HERO} alt="A close-up of whole walnuts in their natural brown shells" />
+          <div className="ks-image-label"><span>THE KASHURMEWA EDIT</span><b>Whole walnuts. Natural shells. Carefully packed.</b></div>
           <div className="ks-round-label">GOODNESS<br/><strong>BY NATURE</strong><br/>KASHURMEWA</div>
         </div>
       </section>
@@ -96,7 +96,7 @@ export default function Home() {
 
       <section className="ks-shop" id="shop">
         <div className="ks-heading">
-          <div><span className="ks-kicker">THE SIGNATURE COLLECTION</span><h2>Good things come <em>in shells.</em></h2><p>Explore our available packs and choose the size that works for you.</p></div>
+          <div><span className="ks-kicker">THE SIGNATURE COLLECTION</span><h2>Whole walnuts, <em>still in shell.</em></h2><p>Shop whole walnuts in shell—not shelled kernels—in the pack size that suits your home.</p></div>
           <Link className="ks-inline-link" href="/shop">Explore the shop <ArrowUpRight size={16}/></Link>
         </div>
         {loading ? <div className="ks-state">Loading current pack sizes and prices…</div> :
