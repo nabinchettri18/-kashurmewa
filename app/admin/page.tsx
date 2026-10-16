@@ -30,6 +30,7 @@ export default function AdminDashboard() {
   const [product, setProduct] = useState<Product | null>(null);
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
+  const [accessDenied, setAccessDenied] = useState(false);
   const [message, setMessage] = useState("");
   const [searchCustomer, setSearchCustomer] = useState("");
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
@@ -38,33 +39,31 @@ export default function AdminDashboard() {
   const loadData = async () => {
     setLoading(true);
     try {
-      // 1. Load Products & Variants
-      const { data: pData } = await supabase
-        .from("km_products")
-        .select("id,name,slug,active,description,km_product_variants(id,size,price_inr,stock,sku)")
-        .eq("slug", "kashmiri-walnuts")
-        .single();
-
-      if (pData) {
-        const p = pData as any;
-        p.variants = (p.km_product_variants || []).sort((a: Variant, b: Variant) => a.price_inr - b.price_inr);
-        setProduct(p);
-      } else {
-        setProduct(null);
-        setMessage("Live product data could not be loaded. No sample prices or stock values are being shown.");
+      const { data: sessionData } = await supabase.auth.getSession();
+      const session = sessionData.session;
+      if (!session) {
+        window.location.assign("/account?next=/admin");
+        return;
+      }
+      if (session.user.app_metadata?.role !== "admin") {
+        setAccessDenied(true);
+        setMessage("This account does not have store-admin permission.");
+        return;
       }
 
-      // 2. Load Orders
-      const { data: oData } = await supabase
-        .from("km_orders")
-        .select("*")
-        .order("created_at", { ascending: false });
+      const response = await fetch("/api/admin", {
+        headers: { Authorization: `Bearer ${session.access_token}` },
+        cache: "no-store",
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || "Could not load store data.");
 
-      if (oData) {
-        setOrders(oData as Order[]);
-      }
-    } catch {
-      setMessage("Note: Running in standalone admin view mode.");
+      setProduct(result.product || null);
+      setOrders((result.orders || []) as Order[]);
+      setAccessDenied(false);
+      setMessage("");
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Could not load store data.");
     } finally {
       setLoading(false);
     }
@@ -83,34 +82,47 @@ export default function AdminDashboard() {
       setProduct({ ...product, variants: updatedVariants });
     }
 
-    const { error } = await supabase
-      .from("km_product_variants")
-      .update({ [field]: num })
-      .eq("id", id);
-
-    if (error) {
-      await loadData();
-      setMessage("Could not save the change to the database. Live data has been reloaded; please try again.");
-    } else {
+    try {
+      const { data: sessionData } = await supabase.auth.getSession();
+      const session = sessionData.session;
+      if (!session) {
+        window.location.assign("/account?next=/admin");
+        return;
+      }
+      const response = await fetch("/api/admin", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${session.access_token}` },
+        body: JSON.stringify({ action: "variant", id, field, value: num }),
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || "Could not save the product change.");
       setMessage("Saved successfully to the database.");
+    } catch (error) {
+      await loadData();
+      setMessage(error instanceof Error ? error.message : "Could not save the change. Live data has been reloaded.");
     }
   };
 
   const updateOrderStatus = async (orderId: string, status: string, tracking?: string) => {
-    const updateObj: any = { fulfillment_status: status };
-    if (tracking) updateObj.tracking_number = tracking;
-
-    const { error } = await supabase
-      .from("km_orders")
-      .update(updateObj)
-      .eq("id", orderId);
-
-    if (!error) {
-      setOrders(orders.map((o) => (o.id === orderId ? { ...o, ...updateObj } : o)));
+    try {
+      const { data: sessionData } = await supabase.auth.getSession();
+      const session = sessionData.session;
+      if (!session) {
+        window.location.assign("/account?next=/admin");
+        return;
+      }
+      const response = await fetch("/api/admin", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${session.access_token}` },
+        body: JSON.stringify({ action: "order", id: orderId, status, trackingNumber: tracking || "" }),
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || "Could not save the order update.");
+      setOrders(orders.map((o) => (o.id === orderId ? { ...o, fulfillment_status: status, ...(tracking ? { tracking_number: tracking } : {}) } : o)));
       setMessage(`Order ${orderId.slice(0, 8)} updated to ${status}.`);
-    } else {
+    } catch (error) {
       await loadData();
-      setMessage("Could not save the order update. The latest database data has been reloaded.");
+      setMessage(error instanceof Error ? error.message : "Could not save the order update.");
     }
   };
 
@@ -121,6 +133,21 @@ export default function AdminDashboard() {
   const totalPaidRevenue = paidOrders.reduce((sum, o) => sum + Number(o.total_amount_inr || 0), 0);
   const pendingOrdersCount = orders.filter((o) => o.fulfillment_status === "pending").length;
   const lowStockVariants = product?.variants.filter((v) => v.stock < 10) || [];
+
+  if (accessDenied) {
+    return (
+      <main className="commerce-page" style={{ minHeight: "100vh", display: "grid", placeItems: "center", padding: "32px" }}>
+        <section style={{ maxWidth: "520px", width: "100%", background: "#f0e5d8", padding: "clamp(24px, 5vw, 48px)", border: "1px solid #e1d4c5" }}>
+          <p className="commerce-eyebrow">KASHURMEWA STORE ADMIN</p>
+          <h1 style={{ color: "#3b2022", fontFamily: "Georgia, serif", fontSize: "clamp(32px, 7vw, 48px)" }}>Admin access required</h1>
+          <p style={{ lineHeight: 1.8, color: "#70615a" }}>Sign in with an authorized account. Store-admin access must be assigned by the project owner; ordinary customer accounts cannot view orders or change inventory.</p>
+          <p role="status" style={{ fontSize: "13px" }}>{message}</p>
+          <Link href="/account?next=/admin" className="detail-add" style={{ display: "inline-flex", marginTop: "12px" }}>SIGN IN ↗</Link>
+          <Link href="/" style={{ display: "block", marginTop: "18px" }}>Return to storefront</Link>
+        </section>
+      </main>
+    );
+  }
 
   return (
     <div className="admin-shell">
