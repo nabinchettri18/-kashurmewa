@@ -47,7 +47,12 @@ export default function ProductDetailPage() {
   const selectedVariant: ProductVariant | undefined =
     product?.variants.find((variant) => variant.size === size) || product?.variants[0];
   const images = product?.images || [];
-  const mainImage = images[selectedImage]?.url || images[0]?.url;
+  const inShellImages = [
+    "https://images.pexels.com/photos/17832132/pexels-photo-17832132.jpeg?auto=compress&cs=tinysrgb&w=1800&q=90",
+    "https://images.pexels.com/photos/36358810/pexels-photo-36358810.jpeg?auto=compress&cs=tinysrgb&w=1400&q=90",
+    "https://images.pexels.com/photos/3904511/pexels-photo-3904511.jpeg?auto=compress&cs=tinysrgb&w=1400&q=90",
+  ];
+  const mainImage = inShellImages[selectedImage % inShellImages.length];
 
   const addToBag = () => {
     if (!product || !selectedVariant || selectedVariant.stock <= 0) return;
@@ -101,21 +106,21 @@ export default function ProductDetailPage() {
       <section className="premium-product-layout">
         <div className="premium-gallery">
           <div className="premium-main-image">
-            {mainImage ? <img src={mainImage} alt={images[selectedImage]?.alt_text || product.name} /> : <div className="premium-image-placeholder">Product photography coming soon</div>}
-            <span className="premium-image-label">KASHURMEWA · SIGNATURE HARVEST</span>
+            {mainImage ? <img src={mainImage} alt={`${product.name} — whole walnuts in their natural hard shells`} /> : <div className="premium-image-placeholder">Product photography coming soon</div>}
+            <span className="premium-image-label">WHOLE WALNUTS · IN SHELL</span>
           </div>
-          {images.length > 1 && (
+          {inShellImages.length > 1 && (
             <div className="premium-thumbnails" aria-label="Product images">
-              {images.map((image, index) => (
+              {inShellImages.map((image, index) => (
                 <button
-                  key={image.url}
+                  key={image}
                   type="button"
                   className={selectedImage === index ? "active" : ""}
                   onClick={() => setSelectedImage(index)}
                   aria-label={`View product image ${index + 1}`}
                   aria-pressed={selectedImage === index}
                 >
-                  <img src={image.url} alt={image.alt_text || `${product.name} view ${index + 1}`} />
+                  <img src={image} alt={`${product.name} whole in-shell walnuts, view ${index + 1}`} />
                 </button>
               ))}
             </div>
@@ -130,9 +135,9 @@ export default function ProductDetailPage() {
         <div className="premium-buy-panel">
           <span className="commerce-eyebrow">A LITTLE CLOSER TO NATURE</span>
           <h1>{product.name}</h1>
-          <p className="premium-description">{product.description}</p>
+          <p className="premium-description">Whole walnuts in their natural hard shells, carefully packed for your home. This product is sold in shell—not as loose walnut kernels.</p>
 
-          <div className="premium-quality-line"><Leaf size={15} /><span>Whole walnuts · Natural shells · Thoughtfully packed</span></div>
+          <div className="premium-quality-line"><Leaf size={15} /><span>Whole walnuts · Sold in shell · Carefully packed</span></div>
 
           <div className="premium-price-block">
             <div>
