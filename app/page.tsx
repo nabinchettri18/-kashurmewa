@@ -72,7 +72,7 @@ export default function Home() {
           </div>
         </div>
         <div className="ks-hero-media">
-          <img src={WALNUT_HERO} alt="A close-up of whole walnuts in their natural brown shells" />
+          <img src={product?.images?.[0]?.url || WALNUT_HERO} alt={product?.images?.[0]?.alt_text || "Whole walnuts in clean, natural hard shells"} fetchPriority="high" decoding="async" />
           <div className="ks-image-label"><span>THE KASHURMEWA EDIT</span><b>Whole walnuts. Natural shells. Carefully packed.</b></div>
           <div className="ks-round-label">GOODNESS<br/><strong>BY NATURE</strong><br/>KASHURMEWA</div>
         </div>
@@ -95,7 +95,7 @@ export default function Home() {
           product?.variants?.length && selectedVariant ? (
             <div className="ks-featured-product">
               <Link className="ks-featured-image" href={`/products/${product.slug}`} aria-label="View whole walnuts in shell">
-                <img src={WALNUT_DETAIL} alt="Whole walnuts in their natural hard shells, with one cracked walnut shown as a serving detail" />
+                <img src={product?.images?.[1]?.url || WALNUT_DETAIL} alt={product?.images?.[1]?.alt_text || "Whole walnuts in their natural hard shells"} loading="lazy" decoding="async" />
                 <span className="ks-featured-stamp">WHOLE WALNUTS<br/><strong>IN SHELL</strong></span>
               </Link>
               <div className="ks-featured-details">
@@ -129,7 +129,7 @@ export default function Home() {
 
       <section className="ks-origin" id="origin">
         <div className="ks-origin-copy"><span className="ks-kicker">A MOMENT FOR YOURSELF</span><h2>Little rituals.<br/><em>Lasting goodness.</em></h2><p>Crack a few walnuts for your breakfast, add them to a favourite recipe, or bring a bowl to the table to share. A simple ingredient can be part of so many everyday moments.</p><Link href="/shop" className="ks-origin-link">SHOP THE WALNUTS <ArrowRight size={15}/></Link></div>
-        <div className="ks-origin-photo"><img src={WALNUT_DETAIL} alt="A close-up of natural walnuts ready to enjoy"/><span>THE EVERYDAY WALNUT</span></div>
+        <div className="ks-origin-photo"><img src={product?.images?.[1]?.url || WALNUT_DETAIL} alt={product?.images?.[1]?.alt_text || "Whole walnuts in their natural hard shells"} loading="lazy" decoding="async"/><span>THE EVERYDAY WALNUT</span></div>
       </section>
 
       <section className="ks-why" id="faq">
