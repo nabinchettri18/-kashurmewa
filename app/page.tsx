@@ -58,17 +58,17 @@ export default function Home() {
 
       <section className="ks-hero" aria-label="Kashurmewa walnuts">
         <div className="ks-hero-copy">
-          <span className="ks-kicker"><i /> A LITTLE CLOSER TO NATURE</span>
-          <h1>From the valley,<br /><em>with goodness.</em></h1>
-          <p>Whole walnuts in their natural hard shells—carefully packed for your kitchen, family table and everyday use. No loose walnut kernels; every pack is in-shell walnuts.</p>
+          <span className="ks-kicker"><i /> NATURE’S FINEST FROM THE VALLEYS</span>
+          <h1>The pure taste<br /><em>of the valleys.</em></h1>
+          <p>Whole walnuts in their natural hard shells, carefully packed for everyday rituals. Naturally distinctive, beautifully simple, and always sold in shell.</p>
           <div className="ks-actions">
-            <Link className="ks-button" href="#shop">Discover the collection <ArrowRight size={17} /></Link>
+            <Link className="ks-button" href="#shop">Shop whole walnuts <ArrowRight size={17} /></Link>
             <span className="ks-price-note">{loading ? "Explore our walnut collection" : product?.variants?.length ? `Packs from ${money(Math.min(...product.variants.map(v => v.price_inr)))}` : "Thoughtfully packed walnuts"}</span>
           </div>
           <div className="ks-proof">
-            <span><Leaf size={18}/><b>Whole walnuts</b></span>
-            <span><PackageCheck size={18}/><b>Thoughtful packs</b></span>
-            <span><Truck size={18}/><b>Made to order</b></span>
+            <span><Leaf size={18}/><b>100% Natural</b></span>
+            <span><PackageCheck size={18}/><b>In-shell freshness</b></span>
+            <span><Truck size={18}/><b>Carefully packed</b></span>
           </div>
         </div>
         <div className="ks-hero-media">
@@ -83,18 +83,6 @@ export default function Home() {
         <div><PackageCheck/><span><b>Considered packaging</b><small>Presented with care</small></span></div>
         <div><Truck/><span><b>Online ordering</b><small>Delivery details at checkout</small></span></div>
         <div><ShoppingBag/><span><b>Simple shopping</b><small>Browse, choose and add to bag</small></span></div>
-      </section>
-
-      <section className="ks-collections" aria-labelledby="collection-title">
-        <div className="ks-collection-heading"><span className="ks-kicker">FIND YOUR EVERYDAY FAVOURITE</span><h2 id="collection-title">Shop by <em>pack size.</em></h2><p>One signature walnut. A size for every kind of table.</p></div>
-        <div className="ks-collection-list">
-          {loading ? <div className="ks-state">Finding available pack sizes…</div> : loadError ? <div className="ks-state">We couldn’t load pack sizes right now. Please visit the <Link href="/shop">shop</Link>.</div> : product?.variants?.length ? product.variants.map((variant, index) => (
-            <a className="ks-collection-item" href="#shop" key={variant.id}>
-              <span className={`ks-collection-image ks-collection-image-${index % 3}`}><img src={index % 2 === 0 ? WALNUT_DETAIL : WALNUT_HERO} alt="" /></span>
-              <strong>{variant.size}</strong><small>{money(variant.price_inr)}</small>
-            </a>
-          )) : <div className="ks-state">Our collection is being prepared. Please check back soon.</div>}
-        </div>
       </section>
 
       <section className="ks-shop" id="shop">
