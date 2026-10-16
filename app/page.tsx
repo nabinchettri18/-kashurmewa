@@ -7,9 +7,9 @@ import { fetchProductBySlug, Product, ProductVariant } from "@/lib/catalog";
 import { NavigationHeader } from "@/components/navigation/Header";
 import "./kashurmewa-storefront.css";
 
-const WALNUT_HERO = "https://images.pexels.com/photos/36040913/pexels-photo-36040913.jpeg?auto=compress&cs=tinysrgb&w=2400&q=90";
-const WALNUT_DETAIL = "https://images.pexels.com/photos/37309469/pexels-photo-37309469.jpeg?auto=compress&cs=tinysrgb&w=1800&q=90";
-const ORCHARD_IMAGE = "https://images.pexels.com/photos/17131011/pexels-photo-17131011.jpeg?auto=compress&cs=tinysrgb&w=2000&q=90";
+const WALNUT_HERO = "https://images.pexels.com/photos/33814341/pexels-photo-33814341.jpeg?auto=compress&cs=tinysrgb&w=2400&q=92";
+const WALNUT_DETAIL = "https://images.pexels.com/photos/20346586/pexels-photo-20346586.jpeg?auto=compress&cs=tinysrgb&w=2000&q=92";
+const ORCHARD_IMAGE = "https://images.pexels.com/photos/28553972/pexels-photo-28553972.jpeg?auto=compress&cs=tinysrgb&w=2000&q=92";
 const money = (value: number) => new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 }).format(value);
 
 export default function Home() {
