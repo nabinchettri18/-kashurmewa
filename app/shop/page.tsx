@@ -56,7 +56,7 @@ export default function ShopPage() {
           <p>Whole Kashmiri walnuts in their natural hard shells. Every pack contains in-shell walnuts—not loose kernels. Carefully packed and shipped across India.</p>
         </div>
         <div className="shop-banner-image">
-          <img src="https://images.pexels.com/photos/36040913/pexels-photo-36040913.jpeg?auto=compress&cs=tinysrgb&w=2200&q=92" alt="Whole walnuts in their natural shells arranged in a wooden bowl" />
+          <img src="https://images.pexels.com/photos/37522385/pexels-photo-37522385.jpeg?auto=compress&cs=tinysrgb&w=2200&q=92" alt="Whole walnuts in their natural shells arranged in a wooden bowl" />
         </div>
       </section>
 
@@ -87,7 +87,7 @@ export default function ShopPage() {
             {filtered.map((p) => {
               const vs = [...p.variants].sort((a, b) => a.price_inr - b.price_inr);
               const minPrice = vs.length ? vs[0].price_inr : null;
-              const inShellImages = ["https://images.pexels.com/photos/17832132/pexels-photo-17832132.jpeg?auto=compress&cs=tinysrgb&w=1200&q=90", "https://images.pexels.com/photos/36358810/pexels-photo-36358810.jpeg?auto=compress&cs=tinysrgb&w=1200&q=90", "https://images.pexels.com/photos/3904511/pexels-photo-3904511.jpeg?auto=compress&cs=tinysrgb&w=1200&q=90"];
+              const inShellImages = ["https://images.pexels.com/photos/37522385/pexels-photo-37522385.jpeg?auto=compress&cs=tinysrgb&w=1200&q=90", "https://images.unsplash.com/photo-1593514212039-84efbd9c21be?auto=format&fit=crop&w=1200&q=90", "https://images.pexels.com/photos/7333062/pexels-photo-7333062.jpeg?auto=compress&cs=tinysrgb&w=1200&q=90"];
               const image = inShellImages[filtered.indexOf(p) % inShellImages.length] || p.images[0]?.url;
 
               return (

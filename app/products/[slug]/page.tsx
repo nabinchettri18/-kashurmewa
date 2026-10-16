@@ -48,9 +48,9 @@ export default function ProductDetailPage() {
     product?.variants.find((variant) => variant.size === size) || product?.variants[0];
   const images = product?.images || [];
   const inShellImages = [
-    "https://images.pexels.com/photos/17832132/pexels-photo-17832132.jpeg?auto=compress&cs=tinysrgb&w=1800&q=90",
-    "https://images.pexels.com/photos/36358810/pexels-photo-36358810.jpeg?auto=compress&cs=tinysrgb&w=1400&q=90",
-    "https://images.pexels.com/photos/3904511/pexels-photo-3904511.jpeg?auto=compress&cs=tinysrgb&w=1400&q=90",
+    "https://images.pexels.com/photos/37522385/pexels-photo-37522385.jpeg?auto=compress&cs=tinysrgb&w=1800&q=90",
+    "https://images.unsplash.com/photo-1593514212039-84efbd9c21be?auto=format&fit=crop&w=1400&q=90",
+    "https://images.pexels.com/photos/7333062/pexels-photo-7333062.jpeg?auto=compress&cs=tinysrgb&w=1400&q=90",
   ];
   const mainImage = inShellImages[selectedImage % inShellImages.length];
 
