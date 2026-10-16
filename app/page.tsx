@@ -14,6 +14,7 @@ const money = (value: number) => new Intl.NumberFormat("en-IN", { style: "curren
 
 export default function Home() {
   const [product, setProduct] = useState<Product | null>(null);
+  const [selectedVariantId, setSelectedVariantId] = useState("");
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
   const [cartCount, setCartCount] = useState(0);
@@ -22,7 +23,7 @@ export default function Home() {
   useEffect(() => {
     let alive = true;
     fetchProductBySlug("kashmiri-walnuts")
-      .then((result) => { if (alive) setProduct(result); })
+      .then((result) => { if (alive) { setProduct(result); setSelectedVariantId(result?.variants?.find((v) => v.size.toLowerCase() === "500 g")?.id || result?.variants?.[0]?.id || ""); } })
       .catch((error) => { console.error("Unable to load Kashurmewa product", error); if (alive) setLoadError(true); })
       .finally(() => { if (alive) setLoading(false); });
     try {
@@ -31,6 +32,8 @@ export default function Home() {
     } catch {}
     return () => { alive = false; };
   }, []);
+
+  const selectedVariant = product?.variants.find((variant) => variant.id === selectedVariantId) || product?.variants.find((variant) => variant.size.toLowerCase() === "500 g") || product?.variants[0];
 
   function addToBag(variant: ProductVariant) {
     if (!product || variant.stock <= 0) { setNotice("This pack is currently unavailable."); return; }
@@ -55,17 +58,17 @@ export default function Home() {
 
       <section className="ks-hero" aria-label="Kashurmewa walnuts">
         <div className="ks-hero-copy">
-          <span className="ks-kicker"><i /> A LITTLE CLOSER TO NATURE</span>
-          <h1>From the valley,<br /><em>with goodness.</em></h1>
-          <p>Whole walnuts in their natural hard shells—carefully packed for your kitchen, family table and everyday use. No loose walnut kernels; every pack is in-shell walnuts.</p>
+          <span className="ks-kicker"><i /> NATURE’S FINEST FROM THE VALLEYS</span>
+          <h1>The pure taste<br /><em>of the valleys.</em></h1>
+          <p>Whole walnuts in their natural hard shells, carefully packed for everyday rituals. Naturally distinctive, beautifully simple, and always sold in shell.</p>
           <div className="ks-actions">
-            <Link className="ks-button" href="#shop">Discover the collection <ArrowRight size={17} /></Link>
+            <Link className="ks-button" href="#shop">Shop whole walnuts <ArrowRight size={17} /></Link>
             <span className="ks-price-note">{loading ? "Explore our walnut collection" : product?.variants?.length ? `Packs from ${money(Math.min(...product.variants.map(v => v.price_inr)))}` : "Thoughtfully packed walnuts"}</span>
           </div>
           <div className="ks-proof">
-            <span><Leaf size={18}/><b>Whole walnuts</b></span>
-            <span><PackageCheck size={18}/><b>Thoughtful packs</b></span>
-            <span><Truck size={18}/><b>Made to order</b></span>
+            <span><Leaf size={18}/><b>100% Natural</b></span>
+            <span><PackageCheck size={18}/><b>In-shell freshness</b></span>
+            <span><Truck size={18}/><b>Carefully packed</b></span>
           </div>
         </div>
         <div className="ks-hero-media">
@@ -82,18 +85,6 @@ export default function Home() {
         <div><ShoppingBag/><span><b>Simple shopping</b><small>Browse, choose and add to bag</small></span></div>
       </section>
 
-      <section className="ks-collections" aria-labelledby="collection-title">
-        <div className="ks-collection-heading"><span className="ks-kicker">FIND YOUR EVERYDAY FAVOURITE</span><h2 id="collection-title">Shop by <em>pack size.</em></h2><p>One signature walnut. A size for every kind of table.</p></div>
-        <div className="ks-collection-list">
-          {loading ? <div className="ks-state">Finding available pack sizes…</div> : loadError ? <div className="ks-state">We couldn’t load pack sizes right now. Please visit the <Link href="/shop">shop</Link>.</div> : product?.variants?.length ? product.variants.map((variant, index) => (
-            <a className="ks-collection-item" href="#shop" key={variant.id}>
-              <span className={`ks-collection-image ks-collection-image-${index % 3}`}><img src={index % 2 === 0 ? WALNUT_DETAIL : WALNUT_HERO} alt="" /></span>
-              <strong>{variant.size}</strong><small>{money(variant.price_inr)}</small>
-            </a>
-          )) : <div className="ks-state">Our collection is being prepared. Please check back soon.</div>}
-        </div>
-      </section>
-
       <section className="ks-shop" id="shop">
         <div className="ks-heading">
           <div><span className="ks-kicker">THE SIGNATURE COLLECTION</span><h2>Whole walnuts, <em>still in shell.</em></h2><p>Shop whole walnuts in shell—not shelled kernels—in the pack size that suits your home.</p></div>
@@ -101,25 +92,32 @@ export default function Home() {
         </div>
         {loading ? <div className="ks-state">Loading current pack sizes and prices…</div> :
           loadError ? <div className="ks-state">We couldn’t load the current catalogue. Please visit the <Link href="/shop">shop</Link>.</div> :
-          product?.variants?.length ? (
-            <div className="ks-products">
-              {product.variants.map((variant, index) => (
-                <article className="ks-product-card" key={variant.id}>
-                  <Link className="ks-product-image" href="/shop" aria-label={`View ${variant.size} Kashmiri walnuts`}>
-                    <img src={index % 2 === 0 ? WALNUT_DETAIL : WALNUT_HERO} alt="Whole walnuts in their natural shells" />
-                    <span>{index === 0 ? "THE SIGNATURE" : "FOR YOUR PANTRY"}</span>
-                    <span className="ks-image-index">0{index + 1}</span>
-                  </Link>
-                  <div className="ks-product-info">
-                    <div className="ks-product-title"><div><small>KASHURMEWA · WALNUTS</small><h3>Whole Kashmiri walnuts</h3></div><strong>{money(variant.price_inr)}</strong></div>
-                    <p>{variant.size} pack <span>·</span> In-shell walnuts</p>
-                    <button className="ks-add-button" disabled={variant.stock <= 0} onClick={() => addToBag(variant)}>
-                      {variant.stock > 0 ? <>Add to bag <ShoppingBag size={16}/></> : <>Currently unavailable</>}
+          product?.variants?.length && selectedVariant ? (
+            <div className="ks-featured-product">
+              <Link className="ks-featured-image" href={`/products/${product.slug}`} aria-label="View whole walnuts in shell">
+                <img src={WALNUT_DETAIL} alt="Whole walnuts in their natural hard shells, with one cracked walnut shown as a serving detail" />
+                <span className="ks-featured-stamp">WHOLE WALNUTS<br/><strong>IN SHELL</strong></span>
+              </Link>
+              <div className="ks-featured-details">
+                <span className="ks-kicker">THE SIGNATURE HARVEST</span>
+                <h3>Kashmiri walnuts <em>in shell</em></h3>
+                <p>One product. Your preferred pack size. Every pack contains whole walnuts in their natural hard shells—not loose kernels.</p>
+                <div className="ks-weight-heading"><strong>Choose pack size</strong><span>Available sizes</span></div>
+                <div className="ks-weight-options" role="group" aria-label="Choose walnut pack size">
+                  {product.variants.map((variant) => (
+                    <button key={variant.id} type="button" className={selectedVariant.id === variant.id ? "ks-weight-option is-selected" : "ks-weight-option"} aria-pressed={selectedVariant.id === variant.id} onClick={() => setSelectedVariantId(variant.id)} disabled={variant.stock <= 0}>
+                      <strong>{variant.size}</strong><span>{money(variant.price_inr)}</span><small>{variant.stock > 0 ? "Available" : "Sold out"}</small>
                     </button>
-                    <div className="ks-stock"><span className={variant.stock > 0 ? "ks-stock-dot" : "ks-stock-dot ks-sold-out"}/>{variant.stock > 0 ? "Available to order" : "Out of stock"}</div>
-                  </div>
-                </article>
-              ))}
+                  ))}
+                </div>
+                <div className="ks-featured-purchase">
+                  <div><small>YOUR SELECTION</small><strong>{selectedVariant.size}</strong><span>{money(selectedVariant.price_inr)}</span></div>
+                  <button className="ks-add-button" disabled={selectedVariant.stock <= 0} onClick={() => addToBag(selectedVariant)}>
+                    {selectedVariant.stock > 0 ? <>Add to bag <ShoppingBag size={16}/></> : <>Currently unavailable</>}
+                  </button>
+                </div>
+                <div className="ks-stock"><span className={selectedVariant.stock > 0 ? "ks-stock-dot" : "ks-stock-dot ks-sold-out"}/>{selectedVariant.stock > 0 ? "Available to order" : "Out of stock"}</div>
+              </div>
             </div>
           ) : <div className="ks-state">Our collection is being prepared. Please check back soon.</div>}
       </section>
