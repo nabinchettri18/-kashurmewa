@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
-import { FALLBACK_PRODUCTS } from "@/lib/catalog";
 
 type CheckoutItemInput = {
   productId: string;
@@ -69,24 +68,6 @@ export async function POST(request: Request) {
       if (clientItem.qty <= 0) continue;
 
       let matchedVariant: any = dbVariants?.find((v: any) => v.id === clientItem.variantId);
-
-      // Fallback matching if database variant not populated yet
-      if (!matchedVariant) {
-        for (const fp of FALLBACK_PRODUCTS) {
-          const fv = fp.variants.find((v) => v.id === clientItem.variantId);
-          if (fv) {
-            matchedVariant = {
-              id: fv.id,
-              product_id: fp.id,
-              size: fv.size,
-              price_inr: fv.price_inr,
-              stock: fv.stock,
-              km_products: { name: fp.name }
-            };
-            break;
-          }
-        }
-      }
 
       if (!matchedVariant) {
         return NextResponse.json(
