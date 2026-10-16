@@ -53,18 +53,18 @@ export default function ShopPage() {
         <div>
           <span className="commerce-eyebrow">THE KASHURMEWA CATALOGUE</span>
           <h1>Good things<br /><i>start here.</i></h1>
-          <p>Handpicked Kashmiri walnuts in shell. Sourced directly from mountain orchards and delivered fresh pan-India.</p>
+          <p>Whole Kashmiri walnuts in their natural hard shells. Every pack contains in-shell walnuts—not loose kernels. Carefully packed and shipped across India.</p>
         </div>
         <div className="shop-banner-image">
-          <img src="https://images.pexels.com/photos/36040913/pexels-photo-36040913.jpeg?auto=compress&cs=tinysrgb&w=2200&q=92" alt="Walnuts arranged on a natural surface" />
+          <img src="https://images.pexels.com/photos/36040913/pexels-photo-36040913.jpeg?auto=compress&cs=tinysrgb&w=2200&q=92" alt="Whole walnuts in their natural shells arranged in a wooden bowl" />
         </div>
       </section>
 
       <section className="catalogue">
         <div className="catalogue-top">
           <div>
-            <span className="commerce-eyebrow">SIGNATURE HARVEST</span>
-            <h2>Shop All Products</h2>
+            <span className="commerce-eyebrow">WHOLE WALNUTS · IN SHELL</span>
+            <h2>Whole walnuts. In shell.</h2>
           </div>
           <div className="catalogue-controls">
             <input placeholder="Search products..." aria-label="Search products" value={query} onChange={(e) => setQuery(e.target.value)} />
@@ -87,19 +87,20 @@ export default function ShopPage() {
             {filtered.map((p) => {
               const vs = [...p.variants].sort((a, b) => a.price_inr - b.price_inr);
               const minPrice = vs.length ? vs[0].price_inr : null;
-              const image = p.images[0]?.url;
+              const inShellImages = ["https://images.pexels.com/photos/17832132/pexels-photo-17832132.jpeg?auto=compress&cs=tinysrgb&w=1200&q=90", "https://images.pexels.com/photos/36358810/pexels-photo-36358810.jpeg?auto=compress&cs=tinysrgb&w=1200&q=90", "https://images.pexels.com/photos/3904511/pexels-photo-3904511.jpeg?auto=compress&cs=tinysrgb&w=1200&q=90"];
+              const image = inShellImages[filtered.indexOf(p) % inShellImages.length] || p.images[0]?.url;
 
               return (
                 <Link className="commerce-product" href={`/products/${p.slug}`} key={p.id}>
                   <div className="commerce-product-image">
-                    {image ? <img src={image} alt={p.name} /> : <div className="commerce-muted">Image coming soon</div>}
+                    {image ? <img src={image} alt={`${p.name} — whole walnuts in their natural shells`} /> : <div className="commerce-muted">Image coming soon</div>}
                     <span>EXPLORE ↗</span>
                   </div>
                   <div className="commerce-product-info">
                     <div>
-                      <small>KASHMIRI IN-SHELL WALNUTS</small>
+                      <small>WHOLE WALNUTS · IN SHELL</small>
                       <h3>{p.name}</h3>
-                      <p>{vs.map((v) => v.size).join(" · ")}</p>
+                      <p>Natural hard shell · Pack sizes: {vs.map((v) => v.size).join(" · ")}</p>
                     </div>
                     <strong>{minPrice === null ? "Price unavailable" : `From ₹${minPrice.toLocaleString("en-IN")}`}</strong>
                   </div>
