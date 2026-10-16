@@ -15,7 +15,7 @@ const heroSlides = [
     eyebrow: "Nature’s finest from the valleys",
     title: <>The pure taste <em>of Kashmir.</em></>,
     copy: "Whole Kashmiri walnuts for the everyday moments around your table.",
-    image: "https://images.pexels.com/photos/35581352/pexels-photo-35581352.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    image: "/images/walnut-hero.webp",
     alt: "Walnuts arranged in an editorial food still life",
     button: "Shop now",
   },
@@ -23,7 +23,7 @@ const heroSlides = [
     eyebrow: "From nature to your table",
     title: <>A little nature. <em>A lot of goodness.</em></>,
     copy: "A simple, versatile pantry favourite for snacking, sharing, baking and the recipes you make your own.",
-    image: "https://images.pexels.com/photos/17765489/pexels-photo-17765489.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    image: "/images/walnut-orchard.webp",
     alt: "A green orchard setting for the KASHURMEWA story",
     button: "Shop now",
   },
@@ -31,7 +31,7 @@ const heroSlides = [
     eyebrow: "The KASHURMEWA selection",
     title: <>Make room for <em>the real thing.</em></>,
     copy: "Choose the pack that suits your home, with live product options and pricing from our catalogue.",
-    image: "https://images.pexels.com/photos/34415576/pexels-photo-34415576.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    image: "/images/walnut-closeup.webp",
     alt: "Walnuts on a clean light background",
     button: "Discover our walnuts",
   },
@@ -42,21 +42,21 @@ const editorialCards = [
     eyebrow: "AT THE TABLE",
     title: "A simple handful, any time of day",
     copy: "Make walnuts part of the small everyday rituals you look forward to.",
-    image: "https://images.pexels.com/photos/35581352/pexels-photo-35581352.jpeg?auto=compress&cs=tinysrgb&w=900",
+    image: "/images/walnut-hero.webp",
     alt: "Walnut food still life",
   },
   {
     eyebrow: "IN THE KITCHEN",
     title: "A little crunch goes a long way",
     copy: "Try them over breakfast, folded into baking, or added to your favourite recipes.",
-    image: "https://images.pexels.com/photos/34415576/pexels-photo-34415576.jpeg?auto=compress&cs=tinysrgb&w=900",
+    image: "/images/walnut-closeup.webp",
     alt: "Whole walnuts photographed on a light background",
   },
   {
     eyebrow: "KEEP IT FRESH",
     title: "Good pantry habits matter",
     copy: "Keep your walnuts sealed and store them in a cool, dry place away from direct sunlight.",
-    image: "https://images.pexels.com/photos/17765489/pexels-photo-17765489.jpeg?auto=compress&cs=tinysrgb&w=900",
+    image: "/images/walnut-orchard.webp",
     alt: "Orchard greenery in a natural setting",
   },
 ];
@@ -185,12 +185,12 @@ export default function KashurmewaVeginaHome({ initialProducts, catalogueError =
 
       <section className="kv-promo-grid" aria-label="Explore KASHURMEWA">
         <Link href="/shop" className="kv-promo kv-promo-one">
-          <img src="https://images.pexels.com/photos/35581352/pexels-photo-35581352.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Walnuts styled for a premium pantry" loading="lazy" />
+          <img src="/images/walnut-hero.webp" alt="Walnuts styled for a premium pantry" loading="lazy" />
           <span className="kv-promo-shade" />
           <span className="kv-promo-copy"><small>THE SIGNATURE SELECTION</small><strong>Premium<br />Kashmiri Walnuts</strong><i>Shop walnuts <span className="kv-text-arrow" aria-hidden="true">↗</span></i></span>
         </Link>
         <Link href="/about" className="kv-promo kv-promo-two">
-          <img src="https://images.pexels.com/photos/17765489/pexels-photo-17765489.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Orchard greenery in a natural setting" loading="lazy" />
+          <img src="/images/walnut-orchard.webp" alt="Orchard greenery in a natural setting" loading="lazy" />
           <span className="kv-promo-shade" />
           <span className="kv-promo-copy"><small>FROM OUR VALLEYS TO YOUR HOME</small><strong>From Our Valleys<br />to Your Home</strong><i>Our story <span className="kv-text-arrow" aria-hidden="true">↗</span></i></span>
         </Link>
@@ -233,14 +233,14 @@ export default function KashurmewaVeginaHome({ initialProducts, catalogueError =
               </Link>
               <div className="kv-product-details"><div className="kv-product-kicker"><span>KASHURMEWA</span><span>{variants.length} pack sizes</span></div><h3>{product.name}</h3><p>Natural in-shell walnuts for snacking, sharing and everyday recipes.</p><strong>From {money(variants.length ? Math.min(...variants.map((item) => item.price_inr)) : 0)}</strong><div className="kv-product-size-list">{variants.map((variant) => <button key={variant.id} type="button" className={selectedVariant?.id === variant.id ? "selected" : ""} onClick={() => setSelectedVariantId(variant.id)}>{variant.size}</button>)}</div><button className="kv-add-button" type="button" disabled={!selectedVariant || selectedVariant.stock <= 0} onClick={() => selectedVariant && addToBag(selectedVariant)}>{selectedVariant?.stock ? "Add to bag" : "Currently unavailable"}<span className="kv-assurance-mark" aria-hidden="true">•</span></button></div>
             </article>
-            <div className="kv-trending-story"><img src="https://images.pexels.com/photos/34415576/pexels-photo-34415576.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Whole walnuts on a light background" loading="lazy" /><div><span>THE SIMPLE THINGS</span><h3>Real ingredients.<br /><em>Room to enjoy.</em></h3><p>Keep a pantry favourite close at hand, ready for the moments that call for a little crunch.</p><Link href={"/products/" + product.slug}>Discover the walnuts <span className="kv-text-arrow" aria-hidden="true">→</span></Link></div></div>
+            <div className="kv-trending-story"><img src="/images/walnut-closeup.webp" alt="Whole walnuts on a light background" loading="lazy" /><div><span>THE SIMPLE THINGS</span><h3>Real ingredients.<br /><em>Room to enjoy.</em></h3><p>Keep a pantry favourite close at hand, ready for the moments that call for a little crunch.</p><Link href={"/products/" + product.slug}>Discover the walnuts <span className="kv-text-arrow" aria-hidden="true">→</span></Link></div></div>
           </div>
         ) : <div className="kv-state">The collection is being prepared. <Link href="/contact">Contact us</Link> if you have a question.</div>}
         <p className="kv-live-note"><span className="kv-text-arrow" aria-hidden="true">✓</span> Live pack options and prices come from the KASHURMEWA catalogue.</p>
       </section>
 
 <section className="kv-deal-banner">
-        <img src="https://images.pexels.com/photos/35581352/pexels-photo-35581352.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Walnuts in a warm, natural still life" loading="lazy" />
+        <img src="/images/walnut-hero.webp" alt="Walnuts in a warm, natural still life" loading="lazy" />
         <div className="kv-deal-overlay" />
         <div className="kv-deal-copy"><span>GOOD THINGS, IN THEIR OWN TIME</span><h2>A pantry favourite<br /><em>for every season.</em></h2><p>No rush, no fuss — simply choose your pack and make it part of your everyday.</p><Link href="/shop">Explore the collection <span className="kv-text-arrow" aria-hidden="true">→</span></Link></div>
         <div className="kv-deal-seal"><span className="kv-assurance-mark" aria-hidden="true">•</span><span>THE</span><strong>KASHURMEWA</strong><span>SELECTION</span></div>
@@ -257,7 +257,7 @@ export default function KashurmewaVeginaHome({ initialProducts, catalogueError =
         </div>
       </section>
 
-<section className="kv-nutrition" aria-label="Walnut goodness"><div className="kv-nutrition-photo"><img src="https://images.pexels.com/photos/34415576/pexels-photo-34415576.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Walnuts arranged for serving" loading="lazy" /></div><div className="kv-nutrition-copy"><span>NATURAL NUTRITION</span><h2>The goodness <em>inside.</em></h2><p>Walnuts are a versatile pantry ingredient, ready to enjoy on their own or add a satisfying crunch to everyday meals.</p><div className="kv-nutrition-points"><div><i>01</i><span><strong>Everyday versatility</strong><small>Enjoy as a snack or add to meals</small></span></div><div><i>02</i><span><strong>Simple ingredient</strong><small>Whole in-shell walnuts</small></span></div><div><i>03</i><span><strong>For your pantry</strong><small>Store sealed in a cool, dry place</small></span></div><div><i>04</i><span><strong>Made for sharing</strong><small>A thoughtful pantry staple</small></span></div></div></div></section>
+<section className="kv-nutrition" aria-label="Walnut goodness"><div className="kv-nutrition-photo"><img src="/images/walnut-closeup.webp" alt="Walnuts arranged for serving" loading="lazy" /></div><div className="kv-nutrition-copy"><span>NATURAL NUTRITION</span><h2>The goodness <em>inside.</em></h2><p>Walnuts are a versatile pantry ingredient, ready to enjoy on their own or add a satisfying crunch to everyday meals.</p><div className="kv-nutrition-points"><div><i>01</i><span><strong>Everyday versatility</strong><small>Enjoy as a snack or add to meals</small></span></div><div><i>02</i><span><strong>Simple ingredient</strong><small>Whole in-shell walnuts</small></span></div><div><i>03</i><span><strong>For your pantry</strong><small>Store sealed in a cool, dry place</small></span></div><div><i>04</i><span><strong>Made for sharing</strong><small>A thoughtful pantry staple</small></span></div></div></div></section>
 
 
       <section className="kv-testimonials" aria-label="Our promise to customers">
