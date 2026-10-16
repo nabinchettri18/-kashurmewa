@@ -71,6 +71,11 @@ export default function CartPage() {
       });
 
       setLines(mapped);
+      // Deep links to /checkout should open the existing checkout drawer after
+      // the saved bag has been revalidated against current catalogue data.
+      if (mapped.length > 0 && new URLSearchParams(window.location.search).get("checkout") === "1") {
+        setShowCheckout(true);
+      }
     } catch (error) {
       console.error("Unable to validate cart against the live catalogue.", error);
       setLoadError("We couldn’t verify current prices and stock. Please refresh or try again shortly.");

@@ -292,13 +292,15 @@ export default function AdminDashboard() {
                       </div>
                       <label className="admin-edit-field">
                         <span>Price (₹)</span>
-                        <input className="admin-input" type="number" min="0" step="1" value={v.price_inr}
-                          onChange={(e) => updateVariant(v.id, "price_inr", e.target.value)} />
+                        <input className="admin-input" type="number" min="0" step="1" defaultValue={v.price_inr}
+                          aria-label={`Price for ${catalogueProduct.name} ${v.size}`}
+                          onBlur={(e) => { const value = e.currentTarget.value; if (value.trim() !== "" && Number(value) !== v.price_inr) void updateVariant(v.id, "price_inr", value); }} />
                       </label>
                       <label className="admin-edit-field">
                         <span>Stock units</span>
-                        <input className="admin-input small" type="number" min="0" step="1" value={v.stock}
-                          onChange={(e) => updateVariant(v.id, "stock", e.target.value)} />
+                        <input className="admin-input small" type="number" min="0" step="1" defaultValue={v.stock}
+                          aria-label={`Stock for ${catalogueProduct.name} ${v.size}`}
+                          onBlur={(e) => { const value = e.currentTarget.value; if (value.trim() !== "" && Number(value) !== v.stock) void updateVariant(v.id, "stock", value); }} />
                       </label>
                     </div>
                   )) : <p className="muted">No pack variants are linked to this product yet.</p>}
@@ -319,7 +321,7 @@ export default function AdminDashboard() {
 
             {lowStockVariants.length > 0 && (
               <div style={{ background: "#fef2f2", border: "1px solid #fca5a5", padding: "14px", color: "#991b1b", marginBottom: "20px" }}>
-                ⚠️ Low Stock Alert: {lowStockVariants.map((v) => `${v.productName} · ${v.size} (${v.stock} remaining)`).join(", ")}
+                Low stock alert: {lowStockVariants.map((v) => `${v.productName} · ${v.size} (${v.stock} remaining)`).join(", ")}
               </div>
             )}
 
