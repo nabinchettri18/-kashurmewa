@@ -592,3 +592,73 @@ a,button{-webkit-tap-highlight-color:transparent}
  .premium-pack-options button strong{font-size:10px}
  .premium-tax-note{max-width:110px}
 }
+
+
+/* Kashurmewa brand consistency across catalogue, product and account surfaces */
+.commerce-page,.account-shell{--brand-wine:#4a1724;--brand-wine-deep:#351019;--brand-ivory:#fbf8f1;--brand-walnut:#39251e;--brand-champagne:#c5a16a;background:var(--brand-ivory);color:var(--brand-walnut)}
+.commerce-header{background:rgba(251,248,241,.97);border-bottom-color:#e5d9ca;position:sticky;top:0;z-index:40;backdrop-filter:blur(14px)}
+.commerce-header nav a{transition:color .2s}
+.commerce-header nav a:hover,.commerce-header nav a.active{color:var(--brand-wine)}
+.commerce-bag{color:var(--brand-wine)}
+.shop-banner{background:#f0e5d8;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);min-height:500px}
+.shop-banner>div:first-child{padding:clamp(42px,6vw,86px) clamp(26px,7vw,100px)}
+.commerce-eyebrow{color:#8c5a5b;letter-spacing:2.5px}
+.shop-banner h1{font-size:clamp(58px,7vw,92px);letter-spacing:-3.8px;color:#3b2022;line-height:.94}
+.shop-banner h1 i{color:#874650}
+.shop-banner p{color:#70615a;font-size:13px;line-height:1.9}
+.shop-banner-image{position:relative;min-height:500px;background:#d6c1a7}
+.shop-banner-image img{transition:transform 1s cubic-bezier(.2,.7,.2,1)}
+.shop-banner-image:hover img{transform:scale(1.025)}
+.catalogue{padding:clamp(48px,6vw,82px) 6vw 100px}
+.catalogue-top h2{font-size:clamp(32px,4vw,44px);color:#3b2022}
+.catalogue-controls input,.catalogue-controls select{background:#fffdf8;border-color:#e1d4c5;color:#39251e;min-height:43px}
+.catalogue-controls input:focus,.catalogue-controls select:focus{border-color:#9c6970;outline-color:#c5a16a}
+.commerce-grid{gap:clamp(16px,2.2vw,30px)}
+.commerce-product{display:block;background:#fffdf8;border:1px solid #e8ded0;transition:transform .25s,box-shadow .25s}
+.commerce-product:hover{transform:translateY(-4px);box-shadow:0 18px 44px #35101912}
+.commerce-product-image{height:clamp(230px,30vw,390px);background:#eee2d3}
+.commerce-product-image>span{background:#4a1724;color:#fff8ee;transition:background .2s}
+.commerce-product:hover .commerce-product-image>span{background:#632635}
+.commerce-product-info{padding:20px 18px 18px;border-bottom:0;align-items:flex-start}
+.commerce-product-info small{color:#966d45;letter-spacing:1.5px}
+.commerce-product-info h3{font-size:clamp(20px,2vw,26px);color:#3b2022}
+.commerce-product-info p{color:#83746a;line-height:1.6}
+.commerce-product-info strong{font-family:'DM Sans',Arial,sans-serif;font-size:13px;color:#4a1724;letter-spacing:-.2px}
+.commerce-muted,.commerce-loading{color:#786d64}
+.commerce-footer{background:#351019;color:#f7eee2;border-color:#5d3138}
+.commerce-footer a{color:#f7eee2;transition:color .2s}
+.commerce-footer a:hover{color:#d9b982}
+.product-breadcrumb{color:#86766c}
+.detail-main-image{background:#eee2d3}
+.detail-buy h1{color:#3b2022}
+.detail-price{color:#4a1724}
+.detail-variants button{background:#fffdf8;border-color:#e1d4c5}
+.detail-variants button.chosen{border-color:#4a1724;background:#f0e4e1;box-shadow:inset 0 0 0 1px #4a1724}
+.detail-add{background:#4a1724;color:#fff8ee;transition:background .2s,transform .2s}
+.detail-add:hover:not(:disabled){background:#632635;transform:translateY(-1px)}
+.commerce-notice,.account-switch,.account-back{color:#6f3541}
+.detail-story{background:#f0e5d8}
+.detail-story h2 i{color:#874650}
+.account-card{background:#f0e5d8}
+.account-tabs button.selected{color:#4a1724;border-bottom-color:#4a1724}
+.account-card form input{background:#fffdf8;border-color:#e1d4c5}
+.account-card form .detail-add{background:#4a1724}
+.account-message{background:#f1e2e0;color:#4a1724}
+@media(max-width:760px){
+ .commerce-header{background:#fbf8f1}
+ .commerce-header nav{gap:11px}
+ .shop-banner{grid-template-columns:1fr}
+ .shop-banner>div:first-child{padding:44px 6vw 34px}
+ .shop-banner h1{font-size:clamp(52px,13vw,72px)}
+ .shop-banner-image{min-height:280px;height:280px}
+ .catalogue{padding:48px 5vw 64px}
+ .catalogue-top h2{font-size:34px}
+ .commerce-grid{gap:12px}
+ .commerce-product{min-width:0}
+ .commerce-product-image{height:clamp(155px,48vw,240px)}
+ .commerce-product-info{padding:13px 12px}
+ .commerce-product-info h3{font-size:18px;overflow-wrap:anywhere}
+ .commerce-product-info small{font-size:7px;line-height:1.5}
+ .commerce-product-info strong{font-size:12px;white-space:normal;padding-top:0}
+ .commerce-footer{background:#351019}
+}
