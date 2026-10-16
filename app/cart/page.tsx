@@ -398,17 +398,9 @@ export default function CartPage() {
                   />
                   <span>Cash on Delivery (COD)</span>
                 </div>
-                <div
-                  className={`payment-option ${paymentMethod === "razorpay" ? "active" : ""}`}
-                  onClick={() => setPaymentMethod("razorpay")}
-                >
-                  <input
-                    type="radio"
-                    name="pay"
-                    checked={paymentMethod === "razorpay"}
-                    onChange={() => setPaymentMethod("razorpay")}
-                  />
-                  <span>Online Payment / UPI</span>
+                <div className="payment-option" aria-disabled="true" style={{ opacity: 0.65, cursor: "not-allowed" }}>
+                  <input type="radio" name="pay" disabled />
+                  <span>Online payment / UPI — coming soon</span>
                 </div>
               </div>
 
