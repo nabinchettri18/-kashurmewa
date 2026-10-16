@@ -42,15 +42,42 @@ export async function POST(request: Request) {
       );
     }
 
-    // 2. Server-side price and stock verification
-    const variantIds = body.items.map((i) => i.variantId);
-    
-    // Attempt database query first
-    const { data: dbVariants } = await supabase
+    if (body.paymentMethod !== "cod") {
+      return NextResponse.json(
+        { error: "Online payment is not enabled yet. Please choose Cash on Delivery." },
+        { status: 400 }
+      );
+    }
+
+    if (body.items.some((item) => !item.variantId || !Number.isInteger(item.qty) || item.qty < 1)) {
+      return NextResponse.json(
+        { error: "Each pack must have a valid variant and a quantity of at least one." },
+        { status: 400 }
+      );
+    }
+
+    const variantIds = body.items.map((item) => item.variantId);
+    if (new Set(variantIds).size !== variantIds.length) {
+      return NextResponse.json(
+        { error: "Please combine duplicate pack lines in your bag and try again." },
+        { status: 400 }
+      );
+    }
+
+    // Verify current price and availability from the live catalogue.
+    const { data: dbVariants, error: variantsError } = await supabase
       .from("km_product_variants")
       .select("id, product_id, size, price_inr, stock, km_products(name)")
       .in("id", variantIds)
       .eq("active", true);
+
+    if (variantsError) {
+      console.error("Checkout catalogue lookup failed:", variantsError.message);
+      return NextResponse.json(
+        { error: "We couldn't verify current prices and stock. Please try again." },
+        { status: 503 }
+      );
+    }
 
     const verifiedItems: {
       productId: string;
@@ -65,9 +92,7 @@ export async function POST(request: Request) {
     let subtotalInr = 0;
 
     for (const clientItem of body.items) {
-      if (clientItem.qty <= 0) continue;
-
-      let matchedVariant: any = dbVariants?.find((v: any) => v.id === clientItem.variantId);
+      const matchedVariant: any = dbVariants?.find((v: any) => v.id === clientItem.variantId);
 
       if (!matchedVariant) {
         return NextResponse.json(
@@ -77,7 +102,7 @@ export async function POST(request: Request) {
       }
 
       const availableStock = Number(matchedVariant.stock || 0);
-      if (clientItem.qty > availableStock && availableStock > 0) {
+      if (clientItem.qty > availableStock) {
         return NextResponse.json(
           { error: `Only ${availableStock} units of ${matchedVariant.size} are available in stock.` },
           { status: 400 }
@@ -134,7 +159,15 @@ export async function POST(request: Request) {
       .select("id")
       .single();
 
-    if (!orderError && orderData?.id) {
+    if (orderError || !orderData?.id) {
+      console.error("Unable to save checkout order:", orderError?.message || "Missing order ID");
+      return NextResponse.json(
+        { error: "We couldn't save your order. No confirmation was created. Please try again or contact support if the issue continues." },
+        { status: 503 }
+      );
+    }
+
+    {
       // Insert order items
       const orderItemsToInsert = verifiedItems.map((item) => ({
         order_id: orderData.id,
@@ -147,7 +180,14 @@ export async function POST(request: Request) {
         total_price_inr: item.totalPriceInr,
       }));
 
-      await supabase.from("km_order_items").insert(orderItemsToInsert);
+      const { error: itemsError } = await supabase.from("km_order_items").insert(orderItemsToInsert);
+      if (itemsError) {
+        console.error("Unable to save checkout line items:", itemsError.message);
+        return NextResponse.json(
+          { error: "Your order could not be fully recorded. Please contact support before placing it again." },
+          { status: 503 }
+        );
+      }
 
       // Decrement inventory stock safely
       for (const item of verifiedItems) {
