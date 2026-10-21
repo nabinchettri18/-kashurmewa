@@ -103,7 +103,7 @@ export default function ProductDetailPage() {
       <section className="premium-product-layout">
         <div className="premium-gallery">
           <div className="premium-main-image">
-            {mainImage ? <img src={mainImage} alt={product.images[selectedImage]?.alt_text || `${product.name} — whole walnuts in their natural hard shells`} fetchPriority="high" decoding="async" /> : <div className="premium-image-placeholder">Product photography coming soon</div>}
+            {mainImage ? <img src={mainImage} alt={product.images[selectedImage]?.alt_text || `${product.name} — whole Kashmiri walnuts with soft, easy-to-crack shells`} fetchPriority="high" decoding="async" /> : <div className="premium-image-placeholder">Product photography coming soon</div>}
             <span className="premium-image-label">WHOLE WALNUTS · IN SHELL</span>
           </div>
           {inShellImages.length > 1 && (
@@ -132,7 +132,7 @@ export default function ProductDetailPage() {
         <div className="premium-buy-panel">
           <span className="commerce-eyebrow">A LITTLE CLOSER TO NATURE</span>
           <h1>{product.name}</h1>
-          <p className="premium-description">Whole walnuts in their natural hard shells, carefully packed for your home. This product is sold in shell—not as loose walnut kernels.</p>
+          <p className="premium-description">Whole Kashmiri walnuts with soft, easy-to-crack shells, carefully packed for your home. Sold whole and in shell—not as loose walnut kernels.</p>
 
           <div className="premium-quality-line"><Leaf size={15} /><span>Whole walnuts · Sold in shell · Carefully packed</span></div>
 
