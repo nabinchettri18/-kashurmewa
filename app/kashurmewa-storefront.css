@@ -286,3 +286,20 @@
 .ks-footer .ks-footer-brand{background:#fbf5e9!important}
 .ks-footer .ks-wordmark{background:#fbf5e9!important;color:#173b27!important}
 .ks-footer .ks-wordmark span{color:#9a6a32!important}
+
+
+/* Refined collection copy and mobile-safe typography */
+.ks-heading{min-width:0;max-width:100%;gap:24px}
+.ks-heading>div{min-width:0;max-width:100%}
+.ks-heading h2{max-width:100%;overflow-wrap:break-word;text-wrap:balance}
+.ks-heading p{max-width:580px;line-height:1.75}
+.ks-shop,.ks-heading,.ks-featured-product,.ks-featured-details{min-width:0}
+.km-store{overflow-x:clip}
+@media(max-width:680px){
+ .ks-heading{display:flex;flex-direction:column;align-items:flex-start;gap:18px}
+ .ks-heading h2{font-size:clamp(34px,9.5vw,46px);line-height:1.08;letter-spacing:-1.3px;overflow-wrap:anywhere}
+ .ks-heading p{font-size:14px;line-height:1.75;max-width:100%}
+ .ks-heading .ks-inline-link{align-self:flex-start;font-size:15px;max-width:100%}
+ .ks-shop{padding-left:20px;padding-right:20px}
+ .ks-featured-product{grid-template-columns:minmax(0,1fr)}
+}
