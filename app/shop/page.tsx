@@ -40,7 +40,7 @@ export default function ShopPage() {
   return (
     <main className="commerce-page">
       <header className="commerce-header">
-        <KashurmewLogo variant="light" size="sm" />
+        <KashurmewLogo variant="dark" size="sm" />
         <nav>
           <Link className="active" href="/shop">Shop</Link>
           <Link href="/about">About Us</Link>
@@ -111,7 +111,7 @@ export default function ShopPage() {
       </section>
 
       <footer className="commerce-footer">
-        <KashurmewLogo variant="light" size="sm" />
+        <KashurmewLogo variant="dark" size="sm" />
         <span>Authentic Kashmiri Produce.</span>
         <Link href="/about">About Us</Link>
         <Link href="/policies/shipping">Shipping Policy</Link>
