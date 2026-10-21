@@ -87,7 +87,7 @@ export default function Home() {
 
       <section className="ks-shop" id="shop">
         <div className="ks-heading">
-          <div><span className="ks-kicker">THE SIGNATURE COLLECTION</span><h2>Whole walnuts, <em>still in shell.</em></h2><p>Shop whole walnuts in shell—not shelled kernels—in the pack size that suits your home.</p></div>
+          <div><span className="ks-kicker">THE KASHURMEWA COLLECTION</span><h2>Good walnuts. <em>Just as nature made them.</em></h2><p>Our walnuts stay in their natural hard shells until they reach your home. Choose your pack, crack them fresh, and make every handful your own.</p></div>
           <Link className="ks-inline-link" href="/shop">Explore the shop <ArrowUpRight size={16}/></Link>
         </div>
         {loading ? <div className="ks-state">Loading current pack sizes and prices…</div> :
@@ -99,9 +99,9 @@ export default function Home() {
                 <span className="ks-featured-stamp">WHOLE WALNUTS<br/><strong>IN SHELL</strong></span>
               </Link>
               <div className="ks-featured-details">
-                <span className="ks-kicker">THE SIGNATURE HARVEST</span>
+                <span className="ks-kicker">GOODNESS, KEPT NATURAL</span>
                 <h3>Kashmiri walnuts <em>in shell</em></h3>
-                <p>One product. Your preferred pack size. Every pack contains whole walnuts in their natural hard shells—not loose kernels.</p>
+                <p>Whole walnuts, naturally protected by their shells. Choose the pack size that suits your home and enjoy them freshly cracked.</p>
                 <div className="ks-weight-heading"><strong>Choose pack size</strong><span>Available sizes</span></div>
                 <div className="ks-weight-options" role="group" aria-label="Choose walnut pack size">
                   {product.variants.map((variant) => (
@@ -141,7 +141,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="ks-final-cta"><div><span className="ks-kicker">YOUR PANTRY, REIMAGINED</span><h2>Make room for <em>something good.</em></h2></div><Link className="ks-button" href="/shop">Find your pack <ArrowRight size={17}/></Link></section>
+      <section className="ks-final-cta"><div><span className="ks-kicker">A LITTLE GOODNESS, EVERY DAY</span><h2>Bring home <em>nature’s goodness.</em></h2></div><Link className="ks-button" href="/shop">Find your pack <ArrowRight size={17}/></Link></section>
 
       <footer className="ks-footer">
         <div className="ks-footer-main"><div className="ks-footer-brand"><span className="ks-wordmark">kashur<span>mewa</span></span><p>Walnuts for everyday rituals, thoughtfully brought to your table.</p></div><div><small>SHOP</small><Link href="/shop">All walnuts</Link><Link href="/cart">Your bag</Link><Link href="/account">My account</Link></div><div><small>DISCOVER</small><Link href="/about">Our story</Link><a href="#shop">Pack sizes</a><a href="#origin">Everyday inspiration</a></div><div className="ks-footer-note"><b>Goodness, grown naturally.</b><p>Thank you for shopping Kashurmewa.</p></div></div>
