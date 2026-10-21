@@ -788,3 +788,80 @@ a,button{-webkit-tap-highlight-color:transparent}
  .premium-pack-options button span{font-size:11px}
  .premium-pack-options button strong{font-size:14px}
 }
+
+
+/* KASHURMEWA CART PAGE — complete standalone styling */
+.cart-page{min-height:100vh;background:#faf7f0;color:#292821;font-family:"DM Sans",Arial,sans-serif}
+.simple-header{min-height:78px;padding:16px clamp(20px,5vw,76px);display:flex;align-items:center;justify-content:space-between;gap:20px;background:#faf7f0;border-bottom:1px solid #e4d8c8}
+.simple-header>a{font-size:10px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:#4a1724;white-space:nowrap}
+.cart-wrap{width:min(1180px,100%);margin:0 auto;padding:clamp(36px,6vw,76px) clamp(20px,5vw,64px) 90px}
+.cart-wrap>.eyebrow{font-size:9px;letter-spacing:2.4px;color:#8a7464;font-weight:600;margin:0 0 16px}
+.cart-wrap>h1{font:400 clamp(38px,5vw,64px)/1.04 "Playfair Display",Georgia,serif;letter-spacing:-1.3px;color:#351019;margin:0 0 42px}
+.cart-wrap>h1 em{color:#8a4c56;font-weight:400}
+.cart-layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(270px,.8fr);gap:clamp(26px,5vw,72px);align-items:start}
+.cart-items{border-top:1px solid #e2d6c8}
+.cart-item{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:24px;padding:28px 0;border-bottom:1px solid #e2d6c8}
+.cart-item>div:first-child>span{display:block;font-size:8px;letter-spacing:2px;color:#927d6a;margin-bottom:9px}
+.cart-item h2{font:400 clamp(20px,2vw,27px)/1.2 "Playfair Display",Georgia,serif;color:#351019;margin:0 0 9px}
+.cart-item p{margin:0;color:#777066;font-size:12px}
+.cart-item>strong{font:500 18px "DM Sans",Arial,sans-serif;white-space:nowrap;color:#351019}
+.qty{display:flex;align-items:center;gap:13px;border:1px solid #d9cbb8;padding:4px 8px;background:#fffaf3}
+.qty button{width:25px;height:28px;display:grid;place-items:center;border:0;background:transparent;color:#351019;font-size:18px}
+.qty b{min-width:12px;text-align:center;font-size:12px;font-weight:500}
+.summary{position:sticky;top:24px;padding:26px;background:#f1e8dc;border:1px solid #e1d2c0}
+.summary>span{display:block;font-size:9px;font-weight:600;letter-spacing:2px;color:#806d5c;padding-bottom:22px;border-bottom:1px solid #d9c9b5}
+.summary>div{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 0 0}
+.summary>div p{margin:0;color:#6d655b;font-size:12px}
+.summary>div b{font-size:13px;font-weight:500;color:#302921;white-space:nowrap}
+.summary>small{display:block;line-height:1.6}
+.summary hr{border:0;border-top:1px solid #d9c9b5;margin:22px 0 6px}
+.summary>div:last-of-type{padding:12px 0 20px}
+.summary>div:last-of-type p{font-size:14px;color:#351019;font-weight:600}
+.summary>div:last-of-type strong{font:400 26px "Playfair Display",Georgia,serif;color:#351019;white-space:nowrap}
+.button.dark,.primary-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:14px 18px;background:#4a1724;color:#fff8ef;border:1px solid #4a1724;font-size:9px;line-height:1.4;font-weight:600;letter-spacing:1px;text-align:center;text-decoration:none}
+.summary .checkout{width:100%;min-height:52px;white-space:normal}
+.summary>small:last-child{margin-top:14px;color:#82796d;font-size:9px;text-align:center}
+.empty{padding:clamp(32px,6vw,66px);background:#f2e9dd;border:1px solid #e3d5c4;text-align:center}
+.empty p{max-width:520px;margin:0 auto 24px;color:#655d53;font-size:14px;line-height:1.8}
+.empty .button{margin:4px}
+.order-success-card{max-width:760px;margin:0 auto;padding:clamp(28px,5vw,56px);background:#f2e9dd;border:1px solid #e3d5c4;text-align:center}
+.order-success-card h2{font:400 clamp(28px,4vw,42px)/1.2 "Playfair Display",Georgia,serif;color:#351019}
+.order-success-card p{font-size:13px;line-height:1.8;color:#655d53}
+.order-reference-box{margin:24px auto;padding:16px;background:#faf7f0;border:1px dashed #b9a487;font-size:11px;letter-spacing:1.5px;color:#351019}
+.cart-page .modal-overlay{position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;padding:20px;background:#15100f99;overflow-y:auto}
+.cart-page .modal-card{width:min(720px,100%);max-height:calc(100dvh - 40px);overflow-y:auto;padding:clamp(22px,4vw,40px);background:#faf7f0;border:1px solid #d9c8b4;box-shadow:0 24px 80px #0003}
+.cart-page .modal-card h2{font:400 clamp(28px,4vw,38px)/1.15 "Playfair Display",Georgia,serif;color:#351019;margin:12px 0 28px}
+.cart-page .checkout-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-bottom:16px}
+.cart-page .checkout-grid.full{grid-template-columns:minmax(0,1fr)}
+.cart-page .checkout-field{display:flex;flex-direction:column;gap:7px;min-width:0}
+.cart-page .checkout-field label{font-size:10px;font-weight:600;color:#68452f;letter-spacing:.3px}
+.cart-page .checkout-field input{width:100%;min-height:44px;padding:11px 12px;border:1px solid #d9cbb8;background:#fffdf9;color:#292821;font-size:13px;border-radius:0}
+.cart-page .payment-options{display:grid;gap:10px;margin:12px 0 24px}
+.cart-page .payment-option{display:flex;align-items:center;gap:10px;padding:14px;border:1px solid #dfd2c1;background:#f5ede2;font-size:12px}
+.cart-page .payment-option.active{border-color:#4a1724;background:#f0e2df}
+.cart-page .modal-actions{display:flex;flex-direction:column;gap:10px}
+.cart-page .btn-primary,.cart-page .btn-secondary{width:100%;min-height:48px;padding:14px 16px;font-size:10px;font-weight:600;letter-spacing:1px;border:1px solid #4a1724}
+.cart-page .btn-primary{background:#4a1724;color:#fff8ef}
+.cart-page .btn-secondary{background:transparent;color:#4a1724}
+@media(max-width:760px){
+ .simple-header{min-height:66px;padding:13px 18px;gap:12px}
+ .simple-header .logo,.simple-header .kashurmewa-logo-img{max-width:155px;width:clamp(110px,34vw,150px);height:auto}
+ .simple-header>a{font-size:8px;letter-spacing:.7px}
+ .cart-wrap{padding:34px 20px 56px}
+ .cart-wrap>.eyebrow{margin-bottom:12px}
+ .cart-wrap>h1{font-size:clamp(36px,9vw,48px);margin-bottom:28px;letter-spacing:-.7px}
+ .cart-layout{grid-template-columns:minmax(0,1fr);gap:28px}
+ .cart-item{grid-template-columns:minmax(0,1fr) auto;gap:14px;padding:22px 0}
+ .cart-item>div:first-child{grid-column:1/-1}
+ .cart-item h2{font-size:23px}
+ .cart-item>strong{font-size:16px;justify-self:end}
+ .qty{grid-column:1;grid-row:2;justify-self:start}
+ .summary{position:static;padding:22px}
+ .summary>div{padding-top:16px}
+ .summary>div:last-of-type strong{font-size:25px}
+ .empty{padding:32px 20px}
+ .cart-page .modal-overlay{align-items:flex-start;padding:12px}
+ .cart-page .modal-card{max-height:calc(100dvh - 24px);padding:22px 18px}
+ .cart-page .checkout-grid{grid-template-columns:minmax(0,1fr);gap:13px;margin-bottom:13px}
+ .cart-page .modal-card h2{margin-bottom:22px}
+}
