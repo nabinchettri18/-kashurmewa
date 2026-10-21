@@ -728,3 +728,63 @@ a,button{-webkit-tap-highlight-color:transparent}
  .bag{padding-left:6px}
  .bag>span:last-of-type{width:19px;height:19px;flex-basis:19px}
 }
+
+.premium-buy-panel{min-width:0;padding:18px 0 0}
+.premium-description{font-size:14px;line-height:1.85;color:#706a60;max-width:480px}
+.premium-quality-line{display:flex;align-items:center;gap:9px;padding:14px 0;border-bottom:1px solid #e5d9ca;color:#4a1724;font-size:11px}
+.premium-price-block{display:flex;align-items:end;justify-content:space-between;gap:12px;padding:24px 0 18px}
+.premium-price-block strong{display:block;font:400 34px/1.1 'Playfair Display',Georgia,serif;color:#351019;margin-top:8px}
+.premium-price-caption,.premium-tax-note{font-size:9px;letter-spacing:1px;color:#777e73}
+.premium-option-heading{display:flex;justify-content:space-between;gap:10px;font-size:12px;margin-bottom:10px}
+.premium-pack-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.premium-pack-options button{min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:7px;padding:13px 10px;border:1px solid #e0d3c3;background:#fffaf3;color:#302a25}
+.premium-pack-options button.selected{border-color:#4a1724;background:#f2e5e1}
+.premium-pack-options button:disabled{opacity:.48}
+.premium-pack-options button span{font-size:12px}
+.premium-pack-options button strong{font:400 16px 'Playfair Display',Georgia,serif}
+.premium-pack-options button small{font-size:8px;letter-spacing:.8px;color:#777e73}
+.premium-quantity-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:22px 0;font-size:12px}
+.premium-quantity-control{display:flex;align-items:center;gap:16px;margin-top:8px;border:1px solid #e0d3c3;width:max-content}
+.premium-quantity-control button{display:grid;place-items:center;width:34px;height:34px;border:0;background:transparent}
+.premium-quantity-control button:disabled{opacity:.35}
+.premium-quantity-control strong{font-size:12px}
+.premium-quantity-row>small{font-size:10px;color:#37674d}
+.premium-add-button{width:100%;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:17px 18px;background:#4a1724;color:#fff8ee;border:0;font-size:10px;font-weight:600;letter-spacing:1.2px}
+.premium-add-button:disabled{opacity:.45}
+.premium-cart-notice{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:12px;padding:12px;background:#f1e6dc;color:#4a1724;font-size:11px}
+.premium-cart-notice a{margin-left:auto;text-decoration:underline}
+.premium-delivery-note{display:flex;gap:12px;padding:22px 0;border-bottom:1px solid #e5d9ca;color:#4a1724}
+.premium-delivery-note div{display:flex;flex-direction:column;gap:5px}
+.premium-delivery-note strong{font-size:12px}
+.premium-delivery-note span{font-size:11px;line-height:1.65;color:#777e73}
+.premium-assurances{display:flex;flex-wrap:wrap;gap:20px;padding:16px 0;border-bottom:1px solid #e5d9ca}
+.premium-assurances div{display:flex;align-items:center;gap:7px;font-size:10px;color:#655d53}
+.premium-details details{border-bottom:1px solid #e5d9ca;padding:15px 0}
+.premium-details summary{cursor:pointer;font-size:12px;font-weight:600}
+.premium-details p{font-size:12px;line-height:1.8;color:#706a60}
+.premium-origin-note{display:flex;align-items:center;flex-wrap:wrap;gap:10px 14px;padding:24px 0 8px;font-size:12px}
+.premium-origin-note>span{font-size:9px;letter-spacing:1.6px;color:#8a867c}
+.premium-origin-note strong{font-weight:500;color:#36332d}
+.premium-origin-divider{width:1px;height:28px;background:#d8cbbb;margin:0 4px}
+.premium-image-label{position:absolute;left:16px;bottom:16px;background:#10291f;color:#f5f0e5;padding:13px 18px;font-size:9px;letter-spacing:1.7px}
+.premium-product-story{padding:60px 8vw;background:#f0e5d8}
+.premium-product-story h2{font:400 clamp(32px,5vw,58px)/1.08 'Playfair Display',Georgia,serif;color:#351019}
+.premium-product-story p{max-width:680px;font-size:14px;line-height:1.85;color:#655d53}
+@media(max-width:760px){
+ .premium-buy-panel{padding-top:2px}
+ .premium-price-block{padding:20px 0 16px;align-items:flex-end}
+ .premium-price-block strong{font-size:30px}
+ .premium-tax-note{max-width:130px;text-align:right;line-height:1.5}
+ .premium-pack-options button{padding:12px 8px}
+ .premium-pack-options button strong{font-size:15px}
+ .premium-origin-note{gap:8px 10px}
+ .premium-origin-note strong{font-size:12px}
+ .premium-product-story{padding:44px 6vw}
+ .mobile-nav-overlay{top:106px}
+}
+@media(max-width:390px){
+ .premium-pack-options{gap:6px}
+ .premium-pack-options button{padding:10px 6px}
+ .premium-pack-options button span{font-size:11px}
+ .premium-pack-options button strong{font-size:14px}
+}
