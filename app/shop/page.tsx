@@ -53,7 +53,7 @@ export default function ShopPage() {
         <div>
           <span className="commerce-eyebrow">THE KASHURMEWA CATALOGUE</span>
           <h1>Good things<br /><i>start here.</i></h1>
-          <p>Whole Kashmiri walnuts in their natural hard shells. Every pack contains in-shell walnuts—not loose kernels. Carefully packed and shipped across India.</p>
+          <p>Whole Kashmiri walnuts with soft, easy-to-crack shells. Every pack contains whole walnuts in shell—not loose kernels. Carefully packed and shipped across India.</p>
         </div>
         <div className="shop-banner-image">
           <img src="https://images.pexels.com/photos/37522385/pexels-photo-37522385.jpeg?auto=compress&cs=tinysrgb&w=2200&q=92" alt="Whole walnuts in their natural shells arranged in a wooden bowl" />
@@ -92,14 +92,14 @@ export default function ShopPage() {
               return (
                 <Link className="commerce-product" href={`/products/${p.slug}`} key={p.id}>
                   <div className="commerce-product-image">
-                    {image ? <img src={image} alt={p.images[0]?.alt_text || `${p.name} — whole walnuts in their natural hard shells`} loading="lazy" decoding="async" /> : <div className="commerce-muted">Image coming soon</div>}
+                    {image ? <img src={image} alt={p.images[0]?.alt_text || `${p.name} — whole Kashmiri walnuts with soft, easy-to-crack shells`} loading="lazy" decoding="async" /> : <div className="commerce-muted">Image coming soon</div>}
                     <span>EXPLORE ↗</span>
                   </div>
                   <div className="commerce-product-info">
                     <div>
                       <small>WHOLE WALNUTS · IN SHELL</small>
                       <h3>{p.name}</h3>
-                      <p>Natural hard shell · Pack sizes: {vs.map((v) => v.size).join(" · ")}</p>
+                      <p>Soft shell, easy to crack · Pack sizes: {vs.map((v) => v.size).join(" · ")}</p>
                     </div>
                     <strong>{minPrice === null ? "Price unavailable" : `From ₹${minPrice.toLocaleString("en-IN")}`}</strong>
                   </div>
