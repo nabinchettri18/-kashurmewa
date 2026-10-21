@@ -662,3 +662,129 @@ a,button{-webkit-tap-highlight-color:transparent}
  .commerce-product-info strong{font-size:12px;white-space:normal;padding-top:0}
  .commerce-footer{background:#351019}
 }
+
+/* Responsive repair pass: navigation, product gallery, and shared page rhythm */
+.bag{display:inline-flex;align-items:center;gap:7px;white-space:nowrap;line-height:1;font-size:10px;letter-spacing:.6px;padding-left:12px}
+.bag>span:first-of-type{display:inline!important;width:auto!important;height:auto!important;margin:0!important;padding:0!important;border-radius:0!important;background:transparent!important;color:inherit!important;font-size:10px!important;font-weight:400!important}
+.bag>span:last-of-type{display:inline-flex;flex:0 0 22px;align-items:center;justify-content:center;width:22px;height:22px;margin:0;padding:0;border-radius:50%;background:#c7ad78;color:#10291f;font-size:10px;font-weight:700}
+.mobile-nav-overlay{position:fixed;top:calc(var(--km-header-bottom, 108px));left:0;right:0;z-index:200;background:#10291f;color:#f5f0e5;padding:12px 22px 24px;border-bottom:1px solid #345043;box-shadow:0 18px 32px #06160f40}
+.mobile-nav-links{display:flex;flex-direction:column;gap:0}
+.mobile-nav-link{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:17px 0;border-bottom:1px solid #345043;color:#f5f0e5;text-decoration:none;font-size:11px;line-height:1.4;letter-spacing:1.5px;text-transform:uppercase}
+.mobile-nav-link:last-child{border-bottom:0;color:#d7bd83}
+.premium-breadcrumb{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:22px 5vw 20px;color:#777e73;font-size:12px;line-height:1.5}
+.premium-product-layout{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.85fr);gap:clamp(28px,5vw,76px);align-items:start;padding:8px 5vw 70px}
+.premium-gallery{min-width:0;width:100%}
+.premium-main-image{position:relative;width:100%;height:clamp(400px,56vw,680px);overflow:hidden;background:#eee2d3}
+.premium-main-image img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+.premium-thumbnails,.premium-image-thumbnails,.premium-gallery-thumbs{display:flex;gap:12px;overflow-x:auto;padding:14px 0 4px;max-width:100%}
+.premium-thumbnails button,.premium-image-thumbnails button,.premium-gallery-thumbs button{flex:0 0 100px;width:100px;height:100px;padding:0;overflow:hidden;border:1px solid #e2d6c7;background:#f4eee5}
+.premium-thumbnails img,.premium-image-thumbnails img,.premium-gallery-thumbs img{display:block;width:100%;height:100%;object-fit:cover}
+.premium-thumbnails button:focus-visible,.premium-image-thumbnails button:focus-visible,.premium-gallery-thumbs button:focus-visible{outline:2px solid #4a1724;outline-offset:2px}
+.policy-page{width:100%;max-width:1100px;margin:0 auto;padding:clamp(40px,7vw,92px) 6vw clamp(55px,8vw,110px)}
+.policy-header{max-width:760px;padding-bottom:38px;border-bottom:1px solid #e5d9ca}
+.policy-header h1{font:400 clamp(38px,7vw,76px)/1.02 'Playfair Display',Georgia,serif;letter-spacing:-1.8px;margin:20px 0}
+.policy-header h1 i{color:#174334}
+.policy-header .detail-description{max-width:520px}
+.policy-content{max-width:760px;padding-top:20px}
+.policy-content h2{font:400 clamp(24px,3.5vw,36px)/1.15 'Playfair Display',Georgia,serif;margin:32px 0 12px;padding-bottom:10px;border-bottom:1px solid #e5d9ca;color:#654a38}
+.policy-content p,.policy-content li{font-size:clamp(14px,1.6vw,17px);line-height:1.85;color:#5e584f;margin:0 0 22px}
+.commerce-footer{min-height:88px}
+@media(max-width:760px){
+ .site-header{grid-template-columns:38px minmax(0,1fr) auto;gap:8px;padding:0 16px;height:68px}
+ .site-header>a,.site-header>.kashurmewa-logo{min-width:0;max-width:100%;overflow:hidden}
+ .site-header .kashurmewa-logo-img{max-width:100%;width:clamp(120px,35vw,165px);height:auto}
+ .header-actions{min-width:0;gap:5px}
+ .header-actions>a:first-child{display:none!important}
+ .bag{gap:5px;padding-left:8px;font-size:10px}
+ .bag>span:first-of-type{display:none!important}
+ .bag>span:last-of-type{width:21px;height:21px;flex-basis:21px;font-size:10px!important}
+ .topbar{height:38px;font-size:8px;letter-spacing:2px}
+ .premium-breadcrumb{padding:18px 5vw 16px;font-size:11px;gap:8px}
+ .premium-product-layout{display:flex;flex-direction:column;gap:22px;padding:0 5vw 48px}
+ .premium-gallery{width:100%}
+ .premium-main-image{height:auto;aspect-ratio: .92;max-height:520px;min-height:0}
+ .premium-main-image img{object-fit:cover}
+ .premium-thumbnails,.premium-image-thumbnails,.premium-gallery-thumbs{gap:10px;padding-top:12px}
+ .premium-thumbnails button,.premium-image-thumbnails button,.premium-gallery-thumbs button{flex-basis:clamp(76px,22vw,105px);width:clamp(76px,22vw,105px);height:clamp(76px,22vw,105px)}
+ .detail-buy{width:100%;padding:6px 0 0}
+ .detail-buy h1{font-size:clamp(34px,9vw,48px);letter-spacing:-1px;line-height:1.06}
+ .detail-price{font-size:28px;margin:18px 0}
+ .detail-variants{gap:7px}
+ .detail-variants button{padding:12px 8px}
+ .policy-page{padding:38px 6vw 55px}
+ .policy-header{padding-bottom:28px}
+ .policy-header h1{font-size:clamp(37px,10vw,52px);letter-spacing:-1px;margin:16px 0}
+ .policy-content{padding-top:8px}
+ .policy-content h2{font-size:27px;margin:28px 0 10px}
+ .policy-content p,.policy-content li{font-size:14px;line-height:1.8}
+ .commerce-footer{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:22px;padding:26px 6vw}
+ .commerce-footer>*{min-width:0}
+ .commerce-footer .kashurmewa-logo-img{max-width:150px;height:auto}
+}
+@media(max-width:390px){
+ .site-header{grid-template-columns:34px minmax(0,1fr) auto;gap:5px;padding:0 12px}
+ .mobile-menu{width:32px;height:32px}
+ .site-header .kashurmewa-logo-img{width:clamp(108px,32vw,130px)}
+ .bag{padding-left:6px}
+ .bag>span:last-of-type{width:19px;height:19px;flex-basis:19px}
+}
+
+.premium-buy-panel{min-width:0;padding:18px 0 0}
+.premium-description{font-size:14px;line-height:1.85;color:#706a60;max-width:480px}
+.premium-quality-line{display:flex;align-items:center;gap:9px;padding:14px 0;border-bottom:1px solid #e5d9ca;color:#4a1724;font-size:11px}
+.premium-price-block{display:flex;align-items:end;justify-content:space-between;gap:12px;padding:24px 0 18px}
+.premium-price-block strong{display:block;font:400 34px/1.1 'Playfair Display',Georgia,serif;color:#351019;margin-top:8px}
+.premium-price-caption,.premium-tax-note{font-size:9px;letter-spacing:1px;color:#777e73}
+.premium-option-heading{display:flex;justify-content:space-between;gap:10px;font-size:12px;margin-bottom:10px}
+.premium-pack-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.premium-pack-options button{min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:7px;padding:13px 10px;border:1px solid #e0d3c3;background:#fffaf3;color:#302a25}
+.premium-pack-options button.selected{border-color:#4a1724;background:#f2e5e1}
+.premium-pack-options button:disabled{opacity:.48}
+.premium-pack-options button span{font-size:12px}
+.premium-pack-options button strong{font:400 16px 'Playfair Display',Georgia,serif}
+.premium-pack-options button small{font-size:8px;letter-spacing:.8px;color:#777e73}
+.premium-quantity-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:22px 0;font-size:12px}
+.premium-quantity-control{display:flex;align-items:center;gap:16px;margin-top:8px;border:1px solid #e0d3c3;width:max-content}
+.premium-quantity-control button{display:grid;place-items:center;width:34px;height:34px;border:0;background:transparent}
+.premium-quantity-control button:disabled{opacity:.35}
+.premium-quantity-control strong{font-size:12px}
+.premium-quantity-row>small{font-size:10px;color:#37674d}
+.premium-add-button{width:100%;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:17px 18px;background:#4a1724;color:#fff8ee;border:0;font-size:10px;font-weight:600;letter-spacing:1.2px}
+.premium-add-button:disabled{opacity:.45}
+.premium-cart-notice{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:12px;padding:12px;background:#f1e6dc;color:#4a1724;font-size:11px}
+.premium-cart-notice a{margin-left:auto;text-decoration:underline}
+.premium-delivery-note{display:flex;gap:12px;padding:22px 0;border-bottom:1px solid #e5d9ca;color:#4a1724}
+.premium-delivery-note div{display:flex;flex-direction:column;gap:5px}
+.premium-delivery-note strong{font-size:12px}
+.premium-delivery-note span{font-size:11px;line-height:1.65;color:#777e73}
+.premium-assurances{display:flex;flex-wrap:wrap;gap:20px;padding:16px 0;border-bottom:1px solid #e5d9ca}
+.premium-assurances div{display:flex;align-items:center;gap:7px;font-size:10px;color:#655d53}
+.premium-details details{border-bottom:1px solid #e5d9ca;padding:15px 0}
+.premium-details summary{cursor:pointer;font-size:12px;font-weight:600}
+.premium-details p{font-size:12px;line-height:1.8;color:#706a60}
+.premium-origin-note{display:flex;align-items:center;flex-wrap:wrap;gap:10px 14px;padding:24px 0 8px;font-size:12px}
+.premium-origin-note>span{font-size:9px;letter-spacing:1.6px;color:#8a867c}
+.premium-origin-note strong{font-weight:500;color:#36332d}
+.premium-origin-divider{width:1px;height:28px;background:#d8cbbb;margin:0 4px}
+.premium-image-label{position:absolute;left:16px;bottom:16px;background:#10291f;color:#f5f0e5;padding:13px 18px;font-size:9px;letter-spacing:1.7px}
+.premium-product-story{padding:60px 8vw;background:#f0e5d8}
+.premium-product-story h2{font:400 clamp(32px,5vw,58px)/1.08 'Playfair Display',Georgia,serif;color:#351019}
+.premium-product-story p{max-width:680px;font-size:14px;line-height:1.85;color:#655d53}
+@media(max-width:760px){
+ .premium-buy-panel{padding-top:2px}
+ .premium-price-block{padding:20px 0 16px;align-items:flex-end}
+ .premium-price-block strong{font-size:30px}
+ .premium-tax-note{max-width:130px;text-align:right;line-height:1.5}
+ .premium-pack-options button{padding:12px 8px}
+ .premium-pack-options button strong{font-size:15px}
+ .premium-origin-note{gap:8px 10px}
+ .premium-origin-note strong{font-size:12px}
+ .premium-product-story{padding:44px 6vw}
+ .mobile-nav-overlay{top:106px}
+}
+@media(max-width:390px){
+ .premium-pack-options{gap:6px}
+ .premium-pack-options button{padding:10px 6px}
+ .premium-pack-options button span{font-size:11px}
+ .premium-pack-options button strong{font-size:14px}
+}

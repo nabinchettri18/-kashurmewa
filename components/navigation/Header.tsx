@@ -86,10 +86,10 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="fixed inset-x-0 top-[105px] bg-[#10291f] border-b border-[#345043] p-6 shadow-2xl z-50 md:hidden"
+            className="mobile-nav-overlay md:hidden"
           >
-            <div className="flex flex-col gap-5 text-sm uppercase tracking-widest text-[#f5f0e5]">
-              <Link href="/shop" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pb-3 border-b border-[#345043]">
+            <div className="mobile-nav-links">
+              <Link href="/shop" onClick={() => setMenuOpen(false)} className="mobile-nav-link">
                 <span>Shop Catalogue</span>
                 <ArrowRight size={16} className="text-[#B69A66]" />
               </Link>
@@ -105,7 +105,7 @@ export function NavigationHeader({ cartCount = 0 }: { cartCount?: number }) {
                 <span>About Brand</span>
                 <ArrowRight size={16} className="text-[#B69A66]" />
               </Link>
-              <Link href="/cart" onClick={() => setMenuOpen(false)} className="flex items-center justify-between pt-2 text-[#B69A66] font-semibold">
+              <Link href="/cart" onClick={() => setMenuOpen(false)} className="mobile-nav-link">
                 <span>Your Bag ({cartCount})</span>
                 <ArrowRight size={16} />
               </Link>
