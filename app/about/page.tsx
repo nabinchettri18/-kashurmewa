@@ -5,7 +5,7 @@ export default function AboutPage() {
   return (
     <main className="commerce-page">
       <header className="commerce-header">
-        <KashurmewLogo variant="dark" size="sm" />
+        <KashurmewLogo variant="light" size="sm" />
         <nav>
           <Link href="/shop">Shop</Link>
           <Link className="active" href="/about">About Us</Link>
@@ -47,7 +47,7 @@ export default function AboutPage() {
       </section>
 
       <footer className="commerce-footer">
-        <KashurmewLogo variant="dark" size="sm" />
+        <KashurmewLogo variant="light" size="sm" />
         <Link href="/shop">Explore Collection</Link>
         <Link href="/contact">Contact Us</Link>
         <Link href="/policies/food-safety">Food Declarations</Link>
