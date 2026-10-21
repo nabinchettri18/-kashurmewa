@@ -36,7 +36,7 @@ export default function AboutPage() {
 
           <h2>Natural Quality, Zero Bleaching</h2>
           <p>
-            Unlike commercial market walnuts that undergo intense chlorine bleaching for uniform white outer shells, Kashurmewa walnuts are preserved in their natural state. We sort for structural shell integrity, clean manually, and pack them without chemical agents.
+            We select Kashmiri walnuts with naturally soft shells that are easy to crack. Each batch is handled with care and packed for your home.
           </p>
 
           <h2>Careful Sourcing & Pan-India Dispatch</h2>
