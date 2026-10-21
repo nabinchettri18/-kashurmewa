@@ -865,3 +865,26 @@ a,button{-webkit-tap-highlight-color:transparent}
  .cart-page .checkout-grid{grid-template-columns:minmax(0,1fr);gap:13px;margin-bottom:13px}
  .cart-page .modal-card h2{margin-bottom:22px}
 }
+
+
+/* Unified Kashurmewa visual system: plain warm cream across all pages */
+:root{--km-brand-cream:#fbf5e9;--km-brand-cream-deep:#f4ead9;--km-brand-oxblood:#4a1724;--km-brand-walnut:#6e4c35;--km-brand-ink:#30271f}
+html,body{background:var(--km-brand-cream)!important}
+.kashurmewa-logo{display:inline-flex!important;align-items:center;justify-content:center;background:var(--km-brand-cream)!important;padding:5px 9px!important;border:0!important;border-radius:0!important;box-shadow:none!important;line-height:0;flex-shrink:0}
+.kashurmewa-logo-img{display:block;object-fit:contain;max-width:100%;height:auto}
+.site-header .kashurmewa-logo{background:var(--km-brand-cream)!important}
+.commerce-footer{background:var(--km-brand-cream)!important;color:var(--km-brand-ink)!important;border-top:1px solid #e3d5c3!important}
+.commerce-footer a,.commerce-footer span{color:var(--km-brand-ink)!important}
+.commerce-footer .kashurmewa-logo{background:var(--km-brand-cream)!important}
+.cart-page,.cart-page .simple-header,.checkout-page,.account-page,.policy-page{background:var(--km-brand-cream)}
+.km-store{background:var(--km-brand-cream)!important}
+.ks-footer{background:var(--km-brand-cream)!important;color:var(--km-brand-ink)!important;border-top:1px solid #e3d5c3}
+.ks-footer a,.ks-footer small,.ks-footer p,.ks-footer span{color:var(--km-brand-ink)}
+.ks-footer .ks-wordmark{display:inline-block;background:var(--km-brand-cream);padding:6px 10px;color:#173b27}
+.ks-footer .ks-wordmark span{color:#9a6a32}
+.ks-footer-bottom{border-top:1px solid #e3d5c3!important}
+@media(max-width:760px){
+ .kashurmewa-logo{padding:4px 6px!important}
+ .commerce-footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;padding:24px 6vw}
+ .commerce-footer .kashurmewa-logo{max-width:150px}
+}
