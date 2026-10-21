@@ -62,7 +62,7 @@ export default function Home() {
           <h1>The pure taste<br /><em>of the valleys.</em></h1>
           <p>Whole walnuts in their natural hard shells, carefully packed for everyday rituals. Naturally distinctive, beautifully simple, and always sold in shell.</p>
           <div className="ks-actions">
-            <Link className="ks-button" href="#shop">Shop whole walnuts <ArrowRight size={17} /></Link>
+            <Link className="ks-button" href="/shop">Shop whole walnuts <ArrowRight size={17} /></Link>
             <span className="ks-price-note">{loading ? "Explore our walnut collection" : product?.variants?.length ? `Packs from ${money(Math.min(...product.variants.map(v => v.price_inr)))}` : "Thoughtfully packed walnuts"}</span>
           </div>
           <div className="ks-proof">
@@ -141,7 +141,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="ks-final-cta"><div><span className="ks-kicker">YOUR PANTRY, REIMAGINED</span><h2>Make room for <em>something good.</em></h2></div><Link className="ks-button" href="#shop">Find your pack <ArrowRight size={17}/></Link></section>
+      <section className="ks-final-cta"><div><span className="ks-kicker">YOUR PANTRY, REIMAGINED</span><h2>Make room for <em>something good.</em></h2></div><Link className="ks-button" href="/shop">Find your pack <ArrowRight size={17}/></Link></section>
 
       <footer className="ks-footer">
         <div className="ks-footer-main"><div className="ks-footer-brand"><span className="ks-wordmark">kashur<span>mewa</span></span><p>Walnuts for everyday rituals, thoughtfully brought to your table.</p></div><div><small>SHOP</small><Link href="/shop">All walnuts</Link><Link href="/cart">Your bag</Link><Link href="/account">My account</Link></div><div><small>DISCOVER</small><Link href="/about">Our story</Link><a href="#shop">Pack sizes</a><a href="#origin">Everyday inspiration</a></div><div className="ks-footer-note"><b>Goodness, grown naturally.</b><p>Thank you for shopping Kashurmewa.</p></div></div>
