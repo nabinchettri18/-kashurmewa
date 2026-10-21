@@ -273,3 +273,16 @@
  .ks-origin-photo{min-height:0;height:310px}
  .ks-origin-photo img{height:100%;width:100%;object-fit:cover}
 }
+
+
+/* Homepage follows the same clean cream canvas as every other brand touchpoint */
+.km-store{--ks-cream:#fbf5e9;--ks-paper:#fbf5e9;background:#fbf5e9!important;color:#30271f}
+.km-store .site-header{background:#fbf5e9!important}
+.ks-hero{background:#fbf5e9}
+.ks-benefit-bar,.ks-shop,.ks-why,.ks-final-cta{background:#fbf5e9!important}
+.ks-story-copy{background:#fbf5e9!important}
+.ks-origin,.ks-origin-copy{background:#fbf5e9!important}
+.ks-footer{background:#fbf5e9!important;color:#30271f!important}
+.ks-footer .ks-footer-brand{background:#fbf5e9!important}
+.ks-footer .ks-wordmark{background:#fbf5e9!important;color:#173b27!important}
+.ks-footer .ks-wordmark span{color:#9a6a32!important}
